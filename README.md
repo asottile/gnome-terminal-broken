@@ -3,7 +3,7 @@ gnome-terminal-broken
 
 tab tearing can cause a crash in gnome-terminal so it was disabled upstream
 
-I'd rather have periodic crashes and the feature  ¯\_(ツ)_/¯
+I'd rather have periodic crashes and the feature  `¯\_(ツ)_/¯`
 
 ### build
 
