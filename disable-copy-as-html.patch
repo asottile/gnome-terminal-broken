@@ -1,0 +1,20 @@
+From: Anthony Sottile <asottile@umich.edu>
+Date: Sat, 7 Dec 2019 11:54:14 -0800
+Subject: disable copy as html
+
+---
+ src/terminal-accels.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/src/terminal-accels.c b/src/terminal-accels.c
+index bbe3268..0a3d881 100644
+--- a/src/terminal-accels.c
++++ b/src/terminal-accels.c
+@@ -138,7 +138,6 @@ static KeyEntry file_entries[] = {
+ 
+ static KeyEntry edit_entries[] = {
+   ENTRY (N_("Copy"),                KEY_COPY,                "copy",         "s", "'text'"   ),
+-  ENTRY (N_("Copy as HTML"),        KEY_COPY_HTML,           "copy",         "s", "'html'"   ),
+   ENTRY (N_("Paste"),               KEY_PASTE,               "paste-text",   NULL, NULL      ),
+   ENTRY (N_("Select All"),          KEY_SELECT_ALL,          "select-all",   NULL, NULL      ),
+   ENTRY (N_("Preferences"),         KEY_PREFERENCES,         "edit-preferences",  NULL, NULL      ),

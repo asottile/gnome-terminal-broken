@@ -15,8 +15,12 @@ docker run --rm -ti \
     cd gnome-terminal*/ && \
     cp /src/re-enable-tab-tearing.patch debian/patches && \
     echo re-enable-tab-tearing.patch >> debian/patches/series && \
+    cp /src/disable-copy-as-html.patch debian/patches && \
+    echo disable-copy-as-html.patch >> debian/patches/series && \
     DEBFULLNAME="Anthony Sottile" DEBEMAIL=asottile@umich.edu \
         dch --local +asottile --distribution bionic "Re-enable tab tearing" && \
+    DEBFULLNAME="Anthony Sottile" DEBEMAIL=asottile@umich.edu \
+        dch --local +asottile --distribution bionic "Disable Copy as html" && \
     dpkg-buildpackage -us -uc -sa && \
     cp ../*.deb /dist/
 '
