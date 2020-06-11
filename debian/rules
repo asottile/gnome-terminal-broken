@@ -1,0 +1,30 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,-O1 -Wl,-z,defs -Wl,--as-needed
+
+%:
+	dh $@
+
+override_dh_autoreconf:
+	dh_autoreconf --as-needed
+
+override_dh_auto_build:
+	dh_auto_build
+	/usr/bin/docbook-to-man debian/gnome-terminal.sgml > debian/gnome-terminal.1
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -f debian/gnome-terminal.1
+
+override_dh_install:
+	find debian/tmp -name '*.a' -print -delete
+	find debian/tmp -name '*.la' -print -delete
+	dh_install
+	mv $(CURDIR)/debian/gnome-terminal/usr/bin/gnome-terminal \
+		$(CURDIR)/debian/gnome-terminal/usr/bin/gnome-terminal.real
+	install -m0755 $(CURDIR)/debian/gnome-terminal.wrap \
+		$(CURDIR)/debian/gnome-terminal/usr/bin/gnome-terminal
+
+override_dh_missing:
+	dh_missing --fail-missing
