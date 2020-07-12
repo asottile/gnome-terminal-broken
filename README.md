@@ -32,9 +32,12 @@ gbp import-dsc *.dsc \
     --debian-branch ubuntu/... \
     --upstream-branch upstream \
     --create-missing-branches
+git checkout ubuntu/...
 gbp pq import
 babi src/terminal-notebook.c  # redo the patch
 git commit -am 're-enable-tab-tearing'
 gbp pq export
+git checkout -- debian
+git checkout master
 cp debian/patches/re-enable-tab-tearing.patch .
 ```
