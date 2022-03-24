@@ -38,6 +38,6 @@ babi src/terminal-notebook.c  # redo the patch
 git commit -am 're-enable-tab-tearing'
 gbp pq export
 git checkout -- debian
-git checkout master
+git checkout main
 cp debian/patches/re-enable-tab-tearing.patch .
 ```
