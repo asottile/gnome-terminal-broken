@@ -10,13 +10,14 @@ docker run --rm -ti \
     -v "$PWD:/src:ro" \
     -v "$PWD/dist:/dist:rw" \
     gnome-terminal-patch bash -euxc '\
+    . /etc/lsb-release
     cd /tmp && \
-    dget -ux http://archive.ubuntu.com/ubuntu/pool/main/g/gnome-terminal/gnome-terminal_3.36.1.1-1ubuntu1.dsc && \
+    dget -ux http://archive.ubuntu.com/ubuntu/pool/main/g/gnome-terminal/gnome-terminal_3.44.0-1ubuntu1.dsc && \
     cd gnome-terminal*/ && \
     cp /src/re-enable-tab-tearing.patch debian/patches && \
     echo re-enable-tab-tearing.patch >> debian/patches/series && \
     DEBFULLNAME="Anthony Sottile" DEBEMAIL=asottile@umich.edu \
-        dch --local +asottile --distribution focal "Re-enable tab tearing" && \
+        dch --local +asottile --distribution "$DISTRIB_CODENAME" "Re-enable tab tearing" && \
     dpkg-buildpackage -us -uc -sa && \
     cp ../*.deb /dist/
 '

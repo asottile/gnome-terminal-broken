@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:jammy
 RUN : \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install \
@@ -10,6 +10,7 @@ RUN : \
         devscripts \
         dh-exec \
         docbook-to-man \
+        docbook-xsl \
         equivs \
         gnome-common \
         gnome-pkg-tools \
@@ -24,6 +25,7 @@ RUN : \
         libsm-dev \
         libvte-2.91-dev \
         libx11-dev \
+        meson \
         uuid-dev \
         yelp-tools \
     && apt-get clean \
