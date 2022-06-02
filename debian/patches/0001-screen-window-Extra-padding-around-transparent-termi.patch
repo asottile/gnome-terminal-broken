@@ -10,7 +10,7 @@ https://bugzilla.redhat.com/show_bug.cgi?id=1207943
  2 files changed, 49 insertions(+), 9 deletions(-)
 
 diff --git a/src/terminal-screen.cc b/src/terminal-screen.cc
-index bf41b6c..f8ede37 100644
+index a7f845e..ba8bc65 100644
 --- a/src/terminal-screen.cc
 +++ b/src/terminal-screen.cc
 @@ -154,6 +154,8 @@ static void terminal_screen_system_font_changed_cb (GSettings *,
@@ -89,7 +89,7 @@ index bf41b6c..f8ede37 100644
  terminal_screen_button_press (GtkWidget      *widget,
                                GdkEventButton *event)
 diff --git a/src/terminal-window.cc b/src/terminal-window.cc
-index 269514f..96b7ba2 100644
+index ba628e6..03b0ae1 100644
 --- a/src/terminal-window.cc
 +++ b/src/terminal-window.cc
 @@ -1969,15 +1969,21 @@ terminal_window_draw (GtkWidget *widget,

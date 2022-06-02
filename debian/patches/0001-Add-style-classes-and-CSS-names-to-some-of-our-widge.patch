@@ -37,7 +37,7 @@ index 6686d34..36d0c67 100644
  
  static void
 diff --git a/src/terminal-screen.cc b/src/terminal-screen.cc
-index a987f26..bf41b6c 100644
+index 31facd9..a7f845e 100644
 --- a/src/terminal-screen.cc
 +++ b/src/terminal-screen.cc
 @@ -135,6 +135,8 @@ enum

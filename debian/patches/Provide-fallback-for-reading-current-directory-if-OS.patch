@@ -9,7 +9,7 @@ Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=712628
  1 file changed, 66 insertions(+)
 
 diff --git a/src/terminal-screen.cc b/src/terminal-screen.cc
-index 44c551f..0ef74f3 100644
+index f60b0e3..c90e792 100644
 --- a/src/terminal-screen.cc
 +++ b/src/terminal-screen.cc
 @@ -354,6 +354,63 @@ terminal_screen_clear_exec_data (TerminalScreen *screen,

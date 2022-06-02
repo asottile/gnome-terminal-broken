@@ -243,7 +243,7 @@ index b146ba8..b93bd02 100644
  #define TERMINAL_SETTING_CONTEXT_INFO_KEY               "context-info"
  #define TERMINAL_SETTING_DEFAULT_SHOW_MENUBAR_KEY       "default-show-menubar"
 diff --git a/src/terminal-screen.cc b/src/terminal-screen.cc
-index 0ef74f3..a987f26 100644
+index c90e792..31facd9 100644
 --- a/src/terminal-screen.cc
 +++ b/src/terminal-screen.cc
 @@ -718,6 +718,14 @@ terminal_screen_class_init (TerminalScreenClass *klass)
@@ -327,7 +327,7 @@ index 0ef74f3..a987f26 100644
  
  static void
 diff --git a/src/terminal-window.cc b/src/terminal-window.cc
-index 60f4950..269514f 100644
+index 76f1800..ba628e6 100644
 --- a/src/terminal-window.cc
 +++ b/src/terminal-window.cc
 @@ -1963,6 +1963,26 @@ terminal_window_realize (GtkWidget *widget)

@@ -12,7 +12,7 @@ Last-Update: 2021-04-13
  1 file changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/src/terminal-screen.cc b/src/terminal-screen.cc
-index 4e004c4..7b55165 100644
+index c09e309..7ade9c6 100644
 --- a/src/terminal-screen.cc
 +++ b/src/terminal-screen.cc
 @@ -275,8 +275,7 @@ exec_data_new (void)

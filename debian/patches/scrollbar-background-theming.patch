@@ -68,7 +68,7 @@ index 6d85190..cedb1d9 100644
  
  static void
 diff --git a/src/terminal-screen.cc b/src/terminal-screen.cc
-index 85ae885..4e004c4 100644
+index 211f687..c09e309 100644
 --- a/src/terminal-screen.cc
 +++ b/src/terminal-screen.cc
 @@ -108,6 +108,8 @@ struct _TerminalScreenPrivate
@@ -181,7 +181,7 @@ index 85ae885..4e004c4 100644
  }
  
 diff --git a/src/terminal-screen.hh b/src/terminal-screen.hh
-index 70d0d8c..b434052 100644
+index 25c2565..45af7bb 100644
 --- a/src/terminal-screen.hh
 +++ b/src/terminal-screen.hh
 @@ -115,6 +115,8 @@ GSettings* terminal_screen_get_profile (TerminalScreen *screen);
