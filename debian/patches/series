@@ -7,3 +7,4 @@ Provide-fallback-for-reading-current-directory-if-OS.patch
 60_add_lp_handler.patch
 scrollbar-background-theming.patch
 screen-Use-clean-env-when-creating-new-tab.patch
+re-enable-tab-tearing.patch

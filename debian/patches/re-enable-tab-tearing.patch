@@ -1,0 +1,22 @@
+From: Anthony Sottile <asottile@umich.edu>
+Date: Wed, 1 Jun 2022 21:14:34 -0400
+Subject: re-enable-tab-tearing
+
+---
+ src/terminal-notebook.cc | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/src/terminal-notebook.cc b/src/terminal-notebook.cc
+index 36d0c67..1586ee0 100644
+--- a/src/terminal-notebook.cc
++++ b/src/terminal-notebook.cc
+@@ -149,9 +149,7 @@ terminal_notebook_add_screen (TerminalMdiContainer *container,
+                            "tab-fill", TRUE,
+                            nullptr);
+   gtk_notebook_set_tab_reorderable (gtk_notebook, screen_container, TRUE);
+-#if 0
+   gtk_notebook_set_tab_detachable (gtk_notebook, screen_container, TRUE);
+-#endif
+ }
+ 
+ static void

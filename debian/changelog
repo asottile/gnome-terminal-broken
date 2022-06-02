@@ -1,3 +1,9 @@
+gnome-terminal (3.44.0-1ubuntu1+asottile2) jammy; urgency=medium
+
+  * re-enable tab tearing
+
+ -- Anthony Sottile <asottile@umich.edu>  Wed, 01 Jun 2022 21:14:48 -0400
+
 gnome-terminal (3.44.0-1ubuntu1) jammy; urgency=medium
 
   * Merge with debian, remaining changes:
