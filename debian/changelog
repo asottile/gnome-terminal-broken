@@ -1,3 +1,9 @@
+gnome-terminal (3.36.2-1ubuntu1~20.04+asottile2) focal; urgency=medium
+
+  * re-enable tab tearing
+
+ -- Anthony Sottile <asottile@umich.edu>  Wed, 01 Jun 2022 21:10:22 -0400
+
 gnome-terminal (3.36.2-1ubuntu1~20.04) focal; urgency=medium
 
   * No-change backport from groovy to focal. (LP: #1883015)
