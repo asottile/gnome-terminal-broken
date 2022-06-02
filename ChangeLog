@@ -1,15 +1,139 @@
-commit be754773e25f7b0f8ccfe0ed4b7e65711bcee1be
+commit 9986dbbef8bb2efa94360000c53dd11dde2853bb
 Author: Christian Persch <chpe@src.gnome.org>
-Date:   Sat Apr 25 22:13:00 2020 +0200
+Date:   Sun Mar 27 19:58:38 2022 +0200
 
-    Version 3.36.2
+    build: Version 3.44.0
 
- configure.ac | 2 +-
+ meson.build | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 338a042d638a494d792363ae61cbb0ab32a375c3
+Author: Nathan Follens <nfollens@gnome.org>
+Date:   Fri Mar 25 12:52:29 2022 +0000
+
+    Update Dutch translation
+
+ po/nl.po | 660 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 340 insertions(+), 320 deletions(-)
+
+commit ae8dfea3c9903b5f6a4d50204ecf2d4ebd5c225e
+Author: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>
+Date:   Thu Mar 24 20:52:17 2022 +0000
+
+    Update Latvian translation
+
+ po/lv.po | 651 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 336 insertions(+), 315 deletions(-)
+
+commit 29d46bf5364758e9e35858185e806f7790ea9152
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Thu Mar 17 09:57:02 2022 +0100
+
+    Update Catalan translation
+
+ po/ca.po | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-commit 57ea15c4bdf15247f1d403aa24fb18efe23cd8a7
+commit 6efe21d6077bfa86a623b791b6a7ded11a7fec8a
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Sun Mar 20 15:04:57 2022 +0100
+
+    Update Catalan translation
+
+ help/ca/ca.po | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
+
+commit 75e4fb55bca41335c881df618f36193b9da4d3e6
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Sat Mar 5 20:28:10 2022 +0100
+
+    Update Catalan translation
+
+ help/ca/ca.po | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+commit cf924a762b6efb44da7d17f67808ed3e5959e5c6
+Author: Kjartan Maraas <kmaraas@gnome.org>
+Date:   Thu Mar 17 12:58:55 2022 +0000
+
+    Update Norwegian Bokmål translation
+
+ po/nb.po | 670 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 350 insertions(+), 320 deletions(-)
+
+commit 4929136dbf05a4ee84adc1412497f8389ae205d0
+Author: Марко Костић <marko.m.kostic@gmail.com>
+Date:   Fri Mar 11 16:38:34 2022 +0000
+
+    Update Serbian translation
+
+ po/sr.po | 650 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 335 insertions(+), 315 deletions(-)
+
+commit edefc8cbea6ba78c4a0760fb298601e0b91b1b7a
 Author: Christian Persch <chpe@src.gnome.org>
-Date:   Sat Apr 25 22:03:12 2020 +0200
+Date:   Mon Mar 7 20:27:16 2022 +0100
+
+    all: Insert text as paste
+    
+    Use new API vte_terminal_paste_text() to insert text.
+    
+    (cherry picked from commit f5f15e67492ac61ebe664c5ea12377eedb41f112)
+
+ meson.build            |  2 +-
+ src/terminal-screen.cc | 30 ++++++++++++++++++++++++++----
+ src/terminal-screen.hh |  6 ++++++
+ src/terminal-window.cc |  2 +-
+ 4 files changed, 34 insertions(+), 6 deletions(-)
+
+commit 368d3b9d4ac80924120fa63f99fdafaa58b1c4f9
+Author: Seong-ho Cho <shcho@gnome.org>
+Date:   Fri Mar 4 14:28:17 2022 +0000
+
+    Update Korean translation
+
+ help/ko/ko.po | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+commit 0f598357d771c7c4fb60416040ab383c317baa80
+Author: Emin Tufan Çetin <etcetin@gmail.com>
+Date:   Wed Feb 23 09:35:27 2022 +0000
+
+    Update Turkish translation
+
+ po/tr.po | 652 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 336 insertions(+), 316 deletions(-)
+
+commit 3b0ae1d74eb4e55b467bd51cff72cad95b2e04ca
+Author: Alexander Shopov <ash@kambanaria.org>
+Date:   Mon Feb 14 10:59:45 2022 +0000
+
+    Update Bulgarian translation
+
+ po/bg.po | 157 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 84 insertions(+), 73 deletions(-)
+
+commit 2ae7932159db0ec5678ea2073e4e0d281163e9d6
+Author: Asier Sarasua Garmendia <asiersarasua@ni.eus>
+Date:   Sun Feb 13 08:23:42 2022 +0000
+
+    Update Basque translation
+
+ po/eu.po | 100 +++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 50 insertions(+), 50 deletions(-)
+
+commit 6f5b0f027e3fd95eea60d7618b13fe6fcf72f7a3
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Feb 12 19:49:10 2022 +0100
+
+    build: Post release version bump
+
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit d533f7704815e079ba667799dba9f4104f2775df
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Thu Aug 26 20:01:30 2021 +0200
 
     Revert "screen: Use clean env when creating new tab"
     
@@ -26,24 +150,2736 @@ Date:   Sat Apr 25 22:03:12 2020 +0200
     This reverts commit 9bb94e3aab84ecc4e7733d0ee001ee50256bd273.
     
     https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/253
+    (cherry picked from commit 57ea15c4bdf15247f1d403aa24fb18efe23cd8a7)
+    (cherry picked from commit 16bd9f6a4181d37af2769e7ca5a1f9a1211cfaac)
+    (cherry picked from commit ff0ca88c1ccef6e0eaeaa642951937d4410e228b)
+    (cherry picked from commit bc96e6ee9684305890fdeacdd852341703aa718a)
 
- src/terminal-screen.c | 11 +++++++----
+ src/terminal-screen.cc | 11 +++++++----
  1 file changed, 7 insertions(+), 4 deletions(-)
 
-commit 5ecb0ac8b0cf97c73b4b18ba74e5a220b420d942
+commit b20638076331fbb0fefa93e7abd9818b8cd23f9d
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Feb 12 19:44:09 2022 +0100
+
+    build: Version 3.43.90
+
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 36dc2646ac2de9941386721b0bda7a1cb2de72eb
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri Feb 11 21:49:44 2022 +0100
+
+    nautilus: Work around gtk_get_current_event_time() absence on gtk4
+
+ src/terminal-nautilus.cc | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+commit 10e37fe214cab4033733945f97246eb41f15f5a5
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri Feb 11 21:30:50 2022 +0100
+
+    nautilus: Undef gtk min/max version defines
+    
+    Try to unbreak the build with nautilus git master which brings in gtk4
+    now.
+
+ src/terminal-nautilus.cc | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 17ee0e43be8bb41e429d5d1d9d4a21fad57c3222
+Author: Egmont Koblinger <egmont@gmail.com>
+Date:   Thu Feb 3 22:19:57 2022 +0100
+
+    regex: Fix path-less URL recognition
+    
+    URLs are allowed to contain the query ('?') or fragment ('#') directly
+    after the hostname without a path or even a path separator ('/'), so fix
+    the regexes to recognise these URLs.
+    
+    Fixes: https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/7888
+
+ src/terminal-regex.cc | 16 ++++++++++++++++
+ src/terminal-regex.hh |  2 +-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
+
+commit c673cedf2524737cd7ac6904089e0ae287ebe3c7
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Thu Feb 3 22:19:57 2022 +0100
+
+    Revert "regex: Workaround a PCRE bug resulting in not recognizing schemeless URLs"
+    
+    This reverts commit bb808a756935adbdf2bf950ae100c907374292b9.
+
+ src/terminal-regex.hh | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+commit 32aecd06a6ccae4e17b614532cc8bde2a0f701a4
+Author: Alan Mortensen <alanmortensen.am@gmail.com>
+Date:   Sun Jan 30 13:42:19 2022 +0100
+
+    Updated Danish translation
+
+ help/da/da.po | 71 ++++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 39 insertions(+), 32 deletions(-)
+
+commit 59ed1f61f5c6d27793dbfbb5b684b229f7ef8383
+Author: Sergej A <sw@atrus.ru>
+Date:   Mon Jan 24 13:05:15 2022 +0000
+
+    Update Russian translation
+
+ help/ru/ru.po | 3768 ++++++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 2251 insertions(+), 1517 deletions(-)
+
+commit 3c095d2a0987c07894616486177dfcf041594ccf
+Author: Jordi Mas i Hernandez <jmas@softcatala.org>
+Date:   Thu Jan 20 14:33:55 2022 +0000
+
+    Update Catalan translation
+
+ help/ca/ca.po | 37 +++++++++++++++++++++----------------
+ 1 file changed, 21 insertions(+), 16 deletions(-)
+
+commit e062216db7a091866d551e00136a79cf0eafc1a3
+Author: Hugo Carvalho <hugokarvalho@hotmail.com>
+Date:   Mon Jan 17 14:33:12 2022 +0000
+
+    Update Portuguese translation
+
+ po/pt.po | 278 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 149 insertions(+), 129 deletions(-)
+
+commit 9a168cc23962ce9fa106dc8a40407d381a3db403
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri Jan 14 11:33:32 2022 +0100
+
+    build: Fix for newer meson
+
+ data/meson.build | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+commit edc76b65422d29613237ab9b0a4c4cfec0ce09ea
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri Jan 14 11:33:32 2022 +0100
+
+    server: Unset unwanted envvar
+
+ src/server.cc | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit a2f47d3b432203cf1dee1fd4b25e710b76b35017
+Author: Fran Dieguez <frandieguez@gnome.org>
+Date:   Tue Jan 11 14:28:22 2022 +0000
+
+    Update Galician translation
+
+ po/gl.po | 85 ++++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 42 insertions(+), 43 deletions(-)
+
+commit dd32a70141b2fde361cac29ab7582c21a3248a6b
+Author: Kukuh Syafaat <kukuhsyafaat@gnome.org>
+Date:   Thu Dec 23 04:29:26 2021 +0000
+
+    Update Indonesian translation
+
+ po/id.po | 96 ++++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 48 insertions(+), 48 deletions(-)
+
+commit ea1418177427e58773ef8ab73a4956ded8da302b
+Author: Hugo Carvalho <hugokarvalho@hotmail.com>
+Date:   Sat Dec 18 14:01:49 2021 +0000
+
+    Update Portuguese translation
+    
+    (cherry picked from commit c5699304d27bc001df5652d864dccc36e5352a1a)
+
+ po/pt.po | 255 +++++++++++++++++++++++++++++----------------------------------
+ 1 file changed, 117 insertions(+), 138 deletions(-)
+
+commit df23c5d71a1aefeb2fdc05ff489863512b079afb
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Thu Dec 9 00:21:44 2021 +0100
+
+    window: Use a normal menu for the popup menu
+    
+    ... since the popover doesn't support scrolling, making a long list of
+    profiles unusable.
+    
+    Fixes: https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/7882
+
+ src/terminal-headerbar.ui | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 068655ca0530dd9c47dcda360de640dbadf436d4
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Thu Dec 9 00:21:44 2021 +0100
+
+    Remove obsolete file
+
+ AUTHORS | 3 ---
+ 1 file changed, 3 deletions(-)
+
+commit 4ba8868072c2516aa435cfbd0a62ea9e91b9628b
+Author: Fabio Tomat <f.t.public@gmail.com>
+Date:   Mon Nov 22 10:50:03 2021 +0000
+
+    Update Friulian translation
+
+ po/fur.po | 105 +++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 52 insertions(+), 53 deletions(-)
+
+commit a7f5ccd8fc325361dc1f7416c1061b7860f122ee
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:   Tue Nov 16 15:39:53 2021 +0100
+
+    Updated Spanish translation
+
+ po/es.po | 158 +++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 79 insertions(+), 79 deletions(-)
+
+commit 48092ff0aa868ada10c936b458320fe3b6601d62
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:   Tue Nov 16 15:39:48 2021 +0100
+
+    Updated Spanish translation
+
+ help/es/es.po | 51 ++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 28 insertions(+), 23 deletions(-)
+
+commit eb1da3b1bcf168cfa5b084b1004aa9c8295c4661
+Author: Boyuan Yang <073plan@gmail.com>
+Date:   Sun Nov 14 16:20:40 2021 +0000
+
+    Update Chinese (China) translation
+
+ po/zh_CN.po | 100 ++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 50 insertions(+), 50 deletions(-)
+
+commit 0785e173bb9c29aa4ac502835786ff34f584064c
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Sat Nov 13 23:13:32 2021 +0100
+
+    Update Catalan translation
+
+ help/ca/ca.po | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 168e7cf76c0204deb8ec14502c9b2fca3cbdb347
+Author: Goran Vidović <trebelnik2@gmail.com>
+Date:   Fri Nov 12 12:03:16 2021 +0000
+
+    Update Croatian translation
+
+ po/hr.po | 646 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 333 insertions(+), 313 deletions(-)
+
+commit 70a699346f686d0059a751a454866815b9ac4e34
+Author: Quentin PAGÈS <pages_quentin@hotmail.com>
+Date:   Sun Nov 7 19:19:24 2021 +0000
+
+    Update Occitan translation
+
+ po/oc.po | 106 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 55 insertions(+), 51 deletions(-)
+
+commit af6fa5af6ba69e3cd392de20e9c2954c6405a2dc
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Thu Oct 21 18:13:31 2021 +0200
+
+    build: Use default CXX flags and fix some compiler warnings
+
+ meson.build              | 4 ++--
+ src/terminal-nautilus.cc | 3 +--
+ src/terminal-window.cc   | 4 +++-
+ 3 files changed, 6 insertions(+), 5 deletions(-)
+
+commit eb5989cf66a8eb54153963a09ca2fb3ea0364bbb
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Thu Oct 21 18:13:31 2021 +0200
+
+    build: Remove unnecessary meson option
+    
+    The C std version is applied to the flags directly.
+
+ meson.build | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 9100fd9a7f66822a414ec0357a44ea557c0f00b9
+Author: Fabio Tomat <f.t.public@gmail.com>
+Date:   Thu Sep 16 12:23:46 2021 +0000
+
+    Update Friulian translation
+
+ po/fur.po | 651 ++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 336 insertions(+), 315 deletions(-)
+
+commit a854bd9dd0dfcf97dd91a58878ab6932294118eb
+Author: Tim Sabsch <tim@sabsch.com>
+Date:   Tue Sep 14 18:10:31 2021 +0000
+
+    Update German translation
+    
+    (cherry picked from commit ca2172109911a148e4dc16429e1acc6059169502)
+
+ help/de/de.po | 235 +++++++++++++++++++---------------------------------------
+ 1 file changed, 75 insertions(+), 160 deletions(-)
+
+commit bdd9e5e9e9e55fb2d0f6e31d8bfd52114d8e031f
+Author: Balázs Úr <balazs@urbalazs.hu>
+Date:   Sun Sep 12 06:51:47 2021 +0000
+
+    Update Hungarian translation
+    
+    (cherry picked from commit 52851fb281e8218d8cfc879b7d4df483902031f8)
+
+ help/hu/hu.po | 242 +++++++++++++++++++++-------------------------------------
+ 1 file changed, 86 insertions(+), 156 deletions(-)
+
+commit 9d1df22ea34e034ebaf4488f6181e1120029edad
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Sat Sep 11 16:39:50 2021 +0200
+
+    Update Polish translation
+
+ help/pl/pl.po |  20 +-
+ po/pl.po      | 648 ++++++++++++++++++++++++++++++----------------------------
+ 2 files changed, 347 insertions(+), 321 deletions(-)
+
+commit 79ad3a7ec507bd990f1b2b69626dae885cc254f1
+Author: Alan Mortensen <alanmortensen.am@gmail.com>
+Date:   Sat Sep 11 14:42:29 2021 +0200
+
+    Updated Danish translation
+
+ po/da.po | 663 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 346 insertions(+), 317 deletions(-)
+
+commit 91ff93bb3eb20128c8207053a412634d2032e69b
+Author: Balázs Úr <balazs@urbalazs.hu>
+Date:   Fri Sep 10 21:11:34 2021 +0000
+
+    Update Hungarian translation
+    
+    (cherry picked from commit 5912ee034db86a697db5f8f478afc0be4d007fb8)
+
+ po/hu.po | 649 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 335 insertions(+), 314 deletions(-)
+
+commit cd639c2323a33494baa4dc52a64c62d3be82ce62
+Author: Philipp Kiemle <philipp.kiemle@gmail.com>
+Date:   Thu Sep 9 20:20:39 2021 +0000
+
+    Update German translation
+
+ po/de.po | 664 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 343 insertions(+), 321 deletions(-)
+
+commit b3fd456d42efb8c1f297b532a1430090d816f222
+Author: Goran Vidović <trebelnik2@gmail.com>
+Date:   Mon Sep 6 10:29:34 2021 +0000
+
+    Update Croatian translation
+    
+    (cherry picked from commit 6f378e00617123d9080adbf63d437686fb048ccc)
+
+ po/hr.po | 127 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 69 insertions(+), 58 deletions(-)
+
+commit e8c48f3a5af54d10d0da2d61554a4088b9393b54
+Author: Asier Sarasua Garmendia <asiersarasua@ni.eus>
+Date:   Mon Sep 6 09:53:44 2021 +0000
+
+    Add Basque translation
+    
+    (cherry picked from commit a0732a963fc6bbb4449e708fec71479d4665579a)
+
+ help/LINGUAS  |    1 +
+ help/eu/eu.po | 3196 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 3197 insertions(+)
+
+commit 6d17c3514ee3d2165cca0fca7fda282e4adae32d
+Author: Changwoo Ryu <cwryu@debian.org>
+Date:   Fri Sep 3 02:16:18 2021 +0000
+
+    Update Korean translation
+    
+    (cherry picked from commit 590134b94026d140db105dae0b94be173076cce5)
+
+ po/ko.po | 657 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 340 insertions(+), 317 deletions(-)
+
+commit 9d42a52e83cb42a6454a9ecc750bb97aaaba3b72
+Author: Daniel Șerbănescu <daniel@serbanescu.dk>
+Date:   Thu Sep 2 16:30:21 2021 +0000
+
+    Update Romanian translation
+    
+    (cherry picked from commit 3278c9d60242a11410bfbd3c264fe0b64efde40c)
+
+ po/ro.po | 652 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 336 insertions(+), 316 deletions(-)
+
+commit d32679925578d0ef2729ee64e61f7b48190576fb
+Author: Aurimas Černius <aurisc4@gmail.com>
+Date:   Thu Sep 2 18:12:45 2021 +0300
+
+    Updated Lithuanian translation
+
+ po/lt.po | 671 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 351 insertions(+), 320 deletions(-)
+
+commit b135007defbffae1a59b9719eddc0da5bb84f1f8
+Author: Seong-ho Cho <shcho@gnome.org>
+Date:   Wed Sep 1 10:55:29 2021 +0000
+
+    Update Korean translation
+    
+    (cherry picked from commit 1fe4884d0b345f39621f49a3052802b6d4be41b9)
+
+ help/ko/ko.po | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
+
+commit df218f78a014bccee1e6070d80cddd717b519f46
+Author: Danial Behzadi <dani.behzi@ubuntu.com>
+Date:   Wed Sep 1 09:52:28 2021 +0000
+
+    Update Persian translation
+    
+    (cherry picked from commit e423fbccd72c07734754636a3ac8419dd1b097fb)
+
+ po/fa.po | 633 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 322 insertions(+), 311 deletions(-)
+
+commit 1948f15de7d646ded7e252545456602651693abf
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sun Aug 29 20:03:58 2021 +0200
+
+    window: Disapply geometry hint when in snapped state
+    
+    Based on a patch by Tony Houghton <h@realh.co.uk>.
+    
+    https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/129
+
+ meson.build            |   2 +-
+ src/terminal-screen.cc |  27 ---------
+ src/terminal-window.cc | 146 +++++++++++++++++++++++++------------------------
+ 3 files changed, 77 insertions(+), 98 deletions(-)
+
+commit 02a1cdc0af981d53374fb7d0864d55a01d463176
+Author: Zander Brown <zbrown@gnome.org>
+Date:   Sun Aug 29 11:05:48 2021 +0000
+
+    Update British English translation
+    
+    (cherry picked from commit c75462635cb61024a514a63da240cd80f9cbf485)
+
+ po/en_GB.po | 675 +++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 348 insertions(+), 327 deletions(-)
+
+commit dbfd47a4aa66890c4eb9d19650c86488210c1040
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Aug 28 20:55:35 2021 +0200
+
+    window: Add close button to info bar
+    
+    ... to allow to view the text that's obscured by the info bar.
+
+ src/terminal-info-bar.cc | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit ea1c43f5fde7a3cd1562572ff25dcf89013064fe
+Author: Baurzhan Muftakhidinov <baurthefirst@gmail.com>
+Date:   Sat Aug 28 15:07:35 2021 +0000
+
+    Update Kazakh translation
+    
+    (cherry picked from commit e7a047f922b523cf400cfef73834c6e08c2cf7fa)
+
+ po/kk.po | 652 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 336 insertions(+), 316 deletions(-)
+
+commit d9cd987c9464e39dba5a4116d65dd3da5d7d8aea
+Author: Marek Černocký <marek@manet.cz>
+Date:   Sat Aug 28 14:51:16 2021 +0200
+
+    Updated Czech help translation
+
+ help/cs/cs.po | 24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
+
+commit d5816b7f91e2c607f353eede548b3e88739dc8af
+Author: Jiri Grönroos <jiri.gronroos@iki.fi>
+Date:   Fri Aug 27 18:14:44 2021 +0000
+
+    Update Finnish translation
+    
+    (cherry picked from commit 941d6cb9845b47e1d9a5b6b1ac18cde155496383)
+
+ po/fi.po | 652 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 338 insertions(+), 314 deletions(-)
+
+commit c0895b20c4d0e5239d1a7703e2b55af290ec9d80
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Thu Aug 26 20:03:00 2021 +0200
+
+    build: Post branch version bump
+
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 56d43c926fde1f373569da0fdaa6d784757b8cc9
+Author: Marek Černocký <marek@manet.cz>
+Date:   Thu Aug 26 14:42:42 2021 +0200
+
+    Updated Czech translation
+
+ po/cs.po | 642 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 331 insertions(+), 311 deletions(-)
+
+commit e294bc4318c45417ed6aad5376b2ad47db82989c
+Author: Claude Paroz <claude@2xlibre.net>
+Date:   Thu Aug 26 08:11:49 2021 +0200
+
+    Updated French translation
+
+ po/fr.po | 662 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 335 insertions(+), 327 deletions(-)
+
+commit 906df11a9daa099cd2a9ca2d9bb1fd3a78ea29a7
+Author: Fran Dieguez <frandieguez@gnome.org>
+Date:   Wed Aug 25 17:41:05 2021 +0000
+
+    Update Galician translation
+
+ po/gl.po | 665 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 346 insertions(+), 319 deletions(-)
+
+commit 90d808317ecb76c49e2f80a5f47d92b868ece789
+Author: Andika Triwidada <atriwidada@gnome.org>
+Date:   Tue Aug 24 08:53:08 2021 +0000
+
+    Update Indonesian translation
+
+ help/id/id.po | 31 +++++++++++++++++++------------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
+
+commit a2696374c77df9d59916c7cad39392ff05c23937
+Author: Asier Sarasua Garmendia <asiersarasua@ni.eus>
+Date:   Sat Aug 21 09:03:52 2021 +0000
+
+    Update Basque translation
+
+ po/eu.po | 642 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 331 insertions(+), 311 deletions(-)
+
+commit 18c7e54b17911870d8dcaa9050045955d7a2e11c
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:   Tue Aug 17 13:47:37 2021 +0200
+
+    Updated Spanish translation
+
+ po/es.po | 653 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 337 insertions(+), 316 deletions(-)
+
+commit dd26c34e2531f9f8e0256f43b4eafcb738e6f272
+Author: Anders Jonsson <anders.jonsson@norsjovallen.se>
+Date:   Sat Aug 14 21:34:42 2021 +0000
+
+    Update Swedish translation
+
+ po/sv.po | 657 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 342 insertions(+), 315 deletions(-)
+
+commit d7cfd3bb563cfe5b5fa65fe1e747504f6b5e9a9f
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Aug 14 21:52:14 2021 +0200
+
+    build: Post release version bump
+
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 2dbe778a93c8678c17feffbbd84422087262a7c4
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Aug 14 21:51:45 2021 +0200
+
+    build: Version 3.41.90
+
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit f925e331b8271206fd878e33dd1d09f65cb4b723
+Author: Matej Urbančič <mateju@src.gnome.org>
+Date:   Mon Aug 9 10:55:11 2021 +0000
+
+    Update Slovenian translation
+
+ po/sl.po | 654 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 337 insertions(+), 317 deletions(-)
+
+commit 5f348b1df451b9b60b3f56515bd483a62c7bcbf9
+Author: Kukuh Syafaat <kukuhsyafaat@gnome.org>
+Date:   Sun Aug 8 13:25:37 2021 +0000
+
+    Update Indonesian translation
+
+ po/id.po | 650 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 335 insertions(+), 315 deletions(-)
+
+commit 2017d0e3e623aafc4f601947f79a58dd6bce3bfe
+Author: Enrico Nicoletto <liverig@gmail.com>
+Date:   Sat Aug 7 18:06:49 2021 +0000
+
+    Update Brazilian Portuguese translation
+
+ help/pt_BR/pt_BR.po | 1215 +--------------------------------------------------
+ 1 file changed, 22 insertions(+), 1193 deletions(-)
+
+commit 7ffe65d2930abb2ee6108c93ceadcfd86b357923
+Author: Enrico Nicoletto <liverig@gmail.com>
+Date:   Sat Aug 7 18:03:59 2021 +0000
+
+    Update Brazilian Portuguese translation
+
+ po/pt_BR.po | 1694 ++++++++++++-----------------------------------------------
+ 1 file changed, 337 insertions(+), 1357 deletions(-)
+
+commit d76a79c52fe836190330db7201c816caabd90881
+Author: Yaron Shahrabani <sh.yaron@gmail.com>
+Date:   Sat Aug 7 16:37:49 2021 +0000
+
+    Update Hebrew translation
+
+ po/he.po | 670 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 344 insertions(+), 326 deletions(-)
+
+commit 5363b9ea27ed3d70214933751bdcafb004b9a394
+Author: Alexey Rubtsov <rushills@gmail.com>
+Date:   Tue Aug 3 20:45:22 2021 +0000
+
+    Update Russian translation
+
+ po/ru.po | 650 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 335 insertions(+), 315 deletions(-)
+
+commit 3b5150e92c43dc7528499eaa6dcbcd95fd818e34
+Author: Boyuan Yang <073plan@gmail.com>
+Date:   Mon Aug 2 20:24:24 2021 +0000
+
+    Update Chinese (China) translation
+
+ po/zh_CN.po | 648 +++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 334 insertions(+), 314 deletions(-)
+
+commit 2128e0cbdb9f5c9ec32d140eb6346f932096132e
+Author: Efstathios Iosifidis <eiosifidis@gnome.org>
+Date:   Sun Aug 1 16:33:20 2021 +0000
+
+    Update Greek translation
+
+ po/el.po | 650 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 335 insertions(+), 315 deletions(-)
+
+commit e71cc8964439556176b2f2f13021565a01429ff6
+Author: Hugo Carvalho <hugokarvalho@hotmail.com>
+Date:   Sat Jul 31 21:19:31 2021 +0000
+
+    Update Portuguese translation
+
+ po/pt.po | 650 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 334 insertions(+), 316 deletions(-)
+
+commit 0544a0af30607ca7b12d97f4b0fa956138d67524
+Author: Yuri Chornoivan <yurchor@ukr.net>
+Date:   Sat Jul 31 18:58:30 2021 +0000
+
+    Update Ukrainian translation
+
+ po/uk.po | 656 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 339 insertions(+), 317 deletions(-)
+
+commit a2d713e9cdfb028518749298cb112db153b109fc
+Author: Quentin PAGÈS <pages_quentin@hotmail.com>
+Date:   Sat Jul 31 16:14:17 2021 +0000
+
+    Update Occitan translation
+
+ po/oc.po | 659 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 338 insertions(+), 321 deletions(-)
+
+commit 3ca96c0be0750ef615189884fd698b92767716d8
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Sat Jul 31 15:38:51 2021 +0200
+
+    Update Catalan translation
+
+ po/ca.po | 667 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 340 insertions(+), 327 deletions(-)
+
+commit 9c5f1b92f243d541155a22da4524d96c615d6c0f
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Jul 31 14:56:25 2021 +0200
+
+    app: Remove stray semicolon
+
+ src/terminal-app.cc | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 45dd5696071fa50b7f4eb8298bd6ea329393bf4d
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Jul 31 14:56:25 2021 +0200
+
+    metainfo: Add keyboard/pointer recommends
+
+ data/org.gnome.Terminal.metainfo.xml.in | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+commit 62a2c7105a27325180bbeb0d0d6ba072b621d6ee
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Jul 31 14:56:25 2021 +0200
+
+    client: Add more env vars not to forward
+
+ src/terminal-client-utils.cc | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 8c6f9f38e63e21403cddd730cbb07f236c96600c
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Thu Jul 8 20:34:26 2021 +0200
+
+    build: Post release version bump
+
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 2c714c80239167852a8ea883fcedd73e2249f6c6
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Thu Jul 8 20:07:53 2021 +0200
+
+    about: Fix gnome version
+
+ src/terminal-util.cc | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+commit 0f6fb3781c2f5efe3306ebe6f41a7e4ba71880db
+Author: Alexander Shopov <ash@kambanaria.org>
+Date:   Sun Jul 4 12:30:01 2021 +0000
+
+    Update Bulgarian translation
+
+ po/bg.po | 2561 +++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 1352 insertions(+), 1209 deletions(-)
+
+commit 2f391408b4025d12dd43cdbf1acd071beb984b44
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Wed Jun 30 18:00:45 2021 +0200
+
+    settings: Simplify schema verifier
+
+ src/terminal-util.cc | 34 ++++++++++------------------------
+ 1 file changed, 10 insertions(+), 24 deletions(-)
+
+commit 48936582ddce1d1f23c0c42565887f63cd589187
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Wed Jun 30 18:00:45 2021 +0200
+
+    settings: Fix crash when loading the reference schema source fails
+    
+    https://retrace.fedoraproject.org/faf/reports/190312/
+
+ src/terminal-util.cc | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit e6ec4e28e01d541f4f4b52a2c70a55523ca7c0f1
+Author: Alexey Rubtsov <rushills@gmail.com>
+Date:   Tue Jun 29 11:01:59 2021 +0000
+
+    Update Russian translation
+
+ po/ru.po | 1476 +++++++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 825 insertions(+), 651 deletions(-)
+
+commit f144b6cd7d13896acc32cfae5cab91ede317e361
+Author: Quentin PAGÈS <pages_quentin@hotmail.com>
+Date:   Sat Jun 12 20:45:38 2021 +0000
+
+    Update Occitan translation
+    
+    (cherry picked from commit 0192ff6b993556121f99fc28b5e8109f8defc89d)
+
+ po/oc.po | 29 ++++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
+
+commit ff597524d5817e33dc9336fa586b3bca1ed02d97
+Author: Dušan Kazik <prescott66@gmail.com>
+Date:   Fri Jun 11 13:54:06 2021 +0000
+
+    Update Slovak translation
+    
+    (cherry picked from commit a647d65c7199a0750f3419a60b9f68c9ad748113)
+
+ po/sk.po | 128 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 69 insertions(+), 59 deletions(-)
+
+commit f4d8edd7d324bb9e51bfd5e6968873db532eeeba
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri Jun 4 20:13:18 2021 +0200
+
+    nautilus: Fix extension library name
+
+ src/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 31e37a4cbeb473987f6ea024f90907335787ff91
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri Jun 4 20:13:18 2021 +0200
+
+    nautilus: Fix exported symbols linkage
+
+ src/terminal-nautilus.cc | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+commit cfa851b9e4851805cbcdd477961a6c3b11c4bee5
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri Jun 4 20:13:18 2021 +0200
+
+    all: Add settings schema verifier
+    
+    Add external schemas, and build a reference gschema.compiled. At
+    startup, verify that the installed compiled schemas conform to that
+    reference schema; if not, use the reference schema as schema source
+    instead.
+    
+    This fixes the problem where, on upgrade, or through an otherwise failed
+    recompile of the gschemas.compiled cache, where the upgrade to
+    gnome-terminal added ettings keys, the server will abort when trying to get
+    that new key.
+    
+    E.g. https://bugzilla.redhat.com/show_bug.cgi?id=1961775 which is just
+    the latest instance of this problem occurring.
+
+ meson.build                  |   2 +
+ src/external.gschema.xml     | 143 +++++++++++++++
+ src/meson.build              |  15 ++
+ src/terminal-app.cc          |  11 +-
+ src/terminal-client-utils.cc |   1 +
+ src/terminal-util.cc         | 421 ++++++++++++++++++++++++++++++++++++++-----
+ src/terminal-util.hh         |   5 +-
+ 7 files changed, 545 insertions(+), 53 deletions(-)
+
+commit f5ac87f5d82d0b364ea1cfac57cdf84bdce93380
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri Jun 4 20:13:18 2021 +0200
+
+    all: Specify the schema source when constructing any GSettings
+    
+    Specify the GSettingsSchemaSource to use when constructing a GSettings
+    object. Due to https://gitlab.gnome.org/GNOME/glib/-/issues/1884 this
+    neccessitates not using g_settings_get_child() to construct a child
+    setting, but instead to construct the child GSettings directly.
+    
+    In preparation for the next commit.
+
+ src/terminal-app.cc           | 81 ++++++++++++++++++++++++++++++++++++++-----
+ src/terminal-app.hh           | 12 +++++++
+ src/terminal-client-utils.cc  | 22 ++++++++++++
+ src/terminal-client-utils.hh  |  7 ++++
+ src/terminal-options.cc       |  2 +-
+ src/terminal-profiles-list.cc |  6 ++--
+ src/terminal-profiles-list.hh |  2 +-
+ src/terminal-schemas.hh       |  2 ++
+ src/terminal-settings-list.cc | 39 ++++++++++++++++++---
+ src/terminal-settings-list.hh |  3 +-
+ src/terminal-util.cc          | 61 +++++++++++---------------------
+ src/terminal-util.hh          |  7 ++--
+ 12 files changed, 184 insertions(+), 60 deletions(-)
+
+commit b915867e31ec3a09f230f45cc82cebab63039ca8
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri Jun 4 20:13:18 2021 +0200
+
+    app: Make owner-change check only on X11
+
+ src/terminal-app.cc | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+commit adb52bc4bff8cce733a7b31d63e0b4ae3df3d021
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri Jun 4 20:13:18 2021 +0200
+
+    util: Fix deprecation warning
+
+ src/terminal-util.cc | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit c7876f38ba4a20fc9e01dd103cbeb0fdb7559360
+Author: Anders Jonsson <anders.jonsson@norsjovallen.se>
+Date:   Thu Jun 3 11:23:04 2021 +0000
+
+    Update Swedish translation
+
+ help/sv/sv.po | 591 ++--------------------------------------------------------
+ 1 file changed, 17 insertions(+), 574 deletions(-)
+
+commit c12c90d507b0563662d74a75d1ae52571d7d60b4
+Author: Selyan Slimane AMIRI <selyan.kab@protonmail.com>
+Date:   Sat May 29 19:54:24 2021 +0000
+
+    Add Kabyle translation
+    
+    (cherry picked from commit cbeba1976d23b7f13a7a8e81f5fc44ba5d07c920)
+
+ po/LINGUAS |    1 +
+ po/kab.po  | 2305 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 2306 insertions(+)
+
+commit 62a166a51af20cd09b5deae6c5af9e1642de2b7b
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Mon May 24 12:03:23 2021 +0200
+
+    docs: Add hint about disabling search provider
+
+ README.md | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+commit 51994fdb014e78f5ef2aeac07eed0f71ac30dd31
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri May 21 23:19:46 2021 +0200
+
+    docs: Add skeleton README.md with basic steps for building
+    
+    Fixes: https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/361
+
+ README.md | 118 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 118 insertions(+)
+
+commit 3eb9350d2efcdc513d07d4e1e61b6e277bc52354
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri May 21 23:19:46 2021 +0200
+
+    all: s/NULL/nullptr/g
+
+ src/eggshell.cc                  |   8 +-
+ src/profile-editor.cc            |  80 ++++-----
+ src/server.cc                    |  24 +--
+ src/terminal-accels.cc           | 162 ++++++++---------
+ src/terminal-app.cc              | 128 ++++++-------
+ src/terminal-client-utils.cc     |  16 +-
+ src/terminal-gdbus.cc            |  74 ++++----
+ src/terminal-icon-button.cc      |   2 +-
+ src/terminal-info-bar.cc         |   4 +-
+ src/terminal-libgsystem.hh       |  34 ++--
+ src/terminal-mdi-container.cc    |  20 +--
+ src/terminal-menu-button.cc      |   2 +-
+ src/terminal-nautilus.cc         |  94 +++++-----
+ src/terminal-notebook.cc         |  20 +--
+ src/terminal-options.cc          | 234 ++++++++++++------------
+ src/terminal-options.hh          |   2 +-
+ src/terminal-prefs.cc            | 138 +++++++-------
+ src/terminal-profiles-list.cc    |  54 +++---
+ src/terminal-regex.cc            | 144 +++++++--------
+ src/terminal-regex.hh            |   4 +-
+ src/terminal-screen-container.cc |  28 +--
+ src/terminal-screen.cc           | 230 ++++++++++++------------
+ src/terminal-search-popover.cc   |  38 ++--
+ src/terminal-search-provider.cc  |  60 +++----
+ src/terminal-settings-list.cc    | 144 +++++++--------
+ src/terminal-tab-label.cc        |  20 +--
+ src/terminal-util.cc             | 284 ++++++++++++++---------------
+ src/terminal-window.cc           | 380 +++++++++++++++++++--------------------
+ src/terminal.cc                  |  96 +++++-----
+ 29 files changed, 1262 insertions(+), 1262 deletions(-)
+
+commit 431a0e2a7b146157386da3066aa99ce0793a6db8
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri May 21 23:19:46 2021 +0200
+
+    build: Build as C++
+
+ .dir-locals.el                                     |   7 +-
+ meson.build                                        |  93 ++++++--
+ po/POTFILES.in                                     |  34 +--
+ src/{eggshell.c => eggshell.cc}                    |   2 +-
+ src/{eggshell.h => eggshell.hh}                    |   0
+ src/meson.build                                    | 144 ++++++------
+ src/{profile-editor.c => profile-editor.cc}        | 249 +++++++++++++--------
+ src/{profile-editor.h => profile-editor.hh}        |   0
+ src/{server.c => server.cc}                        |  14 +-
+ src/{terminal-accels.c => terminal-accels.cc}      |  33 +--
+ src/{terminal-accels.h => terminal-accels.hh}      |   0
+ src/{terminal-app.c => terminal-app.cc}            |  66 +++---
+ src/{terminal-app.h => terminal-app.hh}            |   4 +-
+ ...nal-client-utils.c => terminal-client-utils.cc} |   6 +-
+ ...nal-client-utils.h => terminal-client-utils.hh} |   0
+ src/{terminal-debug.c => terminal-debug.cc}        |   6 +-
+ src/{terminal-debug.h => terminal-debug.hh}        |   0
+ src/{terminal-defines.h => terminal-defines.hh}    |   0
+ src/{terminal-enums.h => terminal-enums.hh}        |   0
+ src/{terminal-gdbus.c => terminal-gdbus.cc}        |  55 ++---
+ src/{terminal-gdbus.h => terminal-gdbus.hh}        |   2 +-
+ ...{terminal-headerbar.c => terminal-headerbar.cc} |  12 +-
+ ...{terminal-headerbar.h => terminal-headerbar.hh} |   2 +-
+ src/{terminal-i18n.c => terminal-i18n.cc}          |   2 +-
+ src/{terminal-i18n.h => terminal-i18n.hh}          |   0
+ ...minal-icon-button.c => terminal-icon-button.cc} |   4 +-
+ ...minal-icon-button.h => terminal-icon-button.hh} |   0
+ src/{terminal-info-bar.c => terminal-info-bar.cc}  |  11 +-
+ src/{terminal-info-bar.h => terminal-info-bar.hh}  |   0
+ src/{terminal-intl.h => terminal-intl.hh}          |   0
+ ...erminal-libgsystem.h => terminal-libgsystem.hh} |   0
+ ...l-mdi-container.c => terminal-mdi-container.cc} |   8 +-
+ ...l-mdi-container.h => terminal-mdi-container.hh} |   2 +-
+ ...minal-menu-button.c => terminal-menu-button.cc} |  14 +-
+ ...minal-menu-button.h => terminal-menu-button.hh} |   2 +-
+ src/{terminal-nautilus.c => terminal-nautilus.cc}  |  28 +--
+ src/{terminal-notebook.c => terminal-notebook.cc}  |  43 ++--
+ src/{terminal-notebook.h => terminal-notebook.hh}  |   0
+ src/{terminal-options.c => terminal-options.cc}    | 152 ++++++-------
+ src/{terminal-options.h => terminal-options.hh}    |   2 +-
+ src/{terminal-pcre2.h => terminal-pcre2.hh}        |   0
+ src/{terminal-prefs.c => terminal-prefs.cc}        |  88 ++++----
+ src/{terminal-prefs.h => terminal-prefs.hh}        |   2 +-
+ ...l-profiles-list.c => terminal-profiles-list.cc} |   6 +-
+ ...l-profiles-list.h => terminal-profiles-list.hh} |   2 +-
+ src/{terminal-regex.c => terminal-regex.cc}        |   6 +-
+ src/{terminal-regex.h => terminal-regex.hh}        |   0
+ src/{terminal-schemas.h => terminal-schemas.hh}    |   0
+ ...en-container.c => terminal-screen-container.cc} |  41 ++--
+ ...en-container.h => terminal-screen-container.hh} |   2 +-
+ src/{terminal-screen.c => terminal-screen.cc}      | 108 +++++----
+ src/{terminal-screen.h => terminal-screen.hh}      |   0
+ ...search-popover.c => terminal-search-popover.cc} |  43 ++--
+ ...search-popover.h => terminal-search-popover.hh} |   2 +-
+ ...arch-provider.c => terminal-search-provider.cc} |  15 +-
+ ...arch-provider.h => terminal-search-provider.hh} |   0
+ ...l-settings-list.c => terminal-settings-list.cc} |  54 +++--
+ ...l-settings-list.h => terminal-settings-list.hh} |   2 +-
+ ...{terminal-tab-label.c => terminal-tab-label.cc} |  30 +--
+ ...{terminal-tab-label.h => terminal-tab-label.hh} |   2 +-
+ ...template => terminal-type-builtins.cc.template} |   2 +-
+ ...template => terminal-type-builtins.hh.template} |   0
+ src/{terminal-util.c => terminal-util.cc}          |  52 ++---
+ src/{terminal-util.h => terminal-util.hh}          |   0
+ ...erminal-version.h.in => terminal-version.hh.in} |   0
+ src/{terminal-window.c => terminal-window.cc}      | 190 ++++++++--------
+ src/{terminal-window.h => terminal-window.hh}      |   2 +-
+ src/{terminal.c => terminal.cc}                    |  30 +--
+ 68 files changed, 928 insertions(+), 748 deletions(-)
+
+commit 3ebaf532ca6263a04d86acad383d1c74e63fdd69
+Author: Quentin PAGÈS <pages_quentin@hotmail.com>
+Date:   Thu May 13 15:19:45 2021 +0000
+
+    Update Occitan translation
+    
+    (cherry picked from commit 67a00883a7d601ec111cfebaf5fc83b84ca35ac1)
+
+ po/oc.po | 1841 ++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 952 insertions(+), 889 deletions(-)
+
+commit bff04b86e96945bfb1f757cc82861a903d4f6dab
+Author: Pawan Chitrakar <chautari@gmail.com>
+Date:   Sat May 1 02:43:12 2021 +0000
+
+    Update Nepali translation
+    
+    (cherry picked from commit c99ffc30070cb2200eb6d40f65fea1e8cda21a26)
+
+ po/ne.po | 868 +++++++++++++++++++++++++++------------------------------------
+ 1 file changed, 365 insertions(+), 503 deletions(-)
+
+commit 5307b472ca76f74222a3ecfab19bce401870e4da
+Author: Pawan Chitrakar <chautari@gmail.com>
+Date:   Wed Apr 21 15:33:25 2021 +0000
+
+    Update Nepali translation
+    
+    (cherry picked from commit da268112b260d494e999b172088ded78dc95b1de)
+
+ po/ne.po | 1151 ++++++++++++++++++++++++++------------------------------------
+ 1 file changed, 484 insertions(+), 667 deletions(-)
+
+commit e759bd06f63a0d4ddb26f74f85ea97f9e8fd7c86
+Author: Pawan Chitrakar <chautari@gmail.com>
+Date:   Mon Apr 19 15:08:16 2021 +0000
+
+    Update Nepali translation
+    
+    (cherry picked from commit ae58daaeedee7eca880cd33c5f0cd189be69c5f5)
+
+ po/ne.po | 4433 ++++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 2416 insertions(+), 2017 deletions(-)
+
+commit 7f9a05aec0721b932f56bfd3c2103e14b5f1894b
+Author: Nathan Follens <nfollens@gnome.org>
+Date:   Thu Apr 1 21:04:02 2021 +0000
+
+    Update Dutch translation
+    
+    (cherry picked from commit 3b24c55f9ea36b4c56a775d226ce0f09e3ab56a3)
+
+ po/nl.po | 128 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 69 insertions(+), 59 deletions(-)
+
+commit 43d90525b7fd5fa3a31f5a651c3b12b7de12ca30
+Author: Zander Brown <zbrown@gnome.org>
+Date:   Tue Mar 30 18:53:19 2021 +0000
+
+    Update British English translation
+    
+    (cherry picked from commit 22a403097260dc19424050690e900a8c9fe7e0dc)
+
+ po/en_GB.po | 131 ++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 70 insertions(+), 61 deletions(-)
+
+commit 6784de1b19aba070633e771755b36c16adcb970e
+Author: Yosef Or Boczko <yoseforb@gnome.org>
+Date:   Sun Mar 28 23:07:45 2021 +0000
+
+    Update Hebrew translation
+    
+    (cherry picked from commit 33557f109ea11e1f5a36490a0116aed2683c6a25)
+
+ po/he.po | 133 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 70 insertions(+), 63 deletions(-)
+
+commit 0f9cd949647ee60fd4570b9476e2ab2c30325a5a
+Author: Efstathios Iosifidis <eiosifidis@gnome.org>
+Date:   Fri Mar 26 07:33:42 2021 +0000
+
+    Update Greek translation
+    
+    (cherry picked from commit ed959c90acb6442de69ebaa70da043d623f4d210)
+
+ po/el.po | 125 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 66 insertions(+), 59 deletions(-)
+
+commit 58e2381fc0c0899f4c62d34eb7940f1d50500e42
+Author: Ngọc Quân Trần <vnwildman@gmail.com>
+Date:   Wed Mar 24 07:05:37 2021 +0000
+
+    Update Vietnamese translation
+    
+    (cherry picked from commit c0353e8f5cb027f8e1a20f4de0ddc69bb4e079bd)
+
+ po/vi.po | 1465 ++++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 807 insertions(+), 658 deletions(-)
+
+commit 3b79354a357970147ae276a02ca2222db98a0d28
+Author: Yuri Chornoivan <yurchor@ukr.net>
+Date:   Fri Mar 19 15:29:25 2021 +0000
+
+    Update Ukrainian translation
+
+ help/uk/uk.po | 1139 +++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 573 insertions(+), 566 deletions(-)
+
+commit 7707c5c47986e7ed722334b23eb6c10e4fc093ab
+Author: Sabri Ünal <libreajans@gmail.com>
+Date:   Fri Mar 19 00:11:16 2021 +0100
+
+    help: Use SVG icon
+    
+    Update the icon in the docs to use the same SVG icon as the desktop
+    file, and add a trail link.
+    
+    Fixes: https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/335
+
+ help/C/figures/gnome-terminal-icon.png | Bin 859 -> 0 bytes
+ help/C/figures/org.gnome.Terminal.svg  | 241 +++++++++++++++++++++++++++++++++
+ help/C/index.page                      |   8 +-
+ help/meson.build                       |   2 +-
+ 4 files changed, 246 insertions(+), 5 deletions(-)
+
+commit 2c52360cecfc479ee30a10087893cd62cf3daf10
+Author: Gianvito Cavasoli <gianvito@gmx.it>
+Date:   Tue Mar 16 17:12:05 2021 +0000
+
+    Update Italian translation
+    
+    (cherry picked from commit 3128c6810f71eac864229a689eb66cfc519567e4)
+
+ po/it.po | 131 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 70 insertions(+), 61 deletions(-)
+
+commit 996c15dd775fb279f479c0d6f028774e6e1e2ff1
+Author: Ask Hjorth Larsen <asklarsen@gmail.com>
+Date:   Sat Mar 13 14:10:54 2021 +0100
+
+    Updated Danish translation
+
+ help/da/da.po | 3670 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 3670 insertions(+)
+
+commit abcb48e26d2f86d1511d5df6c05f6914c18c33a4
+Author: Ask Hjorth Larsen <asklarsen@gmail.com>
+Date:   Sat Mar 13 14:10:54 2021 +0100
+
+    add da to LINGUAS
+
+ help/LINGUAS | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 4e8a940c28a5575393de9006c38a013f4dada8cf
+Author: Seong-ho Cho <shcho@gnome.org>
+Date:   Sat Mar 13 05:48:41 2021 +0000
+
+    Update Korean translation
+    
+    (cherry picked from commit aac78a710919b084a8754e4e496bc549745b2b7f)
+
+ help/ko/ko.po | 1668 ++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 874 insertions(+), 794 deletions(-)
+
+commit 6cf002947c4586d564caa000adf8502f38954ee7
+Author: Changwoo Ryu <cwryu@debian.org>
+Date:   Fri Mar 12 09:33:14 2021 +0000
+
+    Update Korean translation
+    
+    (cherry picked from commit c353f952f9da8deaa424ea0c809a1640dcffe405)
+
+ po/ko.po | 133 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 72 insertions(+), 61 deletions(-)
+
+commit 9beefa2e53b9ac1806d16d3f7f727224c260c716
+Author: Danial Behzadi <dani.behzi@ubuntu.com>
+Date:   Wed Mar 10 15:20:14 2021 +0000
+
+    Update Persian translation
+    
+    (cherry picked from commit c430bbe2b0a6f7aab97763469c5bd788f39b48c7)
+
+ po/fa.po | 125 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 67 insertions(+), 58 deletions(-)
+
+commit b0100bb4037a8696655b9706bd6b10286b22a154
+Author: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>
+Date:   Sun Mar 7 14:45:33 2021 +0000
+
+    Update Latvian translation
+    
+    (cherry picked from commit f84e0f1353ad1e3afe3d851e1a79f34c07f4d6ad)
+
+ po/lv.po | 141 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 72 insertions(+), 69 deletions(-)
+
+commit e12b84897e0dff36bbec7261894363a375069e28
+Author: Balázs Meskó <meskobalazs@mailbox.org>
+Date:   Wed Mar 3 07:03:21 2021 +0000
+
+    Update Hungarian translation
+
+ help/hu/hu.po | 1531 ++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 763 insertions(+), 768 deletions(-)
+
+commit fb772db58dcc237a141a993ba96d135d56922201
+Author: Jiri Grönroos <jiri.gronroos@iki.fi>
+Date:   Tue Mar 2 13:58:54 2021 +0000
+
+    Update Finnish translation
+    
+    (cherry picked from commit 9b2ff07f88bdab175c76ad6e110581b7f9da280f)
+
+ po/fi.po | 129 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 68 insertions(+), 61 deletions(-)
+
+commit f7bcceff493da44cb23bdd8213faecce0fe0ba9c
+Author: Charles Monzat <charles.monzat@free.fr>
+Date:   Tue Mar 2 07:48:54 2021 +0000
+
+    Update French translation
+
+ po/fr.po | 132 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 72 insertions(+), 60 deletions(-)
+
+commit 4d2572200c7efd083c610da40ca64e649ac69db0
+Author: Baurzhan Muftakhidinov <baurthefirst@gmail.com>
+Date:   Tue Mar 2 04:05:37 2021 +0000
+
+    Update Kazakh translation
+    
+    (cherry picked from commit 29310eadb7e71be1254a40ae83bd5fb44e0e2a59)
+
+ po/kk.po | 125 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 67 insertions(+), 58 deletions(-)
+
+commit 514f1972a17c81deea0dac7d4d78201c9be4a2af
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Sun Feb 28 14:45:43 2021 +0100
+
+    Update Polish translation
+
+ po/pl.po | 133 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 71 insertions(+), 62 deletions(-)
+
+commit 0f79e90f9174aafd4aae85d5d68941daa795ba93
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri Feb 26 16:52:30 2021 +0100
+
+    build: Add dist script
+
+ Makefile.meson                       |  8 ++++++++
+ meson.build                          |  6 ++++++
+ Makefile.meson => meson_changelog.sh | 40 ++++++++++++++----------------------
+ 3 files changed, 29 insertions(+), 25 deletions(-)
+
+commit a547212667bc0e93b2fd6c60d9c60eb5d4e238a3
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Fri Feb 26 11:10:57 2021 +0100
+
+    Update Catalan translation
+
+ po/ca.po | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 9f1747daea4b231eacc0226d2c0dac3e94da4e80
+Author: Emin Tufan Çetin <etcetin@gmail.com>
+Date:   Thu Feb 25 13:44:51 2021 +0000
+
+    Update Turkish translation
+
+ po/tr.po | 182 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 95 insertions(+), 87 deletions(-)
+
+commit e7e5be74533251943b4d558265672be374525cc5
+Author: Fran Dieguez <frandieguez@gnome.org>
+Date:   Wed Feb 24 19:11:52 2021 +0000
+
+    Update Galician translation
+    
+    (cherry picked from commit d09b441da92f3b891d72250a0a10e9ed1cc2846c)
+
+ po/gl.po | 112 +++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 56 insertions(+), 56 deletions(-)
+
+commit 79ed7130dcc10ae72d8c598186eb8e53ec805a78
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Tue Feb 23 22:34:11 2021 +0100
+
+    build: Replace autotools with meson
+    
+    Re-done from scratch.
+
+ ChangeLog.README                                   |   16 -
+ ChangeLog.pre-2-23                                 | 4754 --------------------
+ HACKING                                            |   13 -
+ Makefile.am                                        |   89 -
+ Makefile.meson                                     |   43 +
+ NEWS                                               |  803 ----
+ acinclude.m4                                       |  289 --
+ autogen.sh                                         |   14 -
+ configure.ac                                       |  341 --
+ data/Makefile.am                                   |    3 -
+ data/icons/Makefile.am                             |   53 -
+ data/icons/meson.build                             |   46 +
+ data/icons/meson_updateiconcache.py                |   28 +
+ data/meson.build                                   |   60 +
+ data/meson_desktopfile.py                          |   28 +
+ .../org.gnome.Terminal.Nautilus.metainfo.xml.in    |    2 +-
+ .../org.gnome.Terminal.desktop.in                  |    1 -
+ .../org.gnome.Terminal.metainfo.xml.in             |    0
+ data/ui-filter-mnemonics.xslt                      |   30 +
+ data/ui-filter-no-mnemonics.xslt                   |   30 +
+ git.mk                                             |  227 -
+ help/LINGUAS                                       |   17 +
+ help/Makefile.am                                   |   51 -
+ help/meson.build                                   |   62 +
+ man/Makefile.am                                    |   18 -
+ man/meson.build                                    |   36 +
+ meson.build                                        |  320 ++
+ meson_options.txt                                  |   43 +
+ po/Makevars                                        |   78 -
+ po/POTFILES.in                                     |   16 +-
+ po/meson.build                                     |   19 +
+ src/Makefile.am                                    |  354 --
+ src/gnome-terminal-server.service.in               |   10 +
+ src/meson.build                                    |  410 ++
+ src/meson_compileschemas.py                        |   28 +
+ src/nautilus.map                                   |    9 +
+ src/nautilus.symbols                               |    3 -
+ src/org.gnome.Terminal.service.in                  |    4 +
+ 38 files changed, 1231 insertions(+), 7117 deletions(-)
+
+commit 3f9ac97d36a254ff9951a7101b4da9afeff76b2a
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Mon Feb 22 17:09:32 2021 +0100
+
+    build: Post branch version bump
+
+ configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 87cf8d7be116e2e35f089822068ceace2d268922
+Author: Asier Sarasua Garmendia <asiersarasua@ni.eus>
+Date:   Sat Feb 20 12:06:01 2021 +0000
+
+    Update Basque translation
+
+ po/eu.po | 123 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 66 insertions(+), 57 deletions(-)
+
+commit ba3f8e83ecbeb0b415195521e6d2e64048d8932e
+Author: Rafael Fontenelle <rafaelff@gnome.org>
+Date:   Thu Feb 18 02:00:16 2021 +0000
+
+    Update Brazilian Portuguese translation
+
+ po/pt_BR.po | 130 ++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 69 insertions(+), 61 deletions(-)
+
+commit 3c6ce90d15fbd7a7819ee1defb689888150b92c0
+Author: Марко Костић <marko.m.kostic@gmail.com>
+Date:   Mon Feb 15 16:10:10 2021 +0000
+
+    Update Serbian translation
+
+ po/sr.po | 124 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 67 insertions(+), 57 deletions(-)
+
+commit 01445c205d69128231de848db0af131b5a084aca
+Author: Balázs Úr <balazs@urbalazs.hu>
+Date:   Sun Feb 14 12:33:44 2021 +0000
+
+    Update Hungarian translation
+
+ po/hu.po | 129 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 69 insertions(+), 60 deletions(-)
+
+commit fc59104185aa849c82f1b0512e4367e54bfe1cec
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Feb 13 21:39:21 2021 +0100
+
+    build: Post release version bump
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c9fb3afca692162f4a63d877dec9061b8b6e25f3
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Feb 13 21:35:49 2021 +0100
+
+    Version 3.39.90
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit fe37b6ca496fab5e78f0d0478e7be3f49b36480c
+Author: Luna Jernberg <droidbittin@gmail.com>
+Date:   Wed Feb 10 01:32:53 2021 +0000
+
+    Update Swedish translation
+
+ po/sv.po | 127 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 69 insertions(+), 58 deletions(-)
+
+commit 6405c8b3a714eb9fded4edee9c9f6305ebd8c5cb
+Author: Marek Černocký <marek@manet.cz>
+Date:   Sun Feb 7 19:58:58 2021 +0100
+
+    Updated Czech translation
+
+ po/cs.po | 102 +++++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 56 insertions(+), 46 deletions(-)
+
+commit 4085fd5b87ebdc8fac4ebfa2ca926e47bf3f48ad
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Thu Feb 4 18:48:15 2021 +0100
+
+    app: Limit the number of clipboard targets to a sensible number
+
+ src/terminal-app.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 1c4097a4facde7947725bfca724f6515f39d8b39
+Author: Bruno Lopes da Silva <brunolopesdsilv@gmail.com>
+Date:   Mon Feb 1 18:57:39 2021 +0000
+
+    Update Brazilian Portuguese translation
+
+ help/pt_BR/pt_BR.po | 1574 +++++++++++++++++++++++++++------------------------
+ 1 file changed, 844 insertions(+), 730 deletions(-)
+
+commit 638bbe42b5657424f1fb123dd13a01dea7a1d3fd
+Author: Fran Dieguez <frandieguez@gnome.org>
+Date:   Mon Jan 25 17:20:46 2021 +0000
+
+    Update Galician translation
+
+ po/gl.po | 111 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 60 insertions(+), 51 deletions(-)
+
+commit f523550df1755163d648d3a0f4f2dfc58af55ef2
+Author: Kjartan Maraas <kmaraas@gnome.org>
+Date:   Mon Jan 25 14:50:19 2021 +0000
+
+    Update Norwegian Bokmål translation
+    
+    (cherry picked from commit 340e57ce13ad742d185815dd889e304915d76cee)
+
+ po/nb.po | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
+
+commit a4d75ae94616234145c3b4a8f83ec5bd2ff27813
+Author: Kowalski7cc <kowalski.7cc@gmail.com>
+Date:   Thu Jan 21 00:42:32 2021 +0100
+
+    window: Mark close button in close confirmation dialogue as destructive
+    
+    Fixes: https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/252
+
+ src/terminal-window.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 31b758c1719f2a2c4ccfb3442ef6dec4a6cf7b61
+Author: Fabio Tomat <f.t.public@gmail.com>
+Date:   Sun Jan 17 13:15:01 2021 +0000
+
+    Update Friulian translation
+
+ po/fur.po | 64 +++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 32 insertions(+), 32 deletions(-)
+
+commit 3cb2777272c46719ed211e0220b1031ad4a9db47
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Sat Jan 16 14:15:28 2021 +0100
+
+    Update Catalan translation
+
+ po/ca.po | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 33a62bf699c17c0ac10e1d9b6676240ae363dc7f
+Author: Kukuh Syafaat <kukuhsyafaat@gnome.org>
+Date:   Thu Jan 14 12:59:24 2021 +0000
+
+    Update Indonesian translation
+
+ po/id.po | 105 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 57 insertions(+), 48 deletions(-)
+
+commit 391e1abdb7e66cd92e1ba568cf3ca19b4c44508b
+Author: Matej Urbančič <mateju@svn.gnome.org>
+Date:   Tue Jan 12 17:04:43 2021 +0000
+
+    Update Slovenian translation
+
+ po/sl.po | 126 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 68 insertions(+), 58 deletions(-)
+
+commit 0d92ba1ba2624334c80dce54ab7ec34c8543ea0b
+Author: Boyuan Yang <073plan@gmail.com>
+Date:   Tue Jan 12 00:35:45 2021 +0000
+
+    Update Chinese (China) translation
+
+ po/zh_CN.po | 101 +++++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 55 insertions(+), 46 deletions(-)
+
+commit 86009008666147c67a8d67375deed2575cfead07
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Fri Jan 8 22:46:29 2021 +0100
+
+    Update Catalan translation
+
+ help/ca/ca.po | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
+
+commit 4fb079a567b012b576b21b04fd7f4e4417828c68
+Author: Hugo Carvalho <hugokarvalho@hotmail.com>
+Date:   Fri Jan 8 15:44:06 2021 +0000
+
+    Update Portuguese translation
+
+ po/pt.po | 1636 +++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 825 insertions(+), 811 deletions(-)
+
+commit 9d2953d3b0b6a82a1958081cd9e01b14bbb776a7
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Wed Jan 6 22:22:32 2021 +0100
+
+    Update Catalan translation
+
+ po/ca.po | 115 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 62 insertions(+), 53 deletions(-)
+
+commit 926be4adc210b94f630c41a168d6b846b18d9af8
+Author: Akarshan Biswas <akarshan.biswas@hotmail.com>
+Date:   Mon Jan 4 08:27:36 2021 +0000
+
+    Update Bengali (India) translation
+    
+    (cherry picked from commit 8682ee73244a9ad92d19cd3b52cb04a0155d4282)
+
+ po/bn_IN.po | 3384 ++++++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 1982 insertions(+), 1402 deletions(-)
+
+commit adeb0a07760b48d63dc186cd2efd07b6a775901a
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Thu Dec 31 20:53:56 2020 +0100
+
+    search: Use timestamp when presenting the search dialogue
+    
+    https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/294
+
+ src/terminal-window.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 7c0aaf22b84494332dce09f36e238e6d3f15ab2b
+Author: Fabio Tomat <f.t.public@gmail.com>
+Date:   Thu Dec 31 09:17:35 2020 +0000
+
+    Update Friulian translation
+
+ po/fur.po | 128 +++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 69 insertions(+), 59 deletions(-)
+
+commit a3fb77dcf0f260c41ca4941dce2c4491b8d5d5c7
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Tue Dec 29 22:50:30 2020 +0100
+
+    Update Catalan translation
+
+ help/ca/ca.po | 42 +++++++++++++++++++++---------------------
+ 1 file changed, 21 insertions(+), 21 deletions(-)
+
+commit 5537aca2547571cebb1167381033a05bd3e43302
+Author: Philipp Kiemle <philipp.kiemle@gmail.com>
+Date:   Sun Dec 27 11:38:42 2020 +0000
+
+    Update German translation
+
+ po/de.po | 120 +++++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 66 insertions(+), 54 deletions(-)
+
+commit f806a81dc955ae5fcab7f651dcf58bec02a70a82
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Dec 26 14:59:49 2020 +0100
+
+    desktop: Set StartupWMClass
+    
+    This isn't necessary for gnome-shell, but some other DEs need this to
+    match gnome-terminal-server to the correct name.
+    
+    Fixes: https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/314
+
+ org.gnome.Terminal.desktop.in.in | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 447514a6c30501b8b8c2534c467112d873b2e542
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Dec 26 14:24:35 2020 +0100
+
+    schemas: Use consistent accelerator string
+    
+    Fixes: https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/258
+
+ src/org.gnome.Terminal.gschema.xml | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
+
+commit 8d2ea58d6049aba02448b622b6ad2b97919ad9f8
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Dec 26 13:42:56 2020 +0100
+
+    search: Make sure to focus the search dialogue
+    
+    ... when it already exists; and move focus to the search entry.
+    
+    Fixes: https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/294
+
+ src/terminal-search-popover.c | 11 +++++++++++
+ src/terminal-window.c         |  6 ++++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
+
+commit aa45ba5c83d8e8940dc20e24397dc4475a72441d
+Author: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
+Date:   Fri Dec 25 18:01:12 2020 +0100
+
+    screen: Manually handle env inheritance
+    
+    Don't let VTE handle merging the environment; build the merged block
+    ourselves. This avoids confusion when we reuse the exec data.
+    
+    https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/303
+
+ src/terminal-screen.c | 29 ++++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
+
+commit 28c35c6017e7264b7b4ecd2883e5a0141bac614c
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri Dec 25 18:01:12 2020 +0100
+
+    client: Filter out some more env variables
+
+ src/terminal-client-utils.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 8979ac4cbfbaa11237ddaf5132393f6a99d0c6ea
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri Dec 25 18:01:12 2020 +0100
+
+    server: Filter environment variables in the server too
+
+ src/Makefile.am             |  2 ++
+ src/terminal-client-utils.c | 88 ++++++++++++++++++++++++++++++---------------
+ src/terminal-client-utils.h |  6 +++-
+ src/terminal-screen.c       | 19 +++-------
+ 4 files changed, 72 insertions(+), 43 deletions(-)
+
+commit c42d9ccf31923f2b1e2eb59c40b48bf196846c7a
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri Dec 25 18:01:12 2020 +0100
+
+    nautilus: Pass environment when creating a terminal in the current directory
+    
+    Fixes: https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/303
+
+ src/terminal-client-utils.c | 3 +++
+ src/terminal-nautilus.c     | 2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+commit 93001885a29a3e7dd105530c991f6dbde428154b
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Thu Dec 24 22:30:29 2020 +0100
+
+    Update Catalan translation
+
+ help/ca/ca.po | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
+
+commit f51f89a5865605749dac05320c94ae1a7e25567e
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Wed Dec 23 18:45:37 2020 +0100
+
+    Update Catalan translation
+
+ help/ca/ca.po | 85 +++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 44 insertions(+), 41 deletions(-)
+
+commit 4a59467ece9f328f256eea08c76efe0b2c2593ec
+Author: Jordi Mas i Hernandez <jmas@softcatala.org>
+Date:   Wed Dec 23 09:34:57 2020 +0000
+
+    Update Catalan translation
+
+ po/ca.po | 278 +++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 139 insertions(+), 139 deletions(-)
+
+commit 30c1a7f87db1cd3ae2359d2464dac0034c17e0e9
+Author: Florentina Mușat <florentina.musat.28@gmail.com>
+Date:   Sat Dec 12 17:20:57 2020 +0000
+
+    Update Romanian translation
+
+ po/ro.po | 103 +++++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 57 insertions(+), 46 deletions(-)
+
+commit c466aed346660556260bd78bc489669dfa42340e
+Author: Kjartan Maraas <kmaraas@gnome.org>
+Date:   Fri Dec 4 13:54:45 2020 +0000
+
+    Update Norwegian Bokmål translation
+    
+    (cherry picked from commit fcc742cc49b7e9c6a97802acd2dcdd58a9b3bf33)
+
+ po/nb.po | 1547 ++++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 846 insertions(+), 701 deletions(-)
+
+commit 367ba142b24a22d392e94b62cff34975aee456eb
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:   Wed Dec 2 13:54:20 2020 +0100
+
+    Updated Spanish translation
+
+ po/es.po | 103 +++++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 57 insertions(+), 46 deletions(-)
+
+commit 3e3cbbee5c33e0c4379f39bc2f11ae70246d179b
+Author: Yuri Chornoivan <yurchor@ukr.net>
+Date:   Fri Nov 27 07:21:08 2020 +0000
+
+    Update Ukrainian translation
+
+ po/uk.po | 105 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 57 insertions(+), 48 deletions(-)
+
+commit 7ddcc33e0d0ce322588c7e121a13aad73342b3e1
+Author: Michael Catanzaro <mcatanzaro@gnome.org>
+Date:   Mon Nov 23 15:53:46 2020 +0000
+
+    Remove compulsory_for_desktop
+    
+    https://gitlab.gnome.org/GNOME/gnome-software/-/issues/445
+
+ org.gnome.Terminal.appdata.xml.in | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit d18c292d98a4ea14c827c3c65d3ece5bf8714721
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Tue Nov 17 21:45:10 2020 +0100
+
+    about: Mention the gnome version corresponding to the release
+
+ src/terminal-util.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+commit 59886f9e7d2b2447c1c52cd23d866d9a531581ae
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Tue Nov 17 21:45:10 2020 +0100
+
+    window: Add option to decode timestamps in context menu
+    
+    Based on a patch by Egmont Koblinger <egmont@gmail.com>.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=757540
+
+ src/org.gnome.Terminal.gschema.xml |  5 ++++
+ src/terminal-libgsystem.h          | 10 +++++++
+ src/terminal-schemas.h             |  1 +
+ src/terminal-screen.c              | 21 ++++++++++----
+ src/terminal-screen.h              |  1 +
+ src/terminal-util.c                | 59 +++++++++++++++++++++++++++++++-------
+ src/terminal-util.h                |  1 +
+ src/terminal-window.c              | 30 +++++++++++++++----
+ 8 files changed, 105 insertions(+), 23 deletions(-)
+
+commit 25c96f18ac270c3d1cf5b2b5e320ce29ebc8282a
+Author: Fabio Tomat <f.t.public@gmail.com>
+Date:   Sun Oct 18 14:58:23 2020 +0000
+
+    Update Friulian translation
+
+ po/fur.po | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
+
+commit 36dafa7b2eca439158863614cadb9e1e7df233a9
+Author: Cheng-Chia Tseng <pswo10680@gmail.com>
+Date:   Mon Oct 12 14:16:30 2020 +0000
+
+    Update Chinese (Taiwan) translation
+    
+    (cherry picked from commit 25fa764fef8219a4aaa9c51814be31f37ad1d6ff)
+
+ po/zh_TW.po | 376 +++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 194 insertions(+), 182 deletions(-)
+
+commit 4f5bc124df78e2318b6ed2cae837c97fd1c61ade
+Author: Andika Triwidada <atriwidada@gnome.org>
+Date:   Wed Oct 7 09:02:39 2020 +0200
+
+    Add Indonesian help translation
+
+ help/id/id.po | 3681 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 3681 insertions(+)
+
+commit c0b0f25dba970ae0f9a0e5164e53efcc06aef5f0
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:   Mon Oct 5 09:11:30 2020 +0200
+
+    Added id language to help
+
+ help/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit a4347301732fc12189f00d50273ade53cfc4cafb
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Sat Oct 3 13:29:17 2020 +0200
+
+    Update Catalan translation
+
+ po/ca.po | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 3063616c57237cd54ad0f6b50cfc8d5602f59160
+Author: Yosef Or Boczko <yoseforb@gnome.org>
+Date:   Mon Sep 28 22:13:19 2020 +0000
+
+    Update Hebrew translation
+    
+    (cherry picked from commit a2354de2544f5fa28c1f7599da95bbc67a37b99c)
+
+ po/he.po | 931 ++++++++++++++++++++++++++++-----------------------------------
+ 1 file changed, 409 insertions(+), 522 deletions(-)
+
+commit aadabfe69a014a9d2ad6d8a5735dcbbbd4e95cc6
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Tue Sep 15 21:43:50 2020 +0200
+
+    Update Catalan translation
+
+ help/ca/ca.po | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit 3d9cb0e4ca43340de8a956e7c5711e85afa2be66
+Author: Juliano Camargo <julianosc@protonmail.com>
+Date:   Sun Sep 13 02:09:29 2020 +0000
+
+    Update Portuguese translation
+    
+    (cherry picked from commit a8cd6749212bb63bcc241ea44c5dfaef959da9d7)
+
+ po/pt.po | 2808 +++++++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 1610 insertions(+), 1198 deletions(-)
+
+commit ca53dcc9983adc1c12e5d20b69dedfa831545a6c
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Sep 12 21:25:22 2020 +0200
+
+    build: Post branch version bump
+
+ configure.ac | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 7339b87d2acd6d714304baa80979142d067700b6
+Author: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>
+Date:   Sat Sep 12 13:02:40 2020 +0000
+
+    Update Latvian translation
+
+ po/lv.po | 1450 ++++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 801 insertions(+), 649 deletions(-)
+
+commit fb1d9576883acea945f032619e9e0810711647fe
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Sat Sep 12 11:16:02 2020 +0200
+
+    Update Catalan translation
+
+ help/ca/ca.po | 623 +---------------------------------------------------------
+ 1 file changed, 7 insertions(+), 616 deletions(-)
+
+commit 3730e1f869652d0a74636fe0830568c61b2d8042
+Author: Bruce Cowan <bruce@bcowan.me.uk>
+Date:   Fri Sep 11 12:25:47 2020 +0000
+
+    Update British English translation
+
+ po/en_GB.po | 787 +++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 404 insertions(+), 383 deletions(-)
+
+commit d733a043b8406543b5e63ab10c121263a74157da
+Author: Gianvito Cavasoli <gianvito@gmx.it>
+Date:   Fri Sep 11 09:29:03 2020 +0000
+
+    Update Italian translation
+
+ po/it.po | 675 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 350 insertions(+), 325 deletions(-)
+
+commit 31da1e74329062122fba1aac3cc9d04b93c0a15c
+Author: Alan Mortensen <alanmortensen.am@gmail.com>
+Date:   Fri Sep 11 02:40:16 2020 +0200
+
+    Updated Danish translation
+
+ po/da.po | 667 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 346 insertions(+), 321 deletions(-)
+
+commit eaae8fc552506168a677e36f9590c685efe2cde4
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Wed Sep 9 22:33:48 2020 +0200
+
+    Update Catalan translation
+
+ help/ca/ca.po | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+commit c25a1dfaa1638da9f410b73aae0ac0922a7f358b
+Author: Marek Černocký <marek@manet.cz>
+Date:   Wed Sep 9 10:45:47 2020 +0200
+
+    Updated Czech help translation
+
+ help/cs/cs.po | 38 ++++++++++++++++++++------------------
+ 1 file changed, 20 insertions(+), 18 deletions(-)
+
+commit 06dbd572bf5349431578c7e7ac778c5dc6428ca3
+Author: Marek Černocký <marek@manet.cz>
+Date:   Wed Sep 9 10:34:11 2020 +0200
+
+    Updated Czech translation
+
+ po/cs.po | 1157 ++++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 641 insertions(+), 516 deletions(-)
+
+commit d089c5f091efa9067fcbd4d155280463f26c3caf
+Author: Efstathios Iosifidis <eiosifidis@gnome.org>
+Date:   Tue Sep 8 22:17:12 2020 +0000
+
+    Update Greek translation
+
+ po/el.po | 1473 ++++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 813 insertions(+), 660 deletions(-)
+
+commit 435433bc979501f2a19d1f87ab3a6821fb7e3c3e
+Author: Balázs Meskó <meskobalazs@mailbox.org>
+Date:   Mon Sep 7 22:03:03 2020 +0000
+
+    Update Hungarian translation
+
+ po/hu.po | 681 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 352 insertions(+), 329 deletions(-)
+
+commit 308f2335dd73e0337ab27ef2b801a16298a22c84
+Author: Mario Blättermann <mario.blaettermann@gmail.com>
+Date:   Mon Sep 7 19:10:39 2020 +0000
+
+    Update German translation
+
+ help/de/de.po | 1695 ++++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 954 insertions(+), 741 deletions(-)
+
+commit dbfbfbd93bd3c99bb0f0b831d699d77729c718f6
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Mon Sep 7 08:06:27 2020 +0200
+
+    Update Catalan translation
+
+ help/ca/ca.po | 1695 ++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 908 insertions(+), 787 deletions(-)
+
+commit 331aeddd3d9eac692ca9eccd0c0a1b5c9af1b993
+Author: Mario Blättermann <mario.blaettermann@gmail.com>
+Date:   Fri Sep 4 23:08:07 2020 +0000
+
+    Update German translation
+
+ po/de.po | 673 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 352 insertions(+), 321 deletions(-)
+
+commit 5407bb5eae9d13f10ea1ab774f2e883ee2a5e2c3
+Author: Changwoo Ryu <cwryu@debian.org>
+Date:   Fri Sep 4 15:15:45 2020 +0000
+
+    Update Korean translation
+
+ po/ko.po | 689 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 359 insertions(+), 330 deletions(-)
+
+commit 378546c80b045866dcf13aa0469e84252679d8fb
+Author: Dušan Kazik <prescott66@gmail.com>
+Date:   Fri Sep 4 09:21:12 2020 +0000
+
+    Update Slovak translation
+
+ po/sk.po | 676 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 352 insertions(+), 324 deletions(-)
+
+commit 61389b21b9306a3fd5d8d45cda36ab029e33f094
+Author: Simon McVittie <smcv@debian.org>
+Date:   Thu Sep 3 11:38:14 2020 +0100
+
+    man: Document the various ways to run a command in a gnome-terminal
+    
+    There are three ways to run a command in a gnome-terminal (using
+    "python -q" as my example because it illustrates how argument parsing
+    works), of which "-e" was previously the only one listed in the
+    man page:
+    
+    * gnome-terminal [OPTIONS] -- python3 -q
+    * gnome-terminal [OPTIONS] -e "python3 -q" [MORE OPTIONS]
+    * gnome-terminal [OPTIONS] -x python3 -q
+    
+    --command is a long form of -e, and --execute is a long form of -x.
+    Both the "-e" and "-x" forms are deprecated in favour of the "--" form,
+    but previously only the deprecated "-e" form was documented in the
+    man page.
+    
+    Document the preferred form in the synopsis, and document -e and -x in
+    terms of their replacements with the preferred form.
+    
+    Resolves: https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/296
+
+ man/gnome-terminal.xml | 52 +++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 51 insertions(+), 1 deletion(-)
+
+commit ea5c2a3f4161ac2ad66373028d5b9a73d589b292
+Author: Марко Костић <marko.m.kostic@gmail.com>
+Date:   Thu Sep 3 09:30:35 2020 +0000
+
+    Update Serbian translation
+
+ po/sr.po | 673 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 350 insertions(+), 323 deletions(-)
+
+commit ce0eb5aef920617eb506bcdfe60671da48f95a03
+Author: Asier Sarasua Garmendia <asiersarasua@ni.eus>
+Date:   Sun Aug 30 08:32:35 2020 +0000
+
+    Update Basque translation
+
+ po/eu.po | 376 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 194 insertions(+), 182 deletions(-)
+
+commit a8ee6750531437f78cf23a95897c7ae030cacead
+Author: Fabio Tomat <f.t.public@gmail.com>
+Date:   Fri Aug 28 11:19:48 2020 +0000
+
+    Update Friulian translation
+
+ po/fur.po | 368 ++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 189 insertions(+), 179 deletions(-)
+
+commit 344012f1189df6c32a139efa624912d429fb9ed6
+Author: Kukuh Syafaat <kukuhsyafaat@gnome.org>
+Date:   Fri Aug 28 01:41:33 2020 +0000
+
+    Update Indonesian translation
+
+ po/id.po | 661 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 344 insertions(+), 317 deletions(-)
+
+commit 1ae1ba5d5ae9fedd397afd87bf9147732b88512c
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Thu Aug 27 20:04:00 2020 +0200
+
+    screen: Fix DND with variant x-moz-url type
+    
+    It appears that some producers (e.g., dolphin) produce a \r\n
+    instead of just a \n, so strip the \r too.
+    
+    Fixes: https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/293
+
+ src/terminal-screen.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
+
+commit 8827ad17e48e5932a830d97e2ab140d7f4f88f30
+Author: Thibault Martin <mail@thibaultmart.in>
+Date:   Thu Aug 27 09:34:39 2020 +0000
+
+    Update French translation
+
+ po/fr.po | 365 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 189 insertions(+), 176 deletions(-)
+
+commit 757d37795698238ba3152b380ee0f91c124bedc9
+Author: Aurimas Černius <aurisc4@gmail.com>
+Date:   Tue Aug 25 22:52:51 2020 +0300
+
+    Updated Lithuanian translation
+
+ po/lt.po | 360 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 185 insertions(+), 175 deletions(-)
+
+commit 1dae1c63a5181a2fb1d25c2e9ef9bf9bc8b930a5
+Author: Nathan Follens <nfollens@gnome.org>
+Date:   Tue Aug 25 16:22:04 2020 +0000
+
+    Update Dutch translation
+
+ po/nl.po | 668 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 347 insertions(+), 321 deletions(-)
+
+commit c7c60b3f71b685daa8933201b99dfb8b12b8df07
+Author: sicklylife <translation@sicklylife.jp>
+Date:   Mon Aug 24 16:45:48 2020 +0000
+
+    Update Japanese translation
+
+ po/ja.po | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 2791ae34e262c57ef2dc26fb224bcacae7d8a5fc
+Author: sicklylife <translation@sicklylife.jp>
+Date:   Mon Aug 24 16:30:24 2020 +0000
+
+    Update Japanese translation
+
+ po/ja.po | 47 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 26 insertions(+), 21 deletions(-)
+
+commit 6378c1ae5bff55871c0af44df4d917e32ce9dda7
+Author: Yuki Okushi <huyuumi.dev@gmail.com>
+Date:   Mon Aug 24 16:28:55 2020 +0000
+
+    Update Japanese translation
+
+ po/ja.po | 513 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 272 insertions(+), 241 deletions(-)
+
+commit de0b4e030ff1afe59eae58a28d99134c3a37840b
+Author: Anders Jonsson <anders.jonsson@norsjovallen.se>
+Date:   Sun Aug 23 17:23:10 2020 +0000
+
+    Update Swedish translation
+
+ po/sv.po | 360 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 186 insertions(+), 174 deletions(-)
+
+commit 5b1985ee2608aa359db32106aa5894f4c370adf4
+Author: Goran Vidović <trebelnik2@gmail.com>
+Date:   Sun Aug 23 15:17:46 2020 +0000
+
+    Update Croatian translation
+
+ po/hr.po | 661 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 344 insertions(+), 317 deletions(-)
+
+commit 8d334993682c9b342f65af7d94ae305c01ac6c71
+Author: Emin Tufan Çetin <etcetin@gmail.com>
+Date:   Sat Aug 22 06:13:53 2020 +0000
+
+    Update Turkish translation
+
+ po/tr.po | 674 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 351 insertions(+), 323 deletions(-)
+
+commit 97dee9d9b1275c0cd4878daae69a22bceb2da8b5
+Author: Matej Urbančič <mateju@svn.gnome.org>
+Date:   Thu Aug 20 18:03:48 2020 +0200
+
+    Updated Slovenian translation
+
+ po/sl.po | 358 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 185 insertions(+), 173 deletions(-)
+
+commit 8bf38c491f84744572a8f864e7775dc81275fe24
+Author: Danial Behzadi <dani.behzi@ubuntu.com>
+Date:   Wed Aug 19 21:09:42 2020 +0000
+
+    Update Persian translation
+
+ po/fa.po | 346 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 179 insertions(+), 167 deletions(-)
+
+commit bbe511b6f8d7336778e1f92e61a7b2b25a0bf038
+Author: Jiri Grönroos <jiri.gronroos@iki.fi>
+Date:   Tue Aug 18 16:27:03 2020 +0000
+
+    Update Finnish translation
+
+ po/fi.po | 675 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 351 insertions(+), 324 deletions(-)
+
+commit 1c19e160b4eb02bb984ad47649ccb53505e38c77
+Author: Rafael Fontenelle <rafaelff@gnome.org>
+Date:   Tue Aug 18 13:11:48 2020 +0000
+
+    Update Brazilian Portuguese translation
+
+ po/pt_BR.po | 667 +++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 347 insertions(+), 320 deletions(-)
+
+commit 6a7aa8a425a68d636c4f411d63c8409a28493e6f
+Author: Baurzhan Muftakhidinov <baurthefirst@gmail.com>
+Date:   Sun Aug 16 08:28:20 2020 +0000
+
+    Update Kazakh translation
+
+ po/kk.po | 363 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 187 insertions(+), 176 deletions(-)
+
+commit fac98a3a4745fa5e88b377dcb6aa80e52e00bf9e
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Sat Aug 15 13:49:38 2020 +0200
+
+    Update Polish translation
+
+ po/pl.po | 659 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 343 insertions(+), 316 deletions(-)
+
+commit cb222268b4c3962cbf92c5753aa37237ba5efde1
+Author: Florentina Mușat <florentina.musat.28@gmail.com>
+Date:   Fri Aug 14 12:43:38 2020 +0000
+
+    Update Romanian translation
+
+ po/ro.po | 381 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 197 insertions(+), 184 deletions(-)
+
+commit 4c825f30ff41b8e470468c4e62b65843df356ee3
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:   Fri Aug 14 11:12:06 2020 +0200
+
+    Updated Spanish translation
+
+ help/es/es.po | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+commit db1d10a6b4f8d0c737d73d64d82df7010a8b32a7
+Author: Boyuan Yang <073plan@gmail.com>
+Date:   Fri Aug 14 02:30:17 2020 +0000
+
+    Update Chinese (China) translation
+
+ po/zh_CN.po | 363 +++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 188 insertions(+), 175 deletions(-)
+
+commit 39d0883e7cd6f5e12d03f97abc6774ccaf589686
+Author: Fran Dieguez <frandieguez@gnome.org>
+Date:   Thu Aug 13 21:42:26 2020 +0000
+
+    Update Galician translation
+
+ po/gl.po | 673 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 350 insertions(+), 323 deletions(-)
+
+commit a8a6062916d9dc6512eaf264bbc1f4719943bb30
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:   Thu Aug 13 10:34:01 2020 +0200
+
+    Updated Spanish translation
+
+ po/es.po | 359 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 186 insertions(+), 173 deletions(-)
+
+commit 287f11eb1af66b11fc3eb1e4ec9b94ea918951ce
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Sun Aug 9 21:39:16 2020 +0200
+
+    Update Catalan translation
+
+ po/ca.po | 536 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 277 insertions(+), 259 deletions(-)
+
+commit 8fca0409aecc0ec0f6b7e86b160b5dead968f5b9
+Author: Yuri Chornoivan <yurchor@ukr.net>
+Date:   Sun Aug 9 08:32:04 2020 +0000
+
+    Update Ukrainian translation
+
+ po/uk.po | 374 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 194 insertions(+), 180 deletions(-)
+
+commit ce2f5cf07099e8005bddc8a750173f32766390f6
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Aug 8 22:02:23 2020 +0200
+
+    build: Post release version bump
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 0acb0d1d8da957ab43d73cb51d3142fc99c28ca7
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Aug 8 21:57:15 2020 +0200
+
+    profile: Add pref to enable SIXEL
+    
+    When VTE was built with SIXEL support, show a checkbox in
+    the compatibility prefs to enable it.
+    
+    https://gitlab.gnome.org/GNOME/vte/-/issues/253
+
+ src/org.gnome.Terminal.gschema.xml |  5 +++++
+ src/preferences.ui                 | 20 ++++++++++++++++++--
+ src/profile-editor.c               |  6 ++++++
+ src/terminal-schemas.h             |  1 +
+ src/terminal-screen.c              |  4 ++++
+ 5 files changed, 34 insertions(+), 2 deletions(-)
+
+commit 0c9e8a8041671fa75fdd7e5d0b90853517aa9cbe
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Aug 8 21:57:15 2020 +0200
+
+    build: Bump version and vte req version
+
+ configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 724eae4a24110e1e0b9712667515a66ca27cc4bb
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Aug 8 21:57:15 2020 +0200
+
+    client: legacy: Ignore some more env variables
+
+ src/terminal-client-utils.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+commit e5c0b4f5836141903137a7887e948b23ef66b75a
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Aug 8 21:57:15 2020 +0200
+
+    profile: editor: Only show font family and size in the font chooser
+
+ configure.ac         | 2 +-
+ src/profile-editor.c | 5 +++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+commit b6282897d3136f8bfd045976a12c84f0c9204e4a
+Author: Calvin Walton <calvin.walton@kepstin.ca>
+Date:   Sun Apr 26 18:17:32 2020 -0400
+
+    Improve contrast in the "GNOME" terminal palette
+    
+    After testing the GNOME terminal palette added in
+    https://gitlab.gnome.org/GNOME/gnome-terminal/issues/72
+    on a wider variety of applications, using a test tool that I developed:
+    https://kepstin.pages.gitlab.gnome.org/terminal-palette/
+    I have come up with some alterations to the "GNOME" terminal palette
+    that aim to improve contrast over the previous revision.
+    
+    Here's a summary of the changes made, with an explanation for the
+    change:
+    
+    * Reduced the brightness of Black (#0). Perhaps the most noticable
+      change. I like the slight purple/blue tint, so I haven't changed it to
+      a pure black, but the new shade is a lot darker. This gives room to
+      improve the contrast of other colors over the dark background.
+    
+    * Reduced the brightness of Brown (#3). This color is often used as a
+      foreground over the default background, so I have adjusted it to be
+      closer to the middle between the dark and light backgrounds.
+      The contrast over White goes up from from 3.30 to 4.12 (still AA
+      Large). The contrast ratio over Black goes down from 4.83 (AA) to
+      4.40 (AA Large).
+    
+    * Reduced the brightness of Blue (#4). The contrast ratio of Blue over
+      Black remains almost the same (2.02 to 2.01). Applications almost
+      always request Bright Blue when using blue over the default
+      background, because the contrast of Blue over Black is really bad in
+      most terminal color schemes. Annoyingly, many existing applications do
+      this by requesting Bold Blue, meaning that enabling the "Show bold
+      text in bright colors" option is highly recommended when using a dark
+      background.
+      Reducing the brightness of Blue helps improve contrast when it is used
+      as a background color, particularly since some of the bright colors
+      also had their brightness reduced (see below).
+    
+    * Reduced the brightness of Cyan (#6). This color is often used as a
+      foreground over the default background. I have adjusted it to increase
+      the contrast over the light background from 2.40 (Fail) to 3.07 (AA
+      Large). The contrast over dark background goes down from 6.66 to 5.91
+      (still AA).
+    
+    * Reduced the brightness of Light Gray (#7). Light gray was previously
+      difficult to distinguish from White when used over a dark background,
+      this helps a bit. Contrast vs White incrases from 1.36 to 1.56.
+      This color is used the foreground color in the dark scheme, the contrast
+      over the default background goes from 11.8 to 11.6 (still AAA).
+      The contrast over Blue goes from 5.82 to 5.80 (still AA).
+    
+    * Increased the brightness of Bright Red (#9).
+      Bright Red is occasionally used as a foreground over Blue. The
+      previous color had nearly matching luminance, making it hard to read.
+      The contrast over Blue increases from 1.92 to 2.90.
+      This does reduce the contrast of Bright Red over Bright White from
+      4.09 to 3.11 (both AA Large) but that's a pretty rare color
+      combination except when "bold is bright" is used.
+    
+    * Reduced the brightness of Bright Yellow (#11) and Cyan (#14).
+      The previous colors were almost completely unreadable against a white
+      background, while the new ones are usable by people with good
+      eyesight, at least (contrast up from 1.29 and 1.68 to 2.01 and 2.03).
+      Applications generally avoid bright yellow and cyan over the default
+      background, but it is seen now and then (usually as a side-effect of
+      "bold is bright"). The contrast of both colors over dark blue is
+      reduced slightly, from AA down to AA Large (4.49 and 4.46 respectively).
+    
+    * Increased the brightness of Bright Blue (#12).
+      Bright Blue is used as a foreground over both dark and light
+      backgrounds. I've adjusted the brightness to give it about the same
+      contrast level against both Black (#0) and Bright White (#15). Both
+      get AA Large (4.30 and 4.21 respectively).
+    
+    * The remaining colors are unchanged, but due to Black getting darker,
+      the contrast of Red, Green, and Purple in particular over Black is
+      noticably improved.
+    
+    On a technical level, I've switched the default palette in the GSettings
+    schema to use the colors expressed in hex, so it's easier to check by
+    eye if the schema and the code match.
+
+ src/org.gnome.Terminal.gschema.xml | 36 ++++++++++++++++++------------------
+ src/profile-editor.c               | 28 ++++++++++++++--------------
+ 2 files changed, 32 insertions(+), 32 deletions(-)
+
+commit 8d2db9597ca920799596dbba0fdce9c5663e1d74
+Author: Anders Jonsson <anders.jonsson@norsjovallen.se>
+Date:   Thu Jul 30 11:59:39 2020 +0000
+
+    Update Swedish translation
+
+ po/sv.po | 415 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 215 insertions(+), 200 deletions(-)
+
+commit dd6139727765ad3d032f5a97077c5d20536929f5
+Author: Alex Garel <alex@garel.org>
+Date:   Wed Jul 29 10:53:41 2020 +0000
+
+    Update French translation
+
+ po/fr.po | 411 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 213 insertions(+), 198 deletions(-)
+
+commit db1ed76fef7c88d5f2e6547492a1265b9ab1dfcf
+Author: Fabio Tomat <f.t.public@gmail.com>
+Date:   Tue Jul 14 16:10:58 2020 +0000
+
+    Update Friulian translation
+
+ po/fur.po | 1161 +++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 635 insertions(+), 526 deletions(-)
+
+commit e729e3ee89693468e652f3ff663306506fb563f0
+Author: Aurimas Černius <aurisc4@gmail.com>
+Date:   Mon Jul 13 16:32:25 2020 +0300
+
+    Updated Lithuanian translation
+
+ po/lt.po | 414 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 214 insertions(+), 200 deletions(-)
+
+commit 2f2b098daee428efb3a632ee50e0b9602bb6e02f
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Sat Jul 4 09:09:48 2020 +0200
+
+    Update Catalan translation
+
+ help/ca/ca.po | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit f46d65ab41ad10011011af7a8fa0bc6861c09a01
+Author: Gil Forcada <gforcada@gnome.org>
+Date:   Fri Jul 3 05:34:32 2020 +0000
+
+    Update Catalan translation
+
+ po/ca.po | 420 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 219 insertions(+), 201 deletions(-)
+
+commit cf56729f1d6fade78165f44c04c1124c1dc3f814
+Author: Baurzhan Muftakhidinov <baurthefirst@gmail.com>
+Date:   Wed Jul 1 15:08:04 2020 +0000
+
+    Update Kazakh translation
+
+ po/kk.po | 411 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 213 insertions(+), 198 deletions(-)
+
+commit 06552a43644587f50ef4a868f1309341ce248e28
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:   Mon Jun 29 10:09:05 2020 +0200
+
+    Updated Spanish translation
+
+ po/es.po | 38 ++++++++++++++++++--------------------
+ 1 file changed, 18 insertions(+), 20 deletions(-)
+
+commit 4a394e854a8c00df426179be25e6d46db82bc5f4
+Author: Baurzhan Muftakhidinov <baurthefirst@gmail.com>
+Date:   Wed Jun 24 05:45:03 2020 +0000
+
+    Update Kazakh translation
+    
+    (cherry picked from commit cd838f535e4567441c83c3c43c82cbd58d492a31)
+
+ po/kk.po | 1435 ++++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 782 insertions(+), 653 deletions(-)
+
+commit 8e897c7bf3a49e03c9ea5411b4dae445a284aefb
+Author: Debarshi Ray <debarshir@gnome.org>
+Date:   Wed Jun 17 12:59:48 2020 +0200
+
+    Add a manual
+    
+    https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/277
+
+ Makefile.am            |   2 +-
+ configure.ac           |   9 ++
+ man/Makefile.am        |  18 +++
+ man/gnome-terminal.xml | 385 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 413 insertions(+), 1 deletion(-)
+
+commit 0fe2d98aed7da646177c1f3962d233c8dd0fc0e5
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Tue Jun 9 23:34:46 2020 +0200
+
+    Update Catalan translation
+
+ help/ca/ca.po | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 882553592219ed48cf6a2cc7bbad7d313584c774
+Author: Zephyr Wang 王滋涵 <wi24rd@fedoraproject.org>
+Date:   Fri Jun 5 08:56:40 2020 +0000
+
+    Update Chinese (China) translation
+
+ po/zh_CN.po | 1460 ++++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 801 insertions(+), 659 deletions(-)
+
+commit d1c8cedd1f39c21e3067bae4794c3148e09570a5
+Author: Matej Urbančič <mateju@svn.gnome.org>
+Date:   Mon Jun 1 22:10:02 2020 +0200
+
+    Updated Slovenian translation
+
+ po/sl.po | 411 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 213 insertions(+), 198 deletions(-)
+
+commit 90d5004fc78d05b1e727333d3250ed803c6fc660
+Author: Yi-Jyun Pan <pan93412@gmail.com>
+Date:   Sun May 17 06:49:39 2020 +0000
+
+    Update Chinese (Taiwan) translation
+
+ po/zh_TW.po | 393 +++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 204 insertions(+), 189 deletions(-)
+
+commit aa905004de041cec593bb683518d8b4277f07a9a
+Author: Yi-Jyun Pan <pan93412@gmail.com>
+Date:   Sun May 17 06:46:05 2020 +0000
+
+    Update Chinese (Taiwan) translation
+    
+    (cherry picked from commit 56f42ca5b9b0ba01b63cecd2a786e59873fec0d9)
+
+ po/zh_TW.po | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
+
+commit cf994598b8e3b76b7035ba003ec9b3770cdd13df
+Author: Danial Behzadi <dani.behzi@ubuntu.com>
+Date:   Tue May 12 14:32:09 2020 +0000
+
+    Update Persian translation
+
+ po/fa.po | 777 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 411 insertions(+), 366 deletions(-)
+
+commit fdad5933c389b953ee4d912173480b5b2806a0a3
+Author: Florentina Mușat <emryslokadottir@gmail.com>
+Date:   Mon May 11 14:18:01 2020 +0000
+
+    Update Romanian translation
+
+ po/ro.po | 398 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 207 insertions(+), 191 deletions(-)
+
+commit 8c99e3f001e95a2db406faf8518347e3b0be5d8a
+Author: Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
+Date:   Sat May 9 10:10:00 2020 +0000
+
+    Update Esperanto translation
+
+ po/eo.po | 368 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 192 insertions(+), 176 deletions(-)
+
+commit 68384825e40bd950e6be3cc8b040559e6f9c611c
+Author: Benjamin Berg <bberg@redhat.com>
+Date:   Tue May 5 15:39:54 2020 +0200
+
+    systemd: Use app- prefix for systemd slice
+    
+    To avoid confusion, we have updated the systemd specification to use
+    app.slice rather than apps.slice. Update the use here accordingly.
+    
+    This change is in no way urgent as other software is not using the
+    conventions yet.
+    
+    See https://github.com/systemd/systemd/pull/15647
+    
+    Closes: #260
+
+ src/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 16e7f0aef1f3a5e333fc50b1abc7e11a34d48752
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Thu May 7 12:01:46 2020 +0200
+
+    Update Catalan translation
+
+ help/ca/ca.po | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+commit 5e7209c46a58ed664d43e87fbf3d6759b1c0fe19
+Author: Yuri Chornoivan <yurchor@ukr.net>
+Date:   Fri May 1 12:58:49 2020 +0300
+
+    Add Ukrainian docs translation
+
+ help/Makefile.am |    2 +-
+ help/uk/uk.po    | 3766 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 3767 insertions(+), 1 deletion(-)
+
+commit ec2926fe3d75dea37a26b5e8dcde972cc9bf9d8f
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri May 1 11:53:05 2020 +0200
+
+    server: Fix missing refcount in error code path
+
+ src/terminal-gdbus.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+commit 0cf3e6b4bd65e21fc72e0d7ed2db0ad6c6f5272c
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri May 1 11:38:38 2020 +0200
+
+    server: Check passed environment
+    
+    Make sure all elements of the environment passed actually are
+    in KEY=VALUE format.
+
+ src/terminal-gdbus.c | 10 +++++++++-
+ src/terminal-util.c  | 22 ++++++++++++++++++++++
+ src/terminal-util.h  |  2 ++
+ 3 files changed, 33 insertions(+), 1 deletion(-)
+
+commit 33589224ca7734c4be343dec4627666cd9f391b9
+Author: Yuri Chornoivan <yurchor@ukr.net>
+Date:   Thu Apr 30 19:03:13 2020 +0000
+
+    Update Ukrainian translation
+
+ po/uk.po | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit cb43c606246d359365088e9dbe390e3507f68a34
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:   Tue Apr 28 17:49:06 2020 +0200
+
+    Updated Spanish translation
+
+ po/es.po | 406 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 210 insertions(+), 196 deletions(-)
+
+commit b092f6a6922c32d99046d73b0ade82b08d095e38
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Mon Apr 27 20:54:08 2020 +0200
+
+    screen: Use new vte_terminal_spawn_with_fds_async
+    
+    Bump vte req version, and use the new vte API to spawn
+    with FD assignments, instead of implementing this ourself.
+
+ configure.ac          |   2 +-
+ src/terminal-gdbus.c  |   7 +++
+ src/terminal-screen.c | 151 ++++++++++++++++----------------------------------
+ 3 files changed, 57 insertions(+), 103 deletions(-)
+
+commit 5e41478cec10181f248a7f2d4894a21005d30393
+Author: Jordi Mas <jmas@softcatala.org>
+Date:   Sun Apr 26 21:43:59 2020 +0200
+
+    Update Catalan translation
+
+ po/ca.po | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 5e1895a504520b4d7eb4e00de4b66d932a4dcd7a
+Author: Peter Mráz <etkinator@gmail.com>
+Date:   Sun Apr 26 16:58:40 2020 +0000
+
+    Update Slovak translation
+
+ po/sk.po | 1301 +++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 695 insertions(+), 606 deletions(-)
+
+commit 5ae5b48b3f71dec024cd523b28f6bd2acbc8ced6
 Author: Christian Persch <chpe@src.gnome.org>
 Date:   Sat Apr 25 21:59:50 2020 +0200
 
     screen: Fix memdup overrun
     
     The extra element was never accessed.
-    
-    (cherry picked from commit 5ae5b48b3f71dec024cd523b28f6bd2acbc8ced6)
 
  src/terminal-screen.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-commit a7ecf5c9df47d12ad2a4799219f485d087718ec3
+commit 1554c74da520db6dff65b9dbf4eb2de82b14e76f
 Author: Christian Persch <chpe@src.gnome.org>
 Date:   Sat Apr 25 21:59:50 2020 +0200
 
@@ -54,60 +2890,126 @@ Date:   Sat Apr 25 21:59:50 2020 +0200
     added to ExecData was leaked, causing the GUnixFDList passed from the client
     (if any) also to be leaked, which meant that its file descriptors were never
     closed, leading to FD exhaustion.
-    
-    (cherry picked from commit 1554c74da520db6dff65b9dbf4eb2de82b14e76f)
 
  src/terminal-gdbus.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-commit c6f72400b39525ecd22def77ec117d924cc519fa
+commit cb733bbe7ecefb3ca2b5e84f7816bc174ba22f06
+Author: Asier Sarasua Garmendia <asier.sarasua@gmail.com>
+Date:   Sat Apr 25 17:19:20 2020 +0000
+
+    Update Basque translation
+
+ po/eu.po | 399 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 207 insertions(+), 192 deletions(-)
+
+commit f0afe0f5096b29e30761520df552ee47cd484722
+Author: Yuri Chornoivan <yurchor@ukr.net>
+Date:   Sat Apr 25 08:09:22 2020 +0000
+
+    Update Ukrainian translation
+
+ po/uk.po | 134 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 68 insertions(+), 66 deletions(-)
+
+commit b76802730e67637c11b70bc5b2e2851755e0a1a5
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Sat Apr 25 08:41:19 2020 +0200
+
+    nautilus: Build fix
+    
+    Fixes: https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/254
+
+ src/terminal-nautilus.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 7409fa84a9c99dd4700130a1419119b3f69426e3
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Fri Apr 24 09:13:40 2020 +0200
+
+    client: Filter out some more env vars
+
+ src/terminal-client-utils.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+commit 4a491e99ee942285a55ebef6caf9558804ebca67
+Author: Christian Persch <chpe@src.gnome.org>
+Date:   Thu Apr 23 23:18:08 2020 +0200
+
+    client: legacy: Add option to not pass the environment
+    
+    Add --no-environment option that makes the client not pass
+    the client's environment to the server to be used as the
+    environment for the newly created terminal.
+    
+    https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/253
+
+ src/terminal-client-utils.c | 41 ++++++++++++++++++++++-------------------
+ src/terminal-client-utils.h |  1 +
+ src/terminal-options.c      |  9 +++++++++
+ src/terminal-options.h      |  1 +
+ src/terminal.c              |  1 +
+ 5 files changed, 34 insertions(+), 19 deletions(-)
+
+commit dcd77201aade51bab925b8257d79766ca7acd714
 Author: Christian Persch <chpe@src.gnome.org>
 Date:   Thu Apr 23 23:18:08 2020 +0200
 
     screen: Take a ref to the FD list
-    
-    (cherry picked from commit dcd77201aade51bab925b8257d79766ca7acd714)
 
  src/terminal-screen.c | 5 ++++-
  1 file changed, 4 insertions(+), 1 deletion(-)
 
-commit 717f8d7dd5a1e6b4006429547b0e035e44d0a164
+commit 6e95b09ae356c920d3e5142c3bad7eee591a517a
 Author: Mathieu Lovato Stumpf Guntz <psychoslave@culture-libre.org>
 Date:   Sun Apr 19 11:51:22 2020 +0000
 
     Update Esperanto translation
+    
+    (cherry picked from commit 717f8d7dd5a1e6b4006429547b0e035e44d0a164)
 
  po/eo.po | 8 +++++---
  1 file changed, 5 insertions(+), 3 deletions(-)
 
-commit 930f14e611e438d6ea534442705b49ab343f0f4f
-Author: Peniel Vargas <tsuneake.kaemitsu@gmail.com>
-Date:   Sat Apr 18 13:54:29 2020 +0000
+commit 0fbabf6318283d2d8ff87cec182f2021113a35be
+Author: sicklylife <translation@sicklylife.jp>
+Date:   Sat Apr 18 13:56:37 2020 +0000
 
     Update Japanese translation
 
- po/ja.po | 63 +++++++++++++++++++++++++++++++++------------------------------
- 1 file changed, 33 insertions(+), 30 deletions(-)
+ po/ja.po | 37 ++++++++++++++++++-------------------
+ 1 file changed, 18 insertions(+), 19 deletions(-)
 
-commit 98a71e6ffbb2aebaf4c6ae09c5db152d6c12807c
+commit e5d95f247f200a2537f0984684dad56f000e5970
+Author: sicklylife <translation@sicklylife.jp>
+Date:   Sat Apr 18 13:48:37 2020 +0000
+
+    Update Japanese translation
+
+ po/ja.po | 297 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 156 insertions(+), 141 deletions(-)
+
+commit cdde4e82d13ab632b765b1a7e09b707ef5df26e5
 Author: Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
 Date:   Sun Apr 12 07:29:51 2020 +0000
 
     Update Esperanto translation
+    
+    (cherry picked from commit 98a71e6ffbb2aebaf4c6ae09c5db152d6c12807c)
 
  po/eo.po | 1460 ++++++++++++++++++++++++++++++++++----------------------------
  1 file changed, 803 insertions(+), 657 deletions(-)
 
-commit 5d966ab4c56bd82a8f6f68cc8f8922bca373c346
+commit 607e2b53bca0188c3cfde35035c96672579b7e6b
 Author: Matej Urbančič <mateju@svn.gnome.org>
-Date:   Fri Apr 10 22:21:18 2020 +0200
+Date:   Fri Apr 10 22:21:29 2020 +0200
 
     Updated Slovenian translation
 
  po/sl.po | 1452 +++++++++++++++++++++++++++++++++-----------------------------
  1 file changed, 781 insertions(+), 671 deletions(-)
 
-commit 11f0ad63587c3a9671fe7c4c6e49356da401f2de
+commit f84316ec180e9b9515a0914e883a0585f6877c7e
 Author: Christian Persch <chpe@src.gnome.org>
 Date:   Thu Apr 9 21:04:32 2020 +0200
 
@@ -121,21 +3023,31 @@ Date:   Thu Apr 9 21:04:32 2020 +0200
     Patch by Kim Nguyen <https://gitlab.gnome.org/kim.nguyen>
     
     Fixes: https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/42
-    (cherry picked from commit f84316ec180e9b9515a0914e883a0585f6877c7e)
 
  src/terminal-options.c | 27 ++++++++++++++++++++++++++-
  1 file changed, 26 insertions(+), 1 deletion(-)
 
-commit 65372d4590986a60e6a28533350fb78bc39cbee3
+commit c6281d272dc8e2e14e140438f24bcbbc03982e93
+Author: Yuri Chornoivan <yurchor@ukr.net>
+Date:   Mon Apr 6 16:28:23 2020 +0000
+
+    Update Ukrainian translation
+
+ po/uk.po | 2655 ++++++++++++++++++--------------------------------------------
+ 1 file changed, 767 insertions(+), 1888 deletions(-)
+
+commit c669eb0075b6daa877c397bff539d506f8b5c261
 Author: Charles Monzat <charles.monzat@free.fr>
 Date:   Sun Apr 5 17:24:18 2020 +0000
 
     Update French translation
+    
+    (cherry picked from commit 65372d4590986a60e6a28533350fb78bc39cbee3)
 
  help/fr/fr.po | 1917 ++++++++++++++++++++++++++++++---------------------------
  1 file changed, 1018 insertions(+), 899 deletions(-)
 
-commit e52b8dcc9265756cf5681adb59adbbad277b27a3
+commit e456d6d896ece1fa303d56f7f9375521467bde6d
 Author: Christian Persch <chpe@src.gnome.org>
 Date:   Sat Apr 4 18:10:10 2020 +0200
 
@@ -146,99 +3058,66 @@ Date:   Sat Apr 4 18:10:10 2020 +0200
     gtk_show_uri()).
     
     https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/242#note_760400
-    (cherry picked from commit e456d6d896ece1fa303d56f7f9375521467bde6d)
 
  src/Makefile.am | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-commit 96ed81405692a98eb984dea51f132762e47d7e02
+commit f40c06c82a388df0f4a15cd24b3c3f721c9def04
 Author: Guillaume Bernard <associations@guillaume-bernard.fr>
 Date:   Wed Apr 1 15:45:28 2020 +0000
 
     Update French translation
+    
+    (cherry picked from commit 96ed81405692a98eb984dea51f132762e47d7e02)
 
  po/fr.po | 22 +++++++++++-----------
  1 file changed, 11 insertions(+), 11 deletions(-)
 
-commit 4dee4102cc07d6d1c416f62a62cc9e709a318aee
+commit bb2d024da8878140fa31bde8d8373064be506dd6
 Author: Daniel Șerbănescu <daniel@serbanescu.dk>
 Date:   Wed Apr 1 01:04:37 2020 +0000
 
     Update Romanian translation
+    
+    (cherry picked from commit 4dee4102cc07d6d1c416f62a62cc9e709a318aee)
 
  po/ro.po | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
-commit f607729cdd692a64c33e5571916f55415fb0aadf
+commit 57ddddbaeea498210405d7ed624450b0bb588193
 Author: Yosef Or Boczko <yoseforb@gnome.org>
 Date:   Tue Mar 31 08:36:10 2020 +0000
 
     Update Hebrew translation
+    
+    (cherry picked from commit f607729cdd692a64c33e5571916f55415fb0aadf)
 
  po/he.po | 3076 ++++++++++++++++++++++++++++++++++++--------------------------
  1 file changed, 1793 insertions(+), 1283 deletions(-)
 
-commit 80b156322fcb65999e246291769c359ecf5cc41e
-Author: Christian Persch <chpe@src.gnome.org>
-Date:   Fri Mar 27 23:51:57 2020 +0100
-
-    build: Post release version bump
-
- configure.ac | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-commit 3c12e8978f815ec3f2b0f2b3e6a98d3569d4a2c8
-Author: Christian Persch <chpe@src.gnome.org>
-Date:   Fri Mar 27 23:49:48 2020 +0100
-
-    Version 3.36.1.1
-
- configure.ac | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-commit bae3eab51ea5553150c3c3c28273495f0abb6f7d
+commit d02ae557b24dee36c91324be9f9a3f80c207e2a7
 Author: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 Date:   Fri Mar 27 21:59:16 2020 +0000
 
     screen: Don't dereference data unchecked
     
     Fixes: https://gitlab.gnome.org/GNOME/gnome-terminal/issues/239
-    (cherry picked from commit d02ae557b24dee36c91324be9f9a3f80c207e2a7)
 
  src/terminal-screen.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-commit dcbe83ea7c0e5c166b05f8b96aed9b12266017c9
-Author: Christian Persch <chpe@src.gnome.org>
-Date:   Fri Mar 27 20:51:53 2020 +0100
-
-    build: Post release version bump
-
- configure.ac | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-commit c428fb95b47a71743c166f89d1371e9ef327230d
-Author: Christian Persch <chpe@src.gnome.org>
-Date:   Fri Mar 27 20:48:23 2020 +0100
-
-    build: Version 3.36.1
-
- configure.ac | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-commit 9bb94e3aab84ecc4e7733d0ee001ee50256bd273
+commit fd5ac772154426e2da5afd633b336414bca33be9
 Author: Christian Persch <chpe@src.gnome.org>
 Date:   Mon Mar 23 09:57:56 2020 +0100
 
     screen: Use clean env when creating new tab
     
     https://gitlab.gnome.org/GNOME/gnome-terminal/issues/236
-    (cherry picked from commit fd5ac772154426e2da5afd633b336414bca33be9)
 
  src/terminal-screen.c | 11 ++++-------
  1 file changed, 4 insertions(+), 7 deletions(-)
 
-commit ad9ed3e7190d0446666f5b46b3b05655063d5ddb
+commit 29cec2866150ae0aa14d28cf30bccfde53b1d111
 Author: Christian Persch <chpe@src.gnome.org>
 Date:   Sun Mar 22 22:33:52 2020 +0100
 
@@ -247,30 +3126,33 @@ Date:   Sun Mar 22 22:33:52 2020 +0100
     ... not the client command line arguments.
     
     Fixes: https://gitlab.gnome.org/GNOME/gnome-terminal/issues/236
-    (cherry picked from commit 29cec2866150ae0aa14d28cf30bccfde53b1d111)
 
  src/terminal-screen.c | 10 ++++++----
  1 file changed, 6 insertions(+), 4 deletions(-)
 
-commit dcc159665c5133c875f3006e249d97d6bad9cab1
+commit bbb58a266cf7e61d485cb8a429d690ed577220ef
 Author: Daniel Șerbănescu <daniel@serbanescu.dk>
 Date:   Sat Mar 21 21:18:32 2020 +0000
 
     Update Romanian translation
+    
+    (cherry picked from commit dcc159665c5133c875f3006e249d97d6bad9cab1)
 
  po/ro.po | 1432 +++++++++++++++++++++++++++++++++-----------------------------
  1 file changed, 770 insertions(+), 662 deletions(-)
 
-commit 9f8405c6bbc6eaca9fff0c223ea8c6d1a97edeee
+commit ec40fa25ce3953600c1cae55db61e4a0e04d3575
 Author: Anders Jonsson <anders.jonsson@norsjovallen.se>
 Date:   Sat Mar 21 21:05:38 2020 +0000
 
     Update Swedish translation
+    
+    (cherry picked from commit 9f8405c6bbc6eaca9fff0c223ea8c6d1a97edeee)
 
  help/sv/sv.po | 1593 ++++++++++++++++++++++++++++++---------------------------
  1 file changed, 846 insertions(+), 747 deletions(-)
 
-commit a1ea8c880091b128e2cd983a89796ce077b8ef8d
+commit c4a1c9594e64907db9592fb5b8254020adb4edbc
 Author: Piotr Drąg <piotrdrag@gmail.com>
 Date:   Fri Mar 20 18:04:32 2020 +0100
 
@@ -279,121 +3161,80 @@ Date:   Fri Mar 20 18:04:32 2020 +0100
  help/pl/pl.po | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-commit c5de478575400dc699a48640953b9cedf4d43999
-Author: Daniel Mustieles <daniel.mustieles@gmail.com>
-Date:   Fri Mar 20 10:59:09 2020 +0100
-
-    Updated Spanish translation
-
- help/es/es.po | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
-
-commit f34fc32388e1b30094de50a4b4300fc5240f5bd9
+commit 1de112ff4403f0f52fea1a2bf074714cf145d2f9
 Author: Egmont Koblinger <egmont@gmail.com>
 Date:   Thu Mar 19 21:50:34 2020 +0100
 
     help: Fix a typo
     
     https://gitlab.gnome.org/GNOME/gnome-terminal/issues/234
-    (cherry picked from commit 1de112ff4403f0f52fea1a2bf074714cf145d2f9)
 
  help/C/app-zoom.page | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-commit 4fffe6d1bc06e116ec18040c1a567026f6321a35
-Author: Peter Mráz <etkinator@gmail.com>
-Date:   Thu Mar 19 13:48:56 2020 +0000
+commit f3c8464b75470434c960ebc23ce3bd116bf65313
+Author: Calvin Walton <calvin.walton@kepstin.ca>
+Date:   Mon Mar 16 21:25:33 2020 +0100
 
-    Update Slovak translation
+    profile: New default colour scheme based on the GNOME 3.32 icon palette
+    
+    Also use these colours for foreground and background, when not using theme colours.
+    
+    I chose colours from the palette to provide good contrast in a wide
+    variety of applications on both light and dark backgrounds, taking into
+    account that the "Show bold text in bright colors" option is now off by
+    default.
+    
+    The explanation behind some of the colour choices:
+    
+    * I chose pure white for slot 15, since it works better as a light
+      terminal background colour than grey (better contrast vs green, cyan)
+    * To improve contrast in blue-background applications, I chose a darker
+      blue along with a brighter green and cyan. The dark blue desired was
+      darker than available on the palette, so I made a darker blue by
+      blending Blue 5 with Dark 4.
+    * To provide extra personality, reference the classic CGA/VGA palette,
+      and improve readability on light backgrounds, I picked a middle Brown
+      tone for slot 3 rather than make up a muddy "dark yellow".
+    
+    Fixes: https://gitlab.gnome.org/GNOME/gnome-terminal/issues/72
 
- po/sk.po | 1297 +++++++++++++++++++++++++++++++++-----------------------------
- 1 file changed, 693 insertions(+), 604 deletions(-)
+ src/org.gnome.Terminal.gschema.xml | 36 ++++++++++++++++-----------------
+ src/preferences.ui                 |  5 ++++-
+ src/profile-editor.c               | 41 +++++++++++++++++++++++++++++++++-----
+ 3 files changed, 58 insertions(+), 24 deletions(-)
 
-commit 40c8e6357e5a851ecf32e143647d4dbf2b9104f6
+commit 8af7d01aa13b7fdbc5b8e6adb8137a0c2108ddaa
 Author: Christian Persch <chpe@src.gnome.org>
 Date:   Sun Mar 15 20:39:21 2020 +0100
 
     screen: Use the client cwd with the client command line
     
     Fixes: https://gitlab.gnome.org/GNOME/gnome-terminal/issues/231
-    (cherry picked from commit 8af7d01aa13b7fdbc5b8e6adb8137a0c2108ddaa)
 
  src/terminal-screen.c | 40 +++++++++++++++++++++-------------------
  1 file changed, 21 insertions(+), 19 deletions(-)
 
-commit 581825bec990ab3ee54f4a63df40933a5e848ed4
-Author: Christian Kirbach <Christian.Kirbach@gmail.com>
-Date:   Sat Mar 14 23:56:14 2020 +0000
-
-    Update German translation
-
- po/de.po | 1423 ++++++++++++++++++++++++++++++++++----------------------------
- 1 file changed, 773 insertions(+), 650 deletions(-)
-
-commit 2b428284015f1eb8b1db776560cc3926788ca842
+commit a26890875c1d195afc93d435d89190228f420c0b
 Author: Egmont Koblinger <egmont@gmail.com>
 Date:   Fri Mar 13 16:39:54 2020 +0100
 
     help: Fix broken markup in Czech help translation
-    
-    (cherry picked from commit a26890875c1d195afc93d435d89190228f420c0b)
 
  help/cs/cs.po | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-commit b1354ef1b2089cdf6e100cf18741ecca2001cead
-Author: Andre Klapper <a9016009@gmx.de>
-Date:   Mon Mar 2 13:51:23 2020 +0100
-
-    Fix broken markup in Xhosa UI translation
-    
-    (cherry picked from commit 492d13231f0ec4fcb80a189f7fe9e5b98a10ae01)
-
- po/xh.po | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-commit acfc9120fc01e1b9ffc60147d09b51497eaf2dba
-Author: Andre Klapper <a9016009@gmx.de>
-Date:   Mon Mar 2 13:50:49 2020 +0100
-
-    Fix broken markup in Walloon UI translation
-    
-    (cherry picked from commit 6fa026f74e3ae079a902b40c5525cd05edab05f0)
-
- po/wa.po | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-commit a35b80302f2b4d11e1cde0ad4268b80a9b0641b6
-Author: Andre Klapper <a9016009@gmx.de>
-Date:   Mon Mar 2 13:50:17 2020 +0100
-
-    Fix broken markup in Georgian UI translation
-    
-    (cherry picked from commit febf7d162977fb408dc53419f0fe161bc118b77c)
-
- po/ka.po | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-commit 278e60ec9a250e42a5976b90284691a638670006
+commit 67d76ebf87dedc1660336d9406aeddf3bc72d731
 Author: Marek Černocký <marek@manet.cz>
-Date:   Wed Mar 11 16:01:12 2020 +0100
+Date:   Wed Mar 11 16:02:57 2020 +0100
 
     Updated Czech help translation
 
- help/cs/cs.po | 1386 ++++++++++++++++++++++++++-------------------------------
+ help/cs/cs.po | 1384 ++++++++++++++++++++++++++-------------------------------
  po/cs.po      |    4 +-
- 2 files changed, 632 insertions(+), 758 deletions(-)
+ 2 files changed, 631 insertions(+), 757 deletions(-)
 
-commit 3e49da20d5c913047545beb62f354dd681d753d0
-Author: Daniel Korostil <ted.korostiled@gmail.com>
-Date:   Tue Mar 10 21:58:14 2020 +0000
-
-    Update Ukrainian translation
-
- po/uk.po | 2648 ++++++++++++++++++--------------------------------------------
- 1 file changed, 760 insertions(+), 1888 deletions(-)
-
-commit 036627fb1700852a191e7f172a4e07d2a2f1746e
+commit 01f4eb65212295c2ef081a873cb6f8aad3dde2de
 Author: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 Date:   Tue Mar 10 21:02:19 2020 +0000
 
@@ -404,22 +3245,31 @@ Date:   Tue Mar 10 21:02:19 2020 +0000
     `gnome-terminal-server` running as a systemd user service is `/`.
     
     Fixes https://gitlab.gnome.org/GNOME/gnome-terminal/issues/228
-    
-    (cherry picked from commit 01f4eb65212295c2ef081a873cb6f8aad3dde2de)
 
  src/terminal-screen.c | 5 ++---
  1 file changed, 2 insertions(+), 3 deletions(-)
 
-commit 7c960f45d332ee190742ee61007d5b772d2a424f
+commit c1572e6e84607d5705922c9c3d68fc31e9aeabfe
+Author: Tim Sabsch <tim@sabsch.com>
+Date:   Mon Mar 9 22:50:17 2020 +0000
+
+    Update German translation
+
+ po/de.po | 1427 ++++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 775 insertions(+), 652 deletions(-)
+
+commit 5fa1bbd73396262ccdee5d4141094e10e326517b
 Author: Goran Vidović <trebelnik2@gmail.com>
 Date:   Mon Mar 9 12:17:37 2020 +0000
 
     Update Croatian translation
+    
+    (cherry picked from commit 7c960f45d332ee190742ee61007d5b772d2a424f)
 
  po/hr.po | 16 ++++++++--------
  1 file changed, 8 insertions(+), 8 deletions(-)
 
-commit 94692777b9247f672f5433d6ae2cafd80954553d
+commit d9a184b34466368e576feec1773b97bdaf2489d2
 Author: Jordi Mas <jmas@softcatala.org>
 Date:   Sat Mar 7 13:42:37 2020 +0100
 
@@ -428,52 +3278,16 @@ Date:   Sat Mar 7 13:42:37 2020 +0100
  help/ca/ca.po | 92 +++++++++++++++++++++++++++++------------------------------
  1 file changed, 46 insertions(+), 46 deletions(-)
 
-commit f4206442044907f1f2cd3fec03ca5e6ed23b93b4
-Author: Christian Persch <chpe@src.gnome.org>
-Date:   Fri Mar 6 01:39:31 2020 +0100
+commit 7309af285fac2be43cc9b48058120e9cf09f2ccb
+Author: Andre Klapper <a9016009@gmx.de>
+Date:   Thu Mar 5 19:33:44 2020 +0100
 
-    build: Fix
+    Fix broken markup in Shavian UI translation
 
- configure.ac | 2 +-
+ po/en@shaw.po | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-commit 8bd9f42819ccaf4445d0ec641899fe5a25856633
-Author: Christian Persch <chpe@src.gnome.org>
-Date:   Thu Mar 5 23:25:59 2020 +0100
-
-    build: Post release version bump
-
- configure.ac | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-commit 7d7b73d1005d8377e6f8303801e0da505f907611
-Author: Christian Persch <chpe@src.gnome.org>
-Date:   Thu Mar 5 23:23:33 2020 +0100
-
-    build: Version 3.36.0.1
-
- configure.ac | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-commit d94afcdf954fc958a488032c40334c458bae5bbb
-Author: Christian Persch <chpe@src.gnome.org>
-Date:   Thu Mar 5 23:07:00 2020 +0100
-
-    build: Post release version bump
-
- configure.ac | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-commit 32c1a21fd36f6c62d3d9295f0ef6bd3bb0ff4df2
-Author: Christian Persch <chpe@src.gnome.org>
-Date:   Thu Mar 5 22:44:04 2020 +0100
-
-    build: Version 3.36.0
-
- configure.ac | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-commit 13dc99f8912bdfea557d5e0d337203878f19bfe2
+commit 4502e9441ab9f5300036bc4eb258240c4d005f04
 Author: Piotr Drąg <piotrdrag@gmail.com>
 Date:   Thu Mar 5 13:30:52 2020 +0100
 
@@ -482,47 +3296,107 @@ Date:   Thu Mar 5 13:30:52 2020 +0100
  help/pl/pl.po | 1354 +++++++++++++++++++++++++++------------------------------
  1 file changed, 636 insertions(+), 718 deletions(-)
 
-commit 7f21dc2ae4145309b96747b87bc9baf4313f0d9f
+commit 05f92ce79e065cc1057c38f7299c1da8e78ccf8c
+Author: Debarshi Ray <debarshir@gnome.org>
+Date:   Tue Mar 3 21:22:17 2020 +0100
+
+    util: Use GLib for coercing UTF-8 in hyperlink tooltips
+    
+    GLib 2.52.0 was released in March 2017 and is present in even RHEL 7.x.
+    It's clearly old enough to be a hard dependency.
+    
+    https://gitlab.gnome.org/GNOME/gnome-terminal/issues/226
+
+ configure.ac        |  6 +++---
+ src/terminal-util.c | 55 +----------------------------------------------------
+ src/terminal-util.h |  3 ---
+ 3 files changed, 4 insertions(+), 60 deletions(-)
+
+commit 350011e63f07de1ebc0ac70601202c688eaacb44
 Author: Gianvito Cavasoli <gianvito@gmx.it>
 Date:   Tue Mar 3 13:02:19 2020 +0000
 
     Update Italian translation
+    
+    (cherry picked from commit 7f21dc2ae4145309b96747b87bc9baf4313f0d9f)
 
  po/it.po | 1390 +++++++++++++++++++++++++++++++++-----------------------------
  1 file changed, 742 insertions(+), 648 deletions(-)
 
-commit 81d944169413e257032a2fa069ecc19ae45db3dc
+commit 492d13231f0ec4fcb80a189f7fe9e5b98a10ae01
+Author: Andre Klapper <a9016009@gmx.de>
+Date:   Mon Mar 2 13:51:23 2020 +0100
+
+    Fix broken markup in Xhosa UI translation
+
+ po/xh.po | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 6fa026f74e3ae079a902b40c5525cd05edab05f0
+Author: Andre Klapper <a9016009@gmx.de>
+Date:   Mon Mar 2 13:50:49 2020 +0100
+
+    Fix broken markup in Walloon UI translation
+
+ po/wa.po | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit febf7d162977fb408dc53419f0fe161bc118b77c
+Author: Andre Klapper <a9016009@gmx.de>
+Date:   Mon Mar 2 13:50:17 2020 +0100
+
+    Fix broken markup in Georgian UI translation
+
+ po/ka.po | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit 10098274eb5a1fb3a6145795aa195cea8128607d
 Author: Anders Jonsson <anders.jonsson@norsjovallen.se>
 Date:   Sun Mar 1 16:20:31 2020 +0000
 
     Update Swedish translation
+    
+    (cherry picked from commit 81d944169413e257032a2fa069ecc19ae45db3dc)
 
  po/sv.po | 1139 +++++++++++++++++++++++++++++++++-----------------------------
  1 file changed, 615 insertions(+), 524 deletions(-)
 
-commit 269fd6c37625612cefbc0a0bc994dc4743d3ee75
+commit 2974c4c687f4f21d8c3590b3779cf335290f33d7
 Author: Goran Vidović <trebelnik2@gmail.com>
 Date:   Sun Mar 1 11:44:12 2020 +0000
 
     Update Croatian translation
+    
+    (cherry picked from commit 269fd6c37625612cefbc0a0bc994dc4743d3ee75)
 
  po/hr.po | 1157 ++++++++++++++++++++++++++++++++++----------------------------
  1 file changed, 626 insertions(+), 531 deletions(-)
 
-commit ad5e94b7b6359c69f81bb8173a9808bf0ec90007
+commit ff0d992e45d5ea3bf61c565f175bd4cda7632869
+Author: Nathan Follens <nfollens@gnome.org>
+Date:   Sun Mar 1 11:40:53 2020 +0000
+
+    Update Dutch translation
+
+ po/nl.po | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 239f269435b908da56e5e07863476e149ece2e1d
 Author: Nathan Follens <nfollens@gnome.org>
 Date:   Sun Mar 1 11:39:01 2020 +0000
 
     Update Dutch translation
+    
+    (cherry picked from commit ad5e94b7b6359c69f81bb8173a9808bf0ec90007)
 
  po/nl.po | 1424 ++++++++++++++++++++++++++++++++++----------------------------
  1 file changed, 772 insertions(+), 652 deletions(-)
 
-commit 204447325bf614cf310d258f4d1ace4124afa6ca
+commit 1106b1ac1a08055779709e145549c1fea1509bb9
 Author: Christian Persch <chpe@src.gnome.org>
-Date:   Sat Feb 29 20:53:25 2020 +0100
+Date:   Sat Feb 29 20:55:10 2020 +0100
 
-    Post release version bump
+    Post branch version bump
 
  configure.ac | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
