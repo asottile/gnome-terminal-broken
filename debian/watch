@@ -1,0 +1,3 @@
+version=4
+https://gitlab.gnome.org/GNOME/@PACKAGE@/tags \
+	.*/@PACKAGE@-([\d].[\d][024689][\d.]+)@ARCHIVE_EXT@
