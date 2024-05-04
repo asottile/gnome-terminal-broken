@@ -8,3 +8,4 @@ lower-VTE-dependency.patch
 60_add_lp_handler.patch
 scrollbar-background-theming.patch
 Use-DejaVu-as-system-font-if-language-is-Arabic.patch
+re-enable-tab-tearing.patch
