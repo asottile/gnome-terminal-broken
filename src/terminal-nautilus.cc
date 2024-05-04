@@ -18,13 +18,10 @@
  */
 
 #include "config.h"
-#undef GDK_VERSION_MIN_REQUIRED
-#undef GDK_VERSION_MAX_ALLOWED
 
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 #include <gio/gio.h>
-#include <gtk/gtk.h>
 
 /* Work around https://gitlab.gnome.org/GNOME/nautilus/-/issues/1884 */
 extern "C" {
@@ -42,6 +39,8 @@ extern "C" {
 #include "terminal-gdbus-generated.h"
 
 /* Nautilus extension class */
+
+#undef TERMINAL_NAUTILUS
 
 #define TERMINAL_TYPE_NAUTILUS         (terminal_nautilus_get_type ())
 #define TERMINAL_NAUTILUS(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), TERMINAL_TYPE_NAUTILUS, TerminalNautilus))
@@ -273,6 +272,8 @@ uri_has_local_path (const char *uri)
 
 /* Nautilus menu item class */
 
+namespace {
+
 typedef struct {
   TerminalNautilus *nautilus;
   guint32 timestamp;
@@ -281,6 +282,8 @@ typedef struct {
   TerminalFileInfo info;
   gboolean remote;
 } ExecData;
+
+} // anon namespace
 
 static void
 exec_data_free (ExecData *data)
@@ -327,8 +330,9 @@ create_terminal (ExecData *data /* transfer full */)
   g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sv}"));
 
   terminal_client_append_create_instance_options (&builder,
-                                                  gdk_display_get_name (gdk_display_get_default ()),
+                                                  nullptr, // display name. FIXMEgtk4?
                                                   startup_id,
+                                                  nullptr, /* activation_token */
                                                   nullptr /* geometry */,
                                                   nullptr /* role */,
                                                   nullptr /* use default profile */,
@@ -463,11 +467,7 @@ terminal_nautilus_menu_item_activate (NautilusMenuItem *item)
 
   data = g_new (ExecData, 1);
   data->nautilus = (TerminalNautilus*)g_object_ref (nautilus);
-#if GTK_CHECK_VERSION (4, 0, 0)
-  data->timestamp = GDK_CURRENT_TIME; /* FIXMEgtk4 */
-#else
-  data->timestamp = gtk_get_current_event_time ();
-#endif
+  data->timestamp = 0; // GDK_CURRENT_TIME
   data->path = path;
   data->uri = uri;
   data->info = info;
@@ -589,7 +589,6 @@ terminal_nautilus_menu_item_new (TerminalNautilus *nautilus,
 
 static GList *
 terminal_nautilus_get_background_items (NautilusMenuProvider *provider,
-                                        GtkWidget            *window,
                                         NautilusFileInfo     *file_info)
 {
   TerminalNautilus *nautilus = TERMINAL_NAUTILUS (provider);
@@ -638,7 +637,6 @@ terminal_nautilus_get_background_items (NautilusMenuProvider *provider,
 
 static GList *
 terminal_nautilus_get_file_items (NautilusMenuProvider *provider,
-                                  GtkWidget            *window,
                                   GList                *files)
 {
   TerminalNautilus *nautilus = TERMINAL_NAUTILUS (provider);
@@ -708,15 +706,15 @@ terminal_nautilus_get_file_items (NautilusMenuProvider *provider,
 }
 
 static void
-terminal_nautilus_menu_provider_iface_init (NautilusMenuProviderIface *iface)
+terminal_nautilus_menu_provider_interface_init (NautilusMenuProviderInterface *interface)
 {
-  iface->get_background_items = terminal_nautilus_get_background_items;
-  iface->get_file_items = terminal_nautilus_get_file_items;
+  interface->get_background_items = terminal_nautilus_get_background_items;
+  interface->get_file_items = terminal_nautilus_get_file_items;
 }
 
 G_DEFINE_DYNAMIC_TYPE_EXTENDED (TerminalNautilus, terminal_nautilus, G_TYPE_OBJECT, 0,
                                 G_IMPLEMENT_INTERFACE_DYNAMIC (NAUTILUS_TYPE_MENU_PROVIDER,
-                                                               terminal_nautilus_menu_provider_iface_init))
+                                                               terminal_nautilus_menu_provider_interface_init))
 
 static void 
 terminal_nautilus_init (TerminalNautilus *nautilus)

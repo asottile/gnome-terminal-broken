@@ -13,7 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this programme.  If not, see <https://www.gnu.org/licenses/>.
 
-gt_mandir = gt_datadir / 'man'
 man1dir = gt_mandir / 'man1'
 
 man1 = custom_target(
@@ -32,5 +31,6 @@ man1 = custom_target(
   input: files(gt_name + '.xml'),
   install: true,
   install_dir: gt_prefix / man1dir,
+  install_tag: 'man',
   output: gt_name + '.1',
 )

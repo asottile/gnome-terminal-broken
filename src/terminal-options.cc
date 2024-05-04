@@ -38,6 +38,7 @@
 #include "terminal-util.hh"
 #include "terminal-version.hh"
 #include "terminal-libgsystem.hh"
+#include "terminal-settings-utils.hh"
 
 static int verbosity = 1;
 
@@ -96,6 +97,18 @@ terminal_log_writer (GLogLevelFlags log_level,
                      gsize n_fields,
                      gpointer user_data)
 {
+#if GLIB_CHECK_VERSION(2, 68, 0)
+  char const* domain = nullptr;
+  for (auto i = gsize{0}; i < n_fields; i++) {
+    if (g_str_equal(fields[i].key, "GLIB_DOMAIN")) {
+      domain = (char const*)fields[i].value;
+      break;
+    }
+  }
+  if (g_log_writer_default_would_drop(log_level, domain))
+    return G_LOG_WRITER_HANDLED;
+#endif /* glib 2.68 */
+
   TerminalVerbosity level = verbosity_from_log_level(log_level);
   for (gsize i = 0; i < n_fields; i++) {
     if (g_str_equal (fields[i].key, "MESSAGE"))
@@ -107,11 +120,23 @@ terminal_log_writer (GLogLevelFlags log_level,
 
 static GOptionContext *get_goption_context (TerminalOptions *options);
 
+static void
+terminal_options_ensure_schema_source(TerminalOptions* options)
+{
+  if (options->schema_source)
+    return;
+
+  options->schema_source = terminal_g_settings_schema_source_get_default();
+}
+
 static TerminalSettingsList *
 terminal_options_ensure_profiles_list (TerminalOptions *options)
 {
-  if (options->profiles_list == nullptr)
-    options->profiles_list = terminal_profiles_list_new(g_settings_schema_source_get_default());
+  if (options->profiles_list == nullptr) {
+    terminal_options_ensure_schema_source(options);
+    options->profiles_list = terminal_profiles_list_new(nullptr /* default backend */,
+                                                        options->schema_source);
+  }
 
   return options->profiles_list;
 }
@@ -802,8 +827,6 @@ option_wait_cb (const gchar *option_name,
   if (options->initial_windows)
     {
       InitialTab *it = ensure_top_tab (options);
-
-      g_free (it->working_dir);
       it->wait = TRUE;
     }
   else
@@ -986,6 +1009,18 @@ digest_options_callback (GOptionContext *context,
   return TRUE;
 }
 
+static char*
+getenv_utf8(char const* env)
+{
+  auto const value = g_getenv(env);
+  if (!value ||
+      !value[0] ||
+      !g_utf8_validate(value, -1, nullptr))
+    return nullptr;
+
+  return g_strdup(value);
+}
+
 /**
  * terminal_options_parse:
  * @argcp: (inout) address of the argument count. Changed if any arguments were handled
@@ -1018,12 +1053,8 @@ terminal_options_parse (int *argcp,
   options->default_maximize = FALSE;
   options->execute = FALSE;
 
-  const char *startup_id = g_getenv ("DESKTOP_STARTUP_ID");
-  if (startup_id && startup_id[0] &&
-      g_utf8_validate (startup_id, -1, nullptr))
-    options->startup_id = g_strdup (startup_id);
-  else
-    options->startup_id = nullptr;
+  options->startup_id = getenv_utf8("DESKTOP_STARTUP_ID");
+  options->activation_token = getenv_utf8("XDG_ACTIVATION_TOKEN");
   options->display_name = nullptr;
   options->initial_windows = nullptr;
   options->default_role = nullptr;
@@ -1100,12 +1131,12 @@ terminal_options_parse (int *argcp,
     return nullptr;
   }
 
+#ifdef GDK_WINDOWING_X11
   /* Do this here so that gdk_display is initialized */
-  if (options->startup_id == nullptr)
+  if (options->startup_id == nullptr) {
     options->startup_id = terminal_client_get_fallback_startup_id ();
-  /* Still nullptr? */
-  if (options->startup_id == nullptr)
-    terminal_printerr_detail ("Warning: DESKTOP_STARTUP_ID not set and no fallback available.\n");
+  }
+#endif /* X11 */
 
   GdkDisplay *display = gdk_display_get_default ();
   if (display != nullptr)
@@ -1264,8 +1295,11 @@ terminal_options_merge_config (TerminalOptions *options,
 void
 terminal_options_ensure_window (TerminalOptions *options)
 {
-  gs_unref_object GSettings *global_settings =
-    g_settings_new (TERMINAL_SETTING_SCHEMA);
+  terminal_options_ensure_schema_source(options);
+  gs_unref_object auto global_settings =
+    terminal_g_settings_new(nullptr, // default backend
+                            options->schema_source,
+                            TERMINAL_SETTING_SCHEMA);
 
   gs_free char *mode_str = g_settings_get_string (global_settings,
                                                   TERMINAL_SETTING_NEW_TERMINAL_MODE_KEY);
@@ -1298,12 +1332,14 @@ terminal_options_free (TerminalOptions *options)
 
   g_free (options->display_name);
   g_free (options->startup_id);
+  g_free (options->activation_token);
   g_free (options->server_app_id);
 
   g_free (options->sm_client_id);
   g_free (options->sm_config_prefix);
 
   g_clear_object (&options->profiles_list);
+  g_clear_pointer (&options->schema_source, g_settings_schema_source_unref);
 
   g_free (options);
 }
@@ -1624,6 +1660,15 @@ get_goption_context (TerminalOptions *options)
       G_OPTION_FLAG_HIDDEN,
       G_OPTION_ARG_STRING,
       &options->startup_id,
+      nullptr,
+      nullptr
+    },
+    {
+      "activation-token",
+      0,
+      G_OPTION_FLAG_HIDDEN,
+      G_OPTION_ARG_STRING,
+      &options->activation_token,
       nullptr,
       nullptr
     },

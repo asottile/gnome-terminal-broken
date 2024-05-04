@@ -62,7 +62,9 @@
 
 #include "eggshell.hh"
 
-#define URL_MATCH_CURSOR  (GDK_HAND2)
+#define URL_MATCH_CURSOR_NAME "pointer"
+
+namespace {
 
 typedef struct {
   volatile int refcount;
@@ -88,6 +90,8 @@ typedef struct {
   /* Cancellable */
   GCancellable *cancellable;
 } ExecData;
+
+} // anon namespace
 
 typedef struct
 {
@@ -500,7 +504,7 @@ terminal_screen_init (TerminalScreen *screen)
       tag_data = g_slice_new (TagData);
       tag_data->flavor = url_regex_flavors[i];
       tag_data->tag = vte_terminal_match_add_regex (terminal, url_regexes[i], 0);
-      vte_terminal_match_set_cursor_type (terminal, tag_data->tag, URL_MATCH_CURSOR);
+      vte_terminal_match_set_cursor_name (terminal, tag_data->tag, URL_MATCH_CURSOR_NAME);
 
       priv->match_tags = g_slist_prepend (priv->match_tags, tag_data);
     }
@@ -1061,6 +1065,9 @@ terminal_screen_profile_changed_cb (GSettings     *profile,
   if (!prop_name || prop_name == I_(TERMINAL_PROFILE_AUDIBLE_BELL_KEY))
       vte_terminal_set_audible_bell (vte_terminal, g_settings_get_boolean (profile, TERMINAL_PROFILE_AUDIBLE_BELL_KEY));
 
+  if (!prop_name || prop_name == I_(TERMINAL_PROFILE_SCROLL_ON_INSERT_KEY))
+    vte_terminal_set_scroll_on_insert(vte_terminal,
+                                      g_settings_get_boolean(profile, TERMINAL_PROFILE_SCROLL_ON_INSERT_KEY));
   if (!prop_name || prop_name == I_(TERMINAL_PROFILE_SCROLL_ON_KEYSTROKE_KEY))
     vte_terminal_set_scroll_on_keystroke (vte_terminal,
                                           g_settings_get_boolean (profile, TERMINAL_PROFILE_SCROLL_ON_KEYSTROKE_KEY));
@@ -1407,6 +1414,20 @@ terminal_screen_get_child_command (TerminalScreen *screen,
   return TRUE;
 }
 
+static gboolean
+remove_prefixed_cb(void* key,
+                   void* value,
+                   void* user_data)
+{
+  auto const env = reinterpret_cast<char const*>(key);
+  auto const prefix = reinterpret_cast<char const*>(user_data);
+
+  if (terminal_client_get_environment_prefix_filters_is_excluded(env))
+    return false;
+
+  return g_str_has_prefix(env, prefix);
+}
+
 static char**
 terminal_screen_get_child_environment (TerminalScreen *screen,
                                        char **initial_envv,
@@ -1442,9 +1463,16 @@ terminal_screen_get_child_environment (TerminalScreen *screen,
     }
 
   /* Remove unwanted env variables */
-  char const* const* filters = terminal_client_get_environment_filters ();
+  auto const filters = terminal_client_get_environment_filters ();
   for (i = 0; filters[i]; ++i)
     g_hash_table_remove (env_table, filters[i]);
+
+  auto const pfilters = terminal_client_get_environment_prefix_filters ();
+  for (i = 0; pfilters[i]; ++i) {
+    g_hash_table_foreach_remove (env_table,
+                                 GHRFunc(remove_prefixed_cb),
+                                 (void*)pfilters[i]);
+  }
 
   terminal_util_add_proxy_env (env_table);
 
@@ -1494,7 +1522,8 @@ info_bar_response_cb (GtkWidget *info_bar,
     case RESPONSE_EDIT_PREFERENCES:
       terminal_app_edit_preferences (terminal_app_get (),
                                      terminal_screen_get_profile (screen),
-                                     "custom-command-entry");
+                                     "custom-command-entry",
+                                     gtk_get_current_event_time());
       break;
     default:
       gtk_widget_destroy (info_bar);
@@ -2248,7 +2277,7 @@ terminal_screen_has_foreground_process (TerminalScreen *screen,
   if (sysctl (mib, G_N_ELEMENTS (mib), nullptr, &len, nullptr, 0) == -1)
       return TRUE;
 
-  data_buf = g_malloc0 (len);
+  data_buf = (char*)g_malloc0 (len);
   if (sysctl (mib, G_N_ELEMENTS (mib), data_buf, &len, nullptr, 0) == -1)
       return TRUE;
   data = data_buf;
@@ -2260,7 +2289,7 @@ terminal_screen_has_foreground_process (TerminalScreen *screen,
   if (sysctl (mib, G_N_ELEMENTS (mib), nullptr, &len, nullptr, 0) == -1)
       return TRUE;
 
-  data_buf = g_malloc0 (len);
+  data_buf = (char*)g_malloc0 (len);
   if (sysctl (mib, G_N_ELEMENTS (mib), data_buf, &len, nullptr, 0) == -1)
       return TRUE;
   data = ((char**)data_buf)[0];

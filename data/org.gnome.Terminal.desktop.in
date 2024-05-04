@@ -9,8 +9,9 @@ Type=Application
 Categories=GNOME;GTK;System;TerminalEmulator;
 StartupNotify=true
 StartupWMClass=Gnome-terminal
-X-GNOME-SingleWindow=false
+SingleMainWindow=false
 Actions=new-window;preferences;
+X-ExecArg=--
 
 [Desktop Action new-window]
 Name=New Window

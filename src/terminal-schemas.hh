@@ -68,6 +68,7 @@ G_BEGIN_DECLS
 #define TERMINAL_PROFILE_SCROLLBACK_LINES_KEY           "scrollback-lines"
 #define TERMINAL_PROFILE_SCROLLBACK_UNLIMITED_KEY       "scrollback-unlimited"
 #define TERMINAL_PROFILE_SCROLLBAR_POLICY_KEY           "scrollbar-policy"
+#define TERMINAL_PROFILE_SCROLL_ON_INSERT_KEY           "scroll-on-insert"
 #define TERMINAL_PROFILE_SCROLL_ON_KEYSTROKE_KEY        "scroll-on-keystroke"
 #define TERMINAL_PROFILE_SCROLL_ON_OUTPUT_KEY           "scroll-on-output"
 #define TERMINAL_PROFILE_TEXT_BLINK_MODE_KEY            "text-blink-mode"
@@ -93,6 +94,7 @@ G_BEGIN_DECLS
 #define TERMINAL_SETTING_TAB_POSITION_KEY               "tab-position"
 #define TERMINAL_SETTING_THEME_VARIANT_KEY              "theme-variant"
 #define TERMINAL_SETTING_UNIFIED_MENU_KEY               "unified-menu"
+#define TERMINAL_SETTING_ALWAYS_CHECK_DEFAULT_KEY       "always-check-default-terminal"
 
 #define TERMINAL_SETTINGS_LIST_LIST_KEY                 "list"
 #define TERMINAL_SETTINGS_LIST_DEFAULT_KEY              "default"

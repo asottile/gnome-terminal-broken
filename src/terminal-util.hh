@@ -71,8 +71,6 @@ char **terminal_util_get_etc_shells (void);
 
 gboolean terminal_util_get_is_shell (const char *command);
 
-GSettingsSchemaSource* terminal_g_settings_schema_source_get_default(void);
-
 const GdkRGBA *terminal_g_settings_get_rgba (GSettings  *settings,
                                              const char *key,
                                              GdkRGBA    *rgba);
@@ -110,6 +108,12 @@ char *terminal_util_find_program_in_path (const char *path,
                                           const char *program);
 
 gboolean terminal_util_check_envv(char const* const* strv);
+
+char** terminal_util_get_desktops(void);
+
+gboolean terminal_util_is_default_terminal(void);
+
+gboolean terminal_util_make_default_terminal(void);
 
 G_END_DECLS
 

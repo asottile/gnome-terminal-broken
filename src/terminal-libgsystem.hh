@@ -52,12 +52,14 @@ GS_DEFINE_CLEANUP_FUNCTION0(GArray*, gs_local_array_unref, g_array_unref)
 GS_DEFINE_CLEANUP_FUNCTION0(GBytes*, gs_local_bytes_unref, g_bytes_unref)
 GS_DEFINE_CLEANUP_FUNCTION0(GChecksum*, gs_local_checksum_free, g_checksum_free)
 GS_DEFINE_CLEANUP_FUNCTION0(GDateTime*, gs_local_date_time_unref, g_date_time_unref)
+GS_DEFINE_CLEANUP_FUNCTION0(GDir*, gs_local_dir_close, g_dir_close)
 GS_DEFINE_CLEANUP_FUNCTION0(GError*, gs_local_free_error, g_error_free)
 GS_DEFINE_CLEANUP_FUNCTION0(GHashTable*, gs_local_hashtable_unref, g_hash_table_unref)
 GS_DEFINE_CLEANUP_FUNCTION0(GKeyFile*, gs_local_key_file_unref, g_key_file_unref)
 GS_DEFINE_CLEANUP_FUNCTION0(GList*, gs_local_list_free, g_list_free)
 GS_DEFINE_CLEANUP_FUNCTION0(GMatchInfo*, gs_local_match_info_free, g_match_info_free)
 GS_DEFINE_CLEANUP_FUNCTION0(GObject*, gs_local_obj_unref, g_object_unref)
+GS_DEFINE_CLEANUP_FUNCTION0(GOptionContext*, gs_local_option_context_free, g_option_context_free)
 GS_DEFINE_CLEANUP_FUNCTION0(GPtrArray*, gs_local_ptrarray_unref, g_ptr_array_unref)
 GS_DEFINE_CLEANUP_FUNCTION0(GRegex*, gs_local_regex_unref, g_regex_unref)
 GS_DEFINE_CLEANUP_FUNCTION0(GSettingsSchema*, gs_local_settings_schema_unref, g_settings_schema_unref)
@@ -65,6 +67,7 @@ GS_DEFINE_CLEANUP_FUNCTION0(GSettingsSchemaKey*, gs_local_settings_schema_key_un
 GS_DEFINE_CLEANUP_FUNCTION0(GVariant*, gs_local_variant_unref, g_variant_unref)
 GS_DEFINE_CLEANUP_FUNCTION0(GVariantBuilder*, gs_local_variant_builder_unref, g_variant_builder_unref)
 GS_DEFINE_CLEANUP_FUNCTION0(GVariantIter*, gs_local_variant_iter_free, g_variant_iter_free)
+GS_DEFINE_CLEANUP_FUNCTION0(GVariantType*, gs_local_variant_type_free, g_variant_type_free)
 
 GS_DEFINE_CLEANUP_FUNCTION(char**, gs_local_strfreev, g_strfreev)
 GS_DEFINE_CLEANUP_FUNCTION(void*, gs_local_free, g_free)
@@ -117,6 +120,14 @@ static inline void gs_local_gstring_free (void *v) \
  * scope.
  */
 #define gs_unref_variant_builder __attribute__ ((cleanup(gs_local_variant_builder_unref)))
+
+/**
+ * gs_free_variant_type:
+ *
+ * Call g_variant_type_free() on a variable location when it goes out of
+ * scope.
+ */
+#define gs_free_variant_type __attribute__ ((cleanup(gs_local_variant_type_free)))
 
 /**
  * gs_unref_array:
@@ -262,6 +273,44 @@ static inline void gs_local_gstring_free (void *v) \
  * be %nullptr.
  */
 #define gs_free_gstring __attribute__ ((cleanup(gs_local_gstring_free)))
+
+/**
+ * gs_free_option_context:
+ *
+ * Call g_regex_unref() on a variable location when it goes out of
+ * scope.  Note that unlike g_option_context_free(), the variable may be
+ * %NULL.
+
+ */
+#define gs_free_option_context __attribute__ ((cleanup(gs_local_option_context_free)))
+
+/**
+ * gs_close_dir:
+ *
+ * Call g_dir_close() on a variable location when it goes out of
+ * scope.
+
+ */
+#define gs_close_dir __attribute__ ((cleanup(gs_local_dir_close)))
+
+static inline void gs_local_fd_close (void *v)
+{
+  auto fd = *reinterpret_cast<int*>(v);
+  if (fd != -1) {
+    auto const errsv = errno;
+    close(fd);
+    errno = errsv;
+  }
+}
+
+/**
+ * gs_free_close:
+ *
+ * Call close() on a variable location when it goes out of
+ * scope.
+
+ */
+#define gs_close_fd __attribute__ ((cleanup(gs_local_fd_close)))
 
 G_END_DECLS
 

@@ -21,10 +21,12 @@
 
 #include "config.h"
 
+#include <fcntl.h>
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <langinfo.h>
 #include <errno.h>
@@ -39,6 +41,9 @@
 
 #include "terminal-accels.hh"
 #include "terminal-app.hh"
+#include "terminal-client-utils.hh"
+#include "terminal-debug.hh"
+#include "terminal-defines.hh"
 #include "terminal-intl.hh"
 #include "terminal-util.hh"
 #include "terminal-version.hh"
@@ -992,8 +997,8 @@ terminal_util_number_info (const char *str)
 
   errno = 0;
   char* end;
-  gint64 num = g_ascii_strtoull(str, &end, hex ? 16 : 10);
-  if (errno || str == end || num == -1)
+  guint64 num = g_ascii_strtoull(str, &end, hex ? 16 : 10);
+  if (errno || str == end)
     return nullptr;
 
   /* No use in dec-hex conversion for so small numbers */
@@ -1006,18 +1011,18 @@ terminal_util_number_info (const char *str)
   if (thousep[0] != '\0') {
     /* If thousep is nonempty, use printf's magic which can handle
        more complex separating logics, e.g. 2+2+2+3 for some locales */
-    decstr = g_strdup_printf("%'" G_GINT64_FORMAT, num);
+    decstr = g_strdup_printf("%'" G_GUINT64_FORMAT, num);
   } else {
     /* If, however, thousep is empty, override it with a space so that we
        do always group the digits (that's the whole point of this feature;
        the choice of space guarantees not conflicting with the decimal separator) */
-    gs_free char *tmp = g_strdup_printf("%" G_GINT64_FORMAT, num);
+    gs_free char *tmp = g_strdup_printf("%" G_GUINT64_FORMAT, num);
     thousep = " ";
     decstr = add_separators(tmp, thousep, 3);
   }
 
   /* Group the hex digits by 4 using the same nonempty separator */
-  hextmp = g_strdup_printf("%" G_GINT64_MODIFIER "x", (guint64)(num));
+  hextmp = g_strdup_printf("%" G_GINT64_MODIFIER "x", num);
   hexstr = add_separators(hextmp, thousep, 4);
 
   /* Find out the human-readable magnitude, e.g. 15.99 Mi */
@@ -1073,7 +1078,7 @@ terminal_util_timestamp_info (const char *str)
   if (num < 1000000000 || num > 1999999999)
     return nullptr;
 
-  gs_unref_date_time GDateTime* date = g_date_time_new_from_unix_utc (num);
+  gs_unref_date_time GDateTime* date = g_date_time_new_from_unix_local (num);
   if (date == nullptr)
     return nullptr;
 
@@ -1219,8 +1224,10 @@ ensure_cache_dir (void)
   cache_dir = get_cache_dir ();
   errno = 0;
   r = g_mkdir_with_parents (cache_dir, 0700);
-  if (r == -1 && errno != EEXIST)
-    g_printerr ("Failed to create cache dir: %m\n");
+  if (r == -1 && errno != EEXIST) {
+    auto const errsv = errno;
+    g_printerr ("Failed to create cache dir: %s\n", g_strerror(errsv));
+  }
   return r == 0;
 }
 
@@ -1568,366 +1575,387 @@ terminal_util_check_envv(char const* const* strv)
   return TRUE;
 }
 
-#define TERMINAL_SCHEMA_VERIFIER_ERROR (g_quark_from_static_string("TerminalSchemaVerifier"))
-
-typedef enum {
-  TERMINAL_SCHEMA_VERIFIER_SCHEMA_MISSING,
-  TERMINAL_SCHEMA_VERIFIER_SCHEMA_PATH,
-  TERMINAL_SCHEMA_VERIFIER_KEY_MISSING,
-  TERMINAL_SCHEMA_VERIFIER_KEY_TYPE,
-  TERMINAL_SCHEMA_VERIFIER_KEY_DEFAULT,
-  TERMINAL_SCHEMA_VERIFIER_KEY_RANGE_TYPE,
-  TERMINAL_SCHEMA_VERIFIER_KEY_RANGE,
-  TERMINAL_SCHEMA_VERIFIER_KEY_RANGE_TYPE_UNKNOWN,
-  TERMINAL_SCHEMA_VERIFIER_KEY_RANGE_TYPE_MISMATCH,
-  TERMINAL_SCHEMA_VERIFIER_KEY_RANGE_ENUM_VALUE,
-  TERMINAL_SCHEMA_VERIFIER_KEY_RANGE_INTERVAL,
-  TERMINAL_SCHEMA_VERIFIER_CHILD_MISSING,
-} TerminalSchemaVerifierError;
-
-static gboolean
-strv_contains(char const* const* strv,
-              char const* str)
+char**
+terminal_util_get_desktops(void)
 {
-  if (strv == nullptr)
-    return FALSE;
+  auto const desktop = g_getenv("XDG_CURRENT_DESKTOP");
+  if (!desktop)
+    return nullptr;
 
-  for (size_t i = 0; strv[i]; i++) {
-    if (g_str_equal (strv[i], str))
-      return TRUE;
-  }
-
-  return FALSE;
+  return g_strsplit(desktop, G_SEARCHPATH_SEPARATOR_S, -1);
 }
 
-static gboolean
-schema_key_range_compatible(GSettingsSchema* source_schema,
-                            GSettingsSchemaKey* source_key,
-                            char const* key,
-                            GSettingsSchemaKey* reference_key,
-                            GError** error)
+#define XTE_CONFIG_DIRNAME  "xdg-terminals"
+#define XTE_CONFIG_FILENAME "xdg-terminals.list"
+
+#define NEWLINE '\n'
+#define DOT_DESKTOP ".desktop"
+#define TERMINAL_DESKTOP_FILENAME TERMINAL_APPLICATION_ID DOT_DESKTOP
+
+static bool
+xte_data_check_one(char const* file,
+                   bool full)
 {
-  gs_unref_variant GVariant* source_range =
-    g_settings_schema_key_get_range(source_key);
-  gs_unref_variant GVariant* reference_range =
-    g_settings_schema_key_get_range(reference_key);
-
-  char const* source_type = nullptr;
-  gs_unref_variant GVariant* source_data = nullptr;
-  g_variant_get(source_range, "(&sv)", &source_type, &source_data);
-
-  char const* reference_type = nullptr;
-  gs_unref_variant GVariant* reference_data = nullptr;
-  g_variant_get(reference_range, "(&sv)", &reference_type, &reference_data);
-
-  if (!g_str_equal(source_type, reference_type)) {
-    g_set_error(error, TERMINAL_SCHEMA_VERIFIER_ERROR,
-                TERMINAL_SCHEMA_VERIFIER_KEY_RANGE_TYPE,
-                "Schema \"%s\" key \"%s\" has range type \"%s\" but reference range type is \"%s\"",
-                g_settings_schema_get_id(source_schema),
-                key, source_type, reference_type);
-    return FALSE;
+  if (!g_file_test(file, G_FILE_TEST_EXISTS)) {
+    _terminal_debug_print(TERMINAL_DEBUG_DEFAULT,
+                          "Desktop file \"%s\" does not exist.\n",
+                          file);
+    return false;
   }
 
-  if (g_str_equal(reference_type, "type"))
-    ; /* no constraints; this is fine */
-  else if (g_str_equal(reference_type, "enum")) {
-    size_t source_values_len = 0;
-    gs_free char const** source_values = g_variant_get_strv(source_data, &source_values_len);
-
-    size_t reference_values_len = 0;
-    gs_free char const** reference_values = g_variant_get_strv(reference_data, &reference_values_len);
-
-    /* Check that every enum value in source is valid according to the reference */
-    for (size_t i = 0; i < source_values_len; ++i) {
-      if (!strv_contains(reference_values, source_values[i])) {
-        g_set_error(error, TERMINAL_SCHEMA_VERIFIER_ERROR,
-                    TERMINAL_SCHEMA_VERIFIER_KEY_RANGE_ENUM_VALUE,
-                    "Schema \"%s\" key \"%s\" has enum value \"%s\" not in reference schema",
-                    g_settings_schema_get_id(source_schema),
-                    key, source_values[i]);
-        return FALSE;
-      }
-    }
-  } else if (g_str_equal(reference_type, "flags")) {
-    /* Our schemas don't use flags. If that changes, need to implement this! */
-    g_assert_not_reached();
-  } else if (g_str_equal(reference_type, "range")) {
-    if (!g_variant_is_of_type(source_data,
-                              g_variant_get_type(reference_data))) {
-      char const* source_type_str = g_variant_get_type_string(source_data);
-      char const* reference_type_str = g_variant_get_type_string(reference_data);
-      g_set_error(error, TERMINAL_SCHEMA_VERIFIER_ERROR,
-                  TERMINAL_SCHEMA_VERIFIER_KEY_RANGE_TYPE_MISMATCH,
-                  "Schema \"%s\" key \"%s\" has range type \"%s\" but reference range type is \"%s\"",
-                  g_settings_schema_get_id(source_schema),
-                  key, source_type_str, reference_type_str);
-      return FALSE;
-    }
-
-    gs_unref_variant GVariant* reference_min = nullptr;
-    gs_unref_variant GVariant* reference_max = nullptr;
-    g_variant_get(reference_data, "(**)", &reference_min, &reference_max);
-
-    gs_unref_variant GVariant* source_min = nullptr;
-    gs_unref_variant GVariant* source_max = nullptr;
-    g_variant_get(source_data, "(**)", &source_min, &source_max);
-
-    /* The source interval must be contained within the reference interval */
-    if (g_variant_compare(source_min, reference_min) < 0 ||
-        g_variant_compare(source_max, reference_max) > 0) {
-      g_set_error(error, TERMINAL_SCHEMA_VERIFIER_ERROR,
-                  TERMINAL_SCHEMA_VERIFIER_KEY_RANGE_INTERVAL,
-                  "Schema \"%s\" key \"%s\" has range interval not contained in reference range interval",
-                  g_settings_schema_get_id(source_schema), key);
-        return FALSE;
-    }
-  } else {
-    g_set_error(error, TERMINAL_SCHEMA_VERIFIER_ERROR,
-                TERMINAL_SCHEMA_VERIFIER_KEY_RANGE_TYPE_UNKNOWN,
-                "Schema \"%s\" key \"%s\" has unknown range type \"%s\"",
-                g_settings_schema_get_id(source_schema),
-                key, reference_type);
-    return FALSE;
-  }
-
-  return TRUE;
-}
-
-static gboolean
-schema_verify_key(GSettingsSchema* source_schema,
-                  char const* key,
-                  GSettingsSchema* reference_schema,
-                  GError** error)
-{
-  if (!g_settings_schema_has_key(source_schema, key)) {
-    g_set_error(error, TERMINAL_SCHEMA_VERIFIER_ERROR,
-                TERMINAL_SCHEMA_VERIFIER_KEY_MISSING,
-                "Schema \"%s\" has missing key \"%s\"",
-                g_settings_schema_get_id(source_schema), key);
-    return FALSE;
-  }
-
-  gs_unref_settings_schema_key GSettingsSchemaKey* source_key =
-    g_settings_schema_get_key(source_schema, key);
-  g_assert_nonnull(source_key);
-
-  gs_unref_settings_schema_key GSettingsSchemaKey* reference_key =
-    g_settings_schema_get_key(reference_schema, key);
-  g_assert_nonnull(reference_key);
-
-  GVariantType const* source_type = g_settings_schema_key_get_value_type(source_key);
-  GVariantType const* reference_type = g_settings_schema_key_get_value_type(reference_key);
-  if (!g_variant_type_equal(source_type, reference_type)) {
-    gs_free char* source_type_str = g_variant_type_dup_string(source_type);
-    gs_free char* reference_type_str = g_variant_type_dup_string(reference_type);
-    g_set_error(error, TERMINAL_SCHEMA_VERIFIER_ERROR,
-                TERMINAL_SCHEMA_VERIFIER_KEY_TYPE,
-                "Schema \"%s\" has type \"%s\" but reference type is \"%s\"",
-                g_settings_schema_get_id(source_schema),
-                source_type_str, reference_type_str);
-    return FALSE;
-  }
-
-  gs_unref_variant GVariant* source_default = g_settings_schema_key_get_default_value(source_key);
-  if (!g_settings_schema_key_range_check(reference_key, source_default)) {
-    gs_free char* source_value_str = g_variant_print(source_default, TRUE);
-    g_set_error(error, TERMINAL_SCHEMA_VERIFIER_ERROR,
-                TERMINAL_SCHEMA_VERIFIER_KEY_DEFAULT,
-                "Schema \"%s\" default value \"%s\" does not conform to reference schema",
-                g_settings_schema_get_id(source_schema), source_value_str);
-    return FALSE;
-  }
-
-  if (!schema_key_range_compatible(source_schema,
-                                   source_key,
-                                   key,
-                                   reference_key,
-                                   error))
-    return FALSE;
-
-  return TRUE;
-}
-
-static gboolean
-schema_verify_child(GSettingsSchema* source_schema,
-                    char const* child_name,
-                    GSettingsSchema* reference_schema,
-                    GError** error)
-{
-  /* Should verify the child's schema ID is as expected and exists in
-   * the source, but there appears to be no API to get the schema ID of
-   * the child.
-   *
-   * We work around this missing verification by never calling
-   * g_settings_get_child() and instead always constructing the child
-   * GSettings directly; and the existence and correctness of that
-   * schema is verified by the per-schema checks.
-   */
-
-  return TRUE;
-}
-
-static gboolean
-schema_verify(GSettingsSchema* source_schema,
-              GSettingsSchema* reference_schema,
-              GError** error)
-{
-  /* Verify path */
-  char const* source_path = g_settings_schema_get_path(source_schema);
-  char const* reference_path = g_settings_schema_get_path(reference_schema);
-  if (g_strcmp0(source_path, reference_path) != 0) {
-    g_set_error(error, TERMINAL_SCHEMA_VERIFIER_ERROR,
-                TERMINAL_SCHEMA_VERIFIER_SCHEMA_PATH,
-                "Schema \"%s\" has path \"%s\" but reference path is \"%s\"",
-                g_settings_schema_get_id(source_schema),
-                source_path ? source_path : "(null)",
-                reference_path ? reference_path : "(null)");
-    return FALSE;
-  }
-
-  /* Verify keys */
-  gs_strfreev char** keys = g_settings_schema_list_keys(reference_schema);
-  if (keys) {
-    for (int i = 0; keys[i]; ++i) {
-      if (!schema_verify_key(source_schema,
-                             keys[i],
-                             reference_schema,
-                             error))
-        return FALSE;
-    }
-  }
-
-  /* Verify child schemas */
-  gs_strfreev char** source_children = g_settings_schema_list_children(source_schema);
-  gs_strfreev char** reference_children = g_settings_schema_list_children(reference_schema);
-  if (reference_children) {
-    for (size_t i = 0; reference_children[i]; ++i) {
-      if (!strv_contains((char const* const*)source_children, reference_children[i])) {
-        g_set_error(error, TERMINAL_SCHEMA_VERIFIER_ERROR,
-                    TERMINAL_SCHEMA_VERIFIER_CHILD_MISSING,
-                    "Schema \"%s\" has missing child \"%s\"",
-                    g_settings_schema_get_id(source_schema),
-                    reference_children[i]);
-        return FALSE;
-      }
-
-      if (!schema_verify_child(source_schema,
-                               reference_children[i],
-                               reference_schema,
-                               error))
-          return FALSE;
-    }
-  }
-
-  return TRUE;
-}
-
-static gboolean
-schemas_source_verify_schema_by_name(GSettingsSchemaSource* source,
-                                     char const* schema_name,
-                                     GSettingsSchemaSource* reference_source,
-                                     GError** error)
-{
-  gs_unref_settings_schema GSettingsSchema* source_schema =
-    g_settings_schema_source_lookup(source, schema_name, TRUE /* recursive */);
-
-  if (!source_schema) {
-    g_set_error(error, TERMINAL_SCHEMA_VERIFIER_ERROR,
-                TERMINAL_SCHEMA_VERIFIER_SCHEMA_MISSING,
-                "Schema \"%s\" is missing", schema_name);
-    return FALSE;
-  }
-
-  gs_unref_settings_schema GSettingsSchema* reference_schema =
-    g_settings_schema_source_lookup(reference_source,
-                                    schema_name,
-                                    FALSE /* recursive */);
-  g_assert_nonnull(reference_schema);
-
-  return schema_verify(source_schema,
-                       reference_schema,
-                       error);
-}
-
-static gboolean
-schemas_source_verify_schemas(GSettingsSchemaSource* source,
-                              char const* const* schemas,
-                              GSettingsSchemaSource* reference_source,
-                              GError** error)
-{
-  if (!schemas)
-    return TRUE;
-
-  for (int i = 0; schemas[i]; ++i) {
-    if (!schemas_source_verify_schema_by_name(source,
-                                              schemas[i],
-                                              reference_source,
-                                              error))
-      return FALSE;
-  }
-
-  return TRUE;
-}
-
-static gboolean
-schemas_source_verify(GSettingsSchemaSource* source,
-                      GSettingsSchemaSource* reference_source,
-                      GError** error)
-{
-  gs_strfreev char** reloc_schemas = nullptr;
-  gs_strfreev char** nonreloc_schemas = nullptr;
-
-  g_settings_schema_source_list_schemas(reference_source,
-                                        FALSE /* recursive */,
-                                        &reloc_schemas,
-                                        &nonreloc_schemas);
-
-  if (!schemas_source_verify_schemas(source,
-                                     (char const* const*)reloc_schemas,
-                                     reference_source,
-                                     error))
-    return FALSE;
-
-  if (!schemas_source_verify_schemas(source,
-                                     (char const* const*)nonreloc_schemas,
-                                     reference_source,
-                                     error))
-    return FALSE;
-
-  return TRUE;
-}
-
-
-GSettingsSchemaSource*
-terminal_g_settings_schema_source_get_default(void)
-{
-  GSettingsSchemaSource* default_source = g_settings_schema_source_get_default();
+  if (!full)
+    return true;
 
   gs_free_error GError* error = nullptr;
-  GSettingsSchemaSource* reference_source =
-    g_settings_schema_source_new_from_directory(TERM_PKGLIBDIR,
-                                                nullptr /* parent source */,
-                                                FALSE /* trusted */,
-                                                &error);
-  if (!reference_source)  {
-    /* Can only use the installed schemas, or abort here. */
-    g_printerr("Failed to load reference schemas: %s\n"
-               "Using unverified installed schemas.\n",
-               error->message);
+  gs_unref_key_file auto kf = g_key_file_new();
+  if (!g_key_file_load_from_file(kf,
+                                 file,
+                                 GKeyFileFlags(G_KEY_FILE_NONE),
+                                 &error)) {
+    _terminal_debug_print(TERMINAL_DEBUG_DEFAULT,
+                          "Failed to load  \"%s\" as keyfile: %s\n",
+                          file, error->message);
 
-    return g_settings_schema_source_ref(default_source);
+    return false;
   }
 
-  if (!schemas_source_verify(default_source, reference_source, &error)) {
-    g_printerr("Installed schemas failed verification: %s\n"
-               "Falling back to built-in reference schemas.\n",
-               error->message);
-
-    return reference_source; /* transfer */
+  if (!g_key_file_has_group(kf, G_KEY_FILE_DESKTOP_GROUP)) {
+    _terminal_debug_print(TERMINAL_DEBUG_DEFAULT,
+                          "Keyfile file \"%s\" is not a desktop file.\n",
+                          file);
+    return false;
   }
 
-  /* Installed schemas verified; use them. */
-  g_settings_schema_source_unref(reference_source);
-  return g_settings_schema_source_ref(default_source);
+  // As per the XDG desktop entry spec, the (optional) TryExec key contains
+  // the name of an executable that can be used to determine if the programme
+  // is actually present.
+  gs_free auto try_exec = g_key_file_get_string(kf,
+                                                G_KEY_FILE_DESKTOP_GROUP,
+                                                G_KEY_FILE_DESKTOP_KEY_TRY_EXEC,
+                                                nullptr);
+  if (try_exec && try_exec[0]) {
+    // TryExec may be an abolute path, or be searched in $PATH
+    gs_free char* exec_path = nullptr;
+    if (g_path_is_absolute(try_exec))
+      exec_path = g_strdup(try_exec);
+    else
+      exec_path = g_find_program_in_path(try_exec);
+
+    auto const exists = exec_path != nullptr &&
+      g_file_test(exec_path, GFileTest(G_FILE_TEST_IS_EXECUTABLE));
+
+    _terminal_debug_print(TERMINAL_DEBUG_DEFAULT,
+                          "Desktop file \"%s\" is %sinstalled (TryExec).\n",
+                          file, exists ? "" : "not ");
+
+    if (!exists)
+      return false;
+  } else {
+    // TryExec is not present. We could fall back to parsing the Exec
+    // key and look if its first argument points to an executable that
+    // exists on the system, but that may also fail if the desktop file
+    // is DBusActivatable=true in which case we would need to find
+    // out if the D-Bus service corresponding to the name of the desktop
+    // file (without the .desktop extension) is activatable.
+
+    _terminal_debug_print(TERMINAL_DEBUG_DEFAULT,
+                          "Desktop file \"%s\" has no TryExec field.\n",
+                          file);
+  }
+
+  return true;
+}
+
+static bool
+xte_data_check(char const* name,
+               bool full)
+{
+  gs_free auto user_path = g_build_filename(g_get_user_data_dir(),
+                                            XTE_CONFIG_DIRNAME,
+                                            name,
+                                            nullptr);
+  if (xte_data_check_one(user_path, full))
+    return true;
+
+  gs_free auto flatpak_user_path = g_build_filename(g_get_user_data_dir(),
+                                                    "flatpak",
+                                                    "exports",
+                                                    "share",
+                                                    "applications",
+                                                    name,
+                                                    nullptr);
+  if (xte_data_check_one(flatpak_user_path, full))
+    return true;
+
+  gs_free auto local_path = g_build_filename(TERM_PREFIX, "local", "share",
+                                             XTE_CONFIG_DIRNAME,
+                                             name,
+                                             nullptr);
+  if (xte_data_check_one(local_path, full))
+    return true;
+
+  gs_free auto sys_path = g_build_filename(TERM_DATADIR,
+                                           XTE_CONFIG_DIRNAME,
+                                           name,
+                                           nullptr);
+  if (xte_data_check_one(sys_path, full))
+    return true;
+
+  gs_free auto flatpak_system_path = g_build_filename("/var/lib/flatpak/exports/share/applications",
+                                                      name,
+                                                      nullptr);
+  if (xte_data_check_one(flatpak_system_path, full))
+    return true;
+
+  return false;
+}
+
+static bool
+xte_data_ensure(void)
+{
+  if (xte_data_check(TERMINAL_DESKTOP_FILENAME, false))
+    return true;
+
+  // If we get here, there wasn't a desktop file in any of the paths. Install
+  // a symlink to the system-installed desktop file into the user path.
+
+  gs_free auto user_dir = g_build_filename(g_get_user_data_dir(),
+                                           XTE_CONFIG_DIRNAME,
+                                           nullptr);
+  if (g_mkdir_with_parents(user_dir, 0700) != 0 &&
+      errno != EEXIST) {
+    auto const errsv = errno;
+    _terminal_debug_print(TERMINAL_DEBUG_DEFAULT,
+                          "Failed to create directory %s: %s\n",
+                          user_dir, g_strerror(errsv));
+    return false;
+  }
+
+  gs_free auto link_path = g_build_filename(user_dir,
+                                            TERMINAL_DESKTOP_FILENAME,
+                                            nullptr);
+  gs_free auto target_path = g_build_filename(TERM_DATADIR,
+                                              "applications",
+                                              TERMINAL_DESKTOP_FILENAME,
+                                              nullptr);
+
+  auto const r = symlink(target_path, link_path);
+  if (r != -1) {
+    _terminal_debug_print(TERMINAL_DEBUG_DEFAULT,
+                          "Installed symlink %s -> %s\n",
+                          link_path, target_path);
+
+  } else {
+    auto const errsv = errno;
+    _terminal_debug_print(TERMINAL_DEBUG_DEFAULT,
+                          "Failed to create symlink %s: %s\n",
+                          link_path, g_strerror(errsv));
+  }
+
+  return r != -1;
+}
+
+static char**
+xte_config_read(char const* path,
+                GError** error)
+{
+  gs_close_fd auto fd = open(path, O_RDONLY | O_NONBLOCK | O_CLOEXEC);
+  if (fd == -1)
+    return nullptr;
+
+  // This is a small config file, so shouldn't be any bigger than this.
+  // If it is bigger, we'll discard the rest. That's why we're not using
+  // g_file_get_contents() here.
+  char buf[8192];
+  auto r = ssize_t{};
+  do {
+    r = read(fd, buf, sizeof(buf) - 1); // reserve one byte in buf
+  } while (r == -1 && errno == EINTR);
+  if (r < 0)
+    return nullptr;
+
+  buf[r] = '\0'; // NUL terminator; note that r < sizeof(buf)
+
+  auto lines = g_strsplit_set(buf, "\r\n", -1);
+  if (!lines)
+    return nullptr;
+
+  for (auto i = 0; lines[i]; ++i)
+    lines[i] = g_strstrip(lines[i]);
+
+  return lines;
+}
+
+static bool
+xte_config_rewrite(char const* path)
+{
+  gs_free_gstring auto str = g_string_sized_new(1024);
+  g_string_append(str, TERMINAL_DESKTOP_FILENAME);
+  g_string_append_c(str, NEWLINE);
+
+  gs_strfreev auto lines = xte_config_read(path, nullptr);
+  if (lines) {
+    for (auto i = 0; lines[i]; ++i) {
+      if (lines[i][0] == '\0')
+        continue;
+      if (strcmp(lines[i], TERMINAL_DESKTOP_FILENAME) == 0)
+        continue;
+
+      g_string_append(str, lines[i]);
+      g_string_append_c(str, NEWLINE);
+    }
+  }
+
+  gs_free_error GError* error = nullptr;
+  auto const r = g_file_set_contents(path, str->str, str->len, &error);
+  if (!r) {
+    _terminal_debug_print(TERMINAL_DEBUG_DEFAULT,
+                          "Failed to rewrite XTE config %s: %s\n",
+                          path, error->message);
+  }
+
+  return r;
+}
+
+static void
+xte_config_rewrite(void)
+{
+  auto const user_dir = g_get_user_config_dir();
+  if (g_mkdir_with_parents(user_dir, 0700) != 0 &&
+      errno != EEXIST) {
+    auto const errsv = errno;
+    _terminal_debug_print(TERMINAL_DEBUG_DEFAULT,
+                          "Failed to create directory %s: %s\n",
+                          user_dir, g_strerror(errsv));
+   // Nothing to do if we can't even create the directory
+    return;
+  }
+
+  // Install as default for all current desktops
+  gs_strfreev auto desktops = terminal_util_get_desktops();
+  if (desktops) {
+    for (auto i = 0; desktops[i]; ++i) {
+      gs_free auto name = g_strdup_printf("%s-" XTE_CONFIG_FILENAME,
+                                          desktops[i]);
+      gs_free auto path = g_build_filename(user_dir, name, nullptr);
+
+      xte_config_rewrite(path);
+    }
+  }
+
+  // Install as non-desktop specific default too
+  gs_free auto path = g_build_filename(user_dir, XTE_CONFIG_FILENAME, nullptr);
+  xte_config_rewrite(path);
+}
+
+static bool
+xte_config_is_foreign(char const* name)
+{
+  return !g_str_equal(name, TERMINAL_DESKTOP_FILENAME);
+}
+
+static char*
+xte_config_get_default_for_path(char const* path)
+{
+  gs_strfreev auto lines = xte_config_read(path, nullptr);
+  if (!lines)
+    return nullptr;
+
+  // A terminal is the default if it's the first non-comment line in the file
+  for (auto i = 0; lines[i]; ++i) {
+    auto const line = lines[i];
+    if (!line[0] || line[0] == '#')
+      continue;
+
+    // If a foreign terminal is default, check whether it is actually installed.
+    // (We always ensure our own desktop file exists.)
+    if (xte_config_is_foreign(line) &&
+        !xte_data_check(line, true)) {
+      _terminal_debug_print(TERMINAL_DEBUG_DEFAULT,
+                            "Default entry \"%s\" from config \"%s\" is not installed, skipping.\n",
+                            line, path);
+      return nullptr;
+    }
+
+    return g_strdup(line);
+  }
+
+  return nullptr;
+}
+
+static char*
+xte_config_get_default_for_path_and_desktops(char const* base_path,
+                                             char const* const* desktops)
+{
+  if (desktops) {
+    for (auto i = 0; desktops[i]; ++i) {
+      gs_free auto name = g_strdup_printf("%s-" XTE_CONFIG_FILENAME,
+                                          desktops[i]);
+      gs_free auto path = g_build_filename(base_path, name, nullptr);
+      if (auto term = xte_config_get_default_for_path(path))
+        return term;
+    }
+  }
+
+  gs_free auto sys_path = g_build_filename(base_path, XTE_CONFIG_FILENAME, nullptr);
+  if (auto term = xte_config_get_default_for_path(sys_path))
+    return term;
+
+  return nullptr;
+}
+
+static char*
+xte_config_get_default(void)
+{
+  gs_strfreev auto desktops = terminal_util_get_desktops();
+  auto const user_dir = g_get_user_config_dir();
+  if (auto term = xte_config_get_default_for_path_and_desktops(user_dir, desktops))
+    return term;
+  if (auto term = xte_config_get_default_for_path_and_desktops("/etc/xdg", desktops))
+    return term;
+  if (auto term = xte_config_get_default_for_path_and_desktops("/usr/etc/xdg", desktops))
+    return term;
+
+  return nullptr;
+}
+
+static bool
+xte_config_is_default(bool* set = nullptr)
+{
+  gs_free auto term = xte_config_get_default();
+
+  auto const is_default = term && g_str_equal(term, TERMINAL_DESKTOP_FILENAME);
+  if (set)
+    *set = term != nullptr;
+  return is_default;
+}
+
+gboolean
+terminal_util_is_default_terminal(void)
+{
+  auto set = false;
+  auto const is_default = xte_config_is_default(&set);
+  if (!set) {
+    // No terminal is default yet, so we claim the default.
+    _terminal_debug_print(TERMINAL_DEBUG_DEFAULT,
+                          "No default terminal, claiming default.\n");
+    return terminal_util_make_default_terminal();
+  }
+
+  if (is_default) {
+    // If we're the default terminal, ensure our desktop file is installed
+    // in the right location.
+    xte_data_ensure();
+  }
+
+  return is_default;
+}
+
+gboolean
+terminal_util_make_default_terminal(void)
+{
+  xte_config_rewrite();
+  xte_data_ensure();
+
+  return xte_config_is_default();
 }

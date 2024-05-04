@@ -47,15 +47,15 @@
     </columns>
     <data>
       <row>
-        <col id="0" translatable="yes" context="theme variant">Default</col>
+        <col id="0" translatable="yes" context="theme variant">Follow system style</col>
         <col id="1">system</col>
       </row>
       <row>
-        <col id="0" translatable="yes" context="theme variant">Light</col>
+        <col id="0" translatable="yes" context="theme variant">Light style</col>
         <col id="1">light</col>
       </row>
       <row>
-        <col id="0" translatable="yes" context="theme variant">Dark</col>
+        <col id="0" translatable="yes" context="theme variant">Dark style</col>
         <col id="1">dark</col>
       </row>
     </data>
@@ -283,6 +283,7 @@
     <property name="show_menubar">False</property>
     <property name="role">gnome-terminal-preferences</property>
     <property name="resizable">False</property>
+    <property name="modal">True</property>
     <child>
       <object class="GtkBox" id="dialogue-content-box">
         <property name="visible">True</property>
@@ -492,6 +493,39 @@
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
                                 <property name="position">3</property>
+                              </packing>
+                            </child>
+			    <child>
+			      <object class="GtkCheckButton" id="always-check-default-checkbutton">
+                                <property name="label" translatable="yes">_Always check if default terminal</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="use_underline">True</property>
+                                <property name="xalign">0</property>
+                                <property name="draw_indicator">True</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">4</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="make-default-button">
+                                <property name="label" translatable="yes">_Set as default terminal</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="use_underline">True</property>
+                                <property name="focus_on_click">False</property>
+                                <property name="halign">start</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">5</property>
                               </packing>
                             </child>
                           </object>
@@ -1840,6 +1874,23 @@
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkCheckButton" id="scroll-on-insert-checkbutton">
+                                <property name="label" translatable="yes">Scroll on _paste</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="use_underline">True</property>
+                                <property name="xalign">0.5</property>
+                                <property name="draw_indicator">True</property>
+                                <property name="hexpand">True</property>
+                              </object>
+                              <packing>
+                                <property name="top_attach">3</property>
+                                <property name="left_attach">0</property>
+                                <property name="width">2</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkCheckButton" id="scrollback-limited-checkbutton">
                                 <property name="label" translatable="yes">_Limit scrollback to:</property>
                                 <property name="visible">True</property>
@@ -1851,7 +1902,7 @@
                                 <property name="hexpand">False</property>
                               </object>
                               <packing>
-                                <property name="top_attach">3</property>
+                                <property name="top_attach">4</property>
                                 <property name="left_attach">0</property>
                               </packing>
                             </child>
@@ -1892,8 +1943,70 @@
                                 </child>
                               </object>
                               <packing>
-                                <property name="top_attach">3</property>
+                                <property name="top_attach">4</property>
                                 <property name="left_attach">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkInfoBar" id="scrollback-warning">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="message-type">warning</property>
+                                <child internal-child="action_area">
+                                  <object class="GtkButtonBox">
+                                    <property name="can-focus">False</property>
+                                    <property name="spacing">6</property>
+                                    <property name="layout-style">end</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child internal-child="content_area">
+                                  <object class="GtkBox">
+                                    <property name="can-focus">False</property>
+                                    <property name="spacing">6</property>
+                                    <child>
+                                      <object class="GtkImage">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="stock">gtk-dialog-warning</property>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="label" translatable="yes">Warning! Large scrollback buffers may lead to exhaustion of system resources.</property>
+                                        <property name="wrap">True</property>
+                                        <property name="max-width-chars">1</property>
+                                        <property name="xalign">0</property>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">True</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="left-attach">0</property>
+                                <property name="top-attach">5</property>
+                                <property name="width">2</property>
                               </packing>
                             </child>
                           </object>

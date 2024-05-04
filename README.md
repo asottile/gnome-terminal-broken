@@ -68,14 +68,6 @@ you should also pass `--reconfigure` option to it.
 (i.e. `sudo ninja -C _build install`) if installing to system directories. Use a
 user-writable directory as `--prefix` instead to avoid that.
 
-* You may need to set the gsettings schema path so that gnome-terminal can find
-its schemas. E.g. use
-```
-$ export GSETTINGS_SCHEMA_DIR=/some/where/share/glib-2.0/schemas
-```
-and if you skipped the `ninja install` step, you need to create the
-gsettings schema cache yourself.
-
 * Since GNOME Terminal uses a D-Bus activated server, you cannot simply run
 the self-built gnome-terminal directly. Instead, you need to start the new `gnome-terminal-server` directly using
 ```
@@ -91,21 +83,20 @@ Also see https://wiki.gnome.org/Apps/Terminal/Debugging for more information.
 Debugging
 ---------
 
-After installing GNOME-TERMINAL with `-Ddebugg=true` flag, you can use `GNOME-TERMINAL_DEBUG` variable to control
+After installing GNOME-TERMINAL with `-Ddebugg=true` flag, you can use `GNOME_TERMINAL_DEBUG` variable to control
 GNOME-TERMINAL to print out the debug information
 
 ```
-# You should change gnome-terminal-[2.91] to the version you build
-$ GNOME-TERMINAL_DEBUG=selection ./_build/src/app/gnome-terminal-2.91
+$ GNOME_TERMINAL_DEBUG=selection ./_build/src/gnome-terminal-server [...]
 
 # Or, you can mixup with multiple logging level
-$ GNOME-TERMINAL_DEBUG=selection,draw,cell ./_build/src/app/gnome-terminal-2.91
+$ GNOME_TERMINAL_DEBUG=selection,draw,cell ./_build/src/gnome-terminal-server [...]
 
 $ Or, you can use `all` to print out all logging message
-$ GNOME-TERMINAL_DEBUG=all ./_build/src/app/gnome-terminal-2.91
+$ GNOME_TERMINAL_DEBUG=all ./_build/src/gnome-terminal-server [...]
 ```
 
-For logging level information, please refer to enum [Gnome-TerminalDebugFlags](src/debug.h).
+For logging level information, please refer to enum [TerminalDebugFlags](src/terminal-debug.hh).
 
 Contributing
 ------------

@@ -23,9 +23,20 @@
 
 G_BEGIN_DECLS
 
+char* terminal_client_get_directory_uninstalled(char const* exe_install_dir,
+                                                char const *file_install_dir,
+                                                char const* file_name,
+                                                GFileTest tests);
+
+char* terminal_client_get_file_uninstalled(char const* exe_install_dir,
+                                           char const *file_install_dir,
+                                           char const* file_name,
+                                           GFileTest tests);
+
 void terminal_client_append_create_instance_options (GVariantBuilder *builder,
                                                      const char      *display_name,
                                                      const char      *startup_id,
+                                                     const char      *activation_token,
                                                      const char      *geometry,
                                                      const char      *role,
                                                      const char      *profile,
@@ -51,14 +62,11 @@ char * terminal_client_get_fallback_startup_id      (void) G_GNUC_MALLOC;
 
 char const* const* terminal_client_get_environment_filters (void);
 
+char const* const* terminal_client_get_environment_prefix_filters (void);
+
+bool terminal_client_get_environment_prefix_filters_is_excluded(char const* env);
+
 char** terminal_client_filter_environment           (char** envv) G_GNUC_MALLOC;
-
-GSettings* terminal_g_settings_new (GSettingsSchemaSource* source,
-                                    char const* schema_id);
-
-GSettings* terminal_g_settings_new_with_path (GSettingsSchemaSource* source,
-                                              char const* schema_id,
-                                              char const* path);
 
 G_END_DECLS
 

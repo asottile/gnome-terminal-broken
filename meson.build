@@ -18,7 +18,7 @@ project(
   ['c', 'cpp',],
   default_options: [
     'buildtype=release',
-    'warning_level=' + (meson.version().version_compare('>= 0.50.0') ? '0' : '1'),
+    'warning_level=0',
     'b_ndebug=false',
   ],
   license: [
@@ -26,8 +26,8 @@ project(
     'GPL-3.0-only', 'CC-BY-SA-3.0', # the documentation
     'GFDL-1.3-only',                # the appstream data
   ],
-  meson_version: '>= 0.49.0',
-  version: '3.44.0',
+  meson_version: '>= 0.62.0',
+  version: '3.52.0',
 )
 
 # Naming
@@ -45,18 +45,18 @@ clangxx_req_version       = '3.3'
 # Requirements
 
 vte_req                      = 'vte-2.91'
-vte_req_version              = '0.68.0'
+vte_req_version              = '0.76.0'
 
 glib_req_version             = '2.52.0'
 glib_min_req_version         = '2.52'
-glib_max_allowed_version     = '2.52'
+glib_max_allowed_version     = '2.68'
 
 gtk_req_version              = '3.22.27'
 gtk_min_req_version          = '3.18'
 gtk_max_allowed_version      = '3.24'
 
-dconf_req_version            = '0.14.0'
-libnautilus_ext_req_version  = '3.28.0'
+libhandy_req_version         = '1.6.0'
+libnautilus_ext_req_version  = '43'
 pcre2_req_version            = '10.00'
 schemas_req_version          = '0.1.0'
 
@@ -71,11 +71,13 @@ gt_micro_version = version_split[2].to_int()
 
 # Directories
 
+gt_bindir     = get_option('bindir')
 gt_datadir    = get_option('datadir')
 gt_includedir = get_option('includedir')
 gt_libdir     = get_option('libdir')
 gt_libexecdir = get_option('libexecdir')
 gt_localedir  = get_option('localedir')
+gt_mandir     = get_option('mandir')
 gt_prefix     = get_option('prefix')
 
 gt_pkgdatadir = gt_datadir / gt_name
@@ -85,7 +87,7 @@ gt_schemadir = gt_datadir / 'glib-2.0' / 'schemas'
 
 gt_searchproviderdir = gt_datadir / 'gnome-shell' / 'search-providers'
 
-gt_nautilusextensiondir = gt_libdir / 'nautilus' / 'extensions-3.0'
+gt_nautilusextensiondir = gt_libdir / 'nautilus' / 'extensions-4'
 
 gt_dbusinterfacedir = gt_datadir / 'dbus-1' / 'interfaces'
 gt_dbusservicedir   = gt_datadir / 'dbus-1' / 'services'
@@ -107,7 +109,6 @@ pkg   = import('pkgconfig')
 # i18n
 
 gt_gettext_domain = gt_name
-po_dir = meson.current_source_dir() / 'po'
 
 # Compilers
 
@@ -159,20 +160,84 @@ config_h.set_quoted('VERSION', gt_version)
 config_h.set('ENABLE_DEBUG', enable_debug)
 config_h.set('ENABLE_SEARCH_PROVIDER', get_option('search_provider'))
 
-# FIXME AC_USE_SYSTEM_EXTENSIONS also supported non-gnu systems
-config_h.set10('_GNU_SOURCE', true)
+# Enable libc features
 
+libc_feature_defines = [
+  ['_GNU_SOURCE', '1'],
+  ['_POSIX_C_SOURCE', '200809L'],
+  ['_XOPEN_SOURCE', '700'],
+  ['_XOPEN_SOURCE_EXTENDED', '1'],
+]
 
-ver = glib_min_req_version.split('.')
-config_h.set('GLIB_VERSION_MIN_REQUIRED', '(G_ENCODE_VERSION(' + ver[0] + ',' + ver[1] + '))')
-ver = glib_max_allowed_version.split('.')
-config_h.set('GLIB_VERSION_MAX_ALLOWED', '(G_ENCODE_VERSION(' + ver[0] + ',' + ver[1] + '))')
+system = host_machine.system()
 
-ver = gtk_min_req_version.split('.')
-config_h.set('GDK_VERSION_MIN_REQUIRED', '(G_ENCODE_VERSION(' + ver[0] + ',' + ver[1] + '))')
+if system == 'freebsd'
+  # Defining _POSIX_C_SOURCE above makes freebsd not expose some functionality
+  # that's hidden behind __BSD_VISIBLE.  Not defininy any of the above however
+  # makes it expose verything.
 
-ver = gtk_max_allowed_version.split('.')
-config_h.set('GDK_VERSION_MAX_ALLOWED', '(G_ENCODE_VERSION(' + ver[0] + ',' + ver[1] + '))')
+  libc_feature_defines = []
+
+elif system == 'darwin'
+  # See issue #2592
+  libc_feature_defines += [
+    ['_DARWIN_C_SOURCE', '1'],
+  ]
+
+elif system == 'netbsd'
+  libc_feature_defines += [
+    ['_NETBSD_SOURCE', '1'],
+  ]
+
+elif system == 'openbsd'
+  libc_feature_defines += [
+    ['_BSD_SOURCE', '1'],
+  ]
+endif
+
+foreach f: libc_feature_defines
+  config_h.set(f[0], f[1])
+endforeach
+
+# Min/max version requirement flags
+
+minver = glib_min_req_version.split('.')
+maxver = glib_max_allowed_version.split('.')
+
+glib_version_cxxflags = [
+  '-DGLIB_VERSION_MIN_REQUIRED=(G_ENCODE_VERSION(' + minver[0] + ',' + minver[1] + '))',
+  '-DGLIB_VERSION_MAX_ALLOWED=(G_ENCODE_VERSION(' + maxver[0] + ',' + maxver[1] + '))',
+]
+
+minver = gtk_min_req_version.split('.')
+maxver = gtk_max_allowed_version.split('.')
+
+gtk_version_cxxflags = [
+  '-DGDK_VERSION_MIN_REQUIRED=(G_ENCODE_VERSION(' + minver[0] + ',' + minver[1] + '))',
+  '-DGDK_VERSION_MAX_ALLOWED=(G_ENCODE_VERSION(' + maxver[0] + ',' + maxver[1] + '))',
+]
+
+version_cxxflags = glib_version_cxxflags + gtk_version_cxxflags
+
+# Asserts must not be disabled
+
+assert(get_option('b_ndebug') == 'false', 'assertions may not be disabled')
+
+# LTO very much NOT supported
+
+assert(get_option('b_lto') == false, 'LTO not supported')
+
+# Check for functions
+
+libdl_dep = cxx.find_library('dl')
+
+check_dl_functions_required = [
+  'dlsym',
+]
+
+foreach func: check_dl_functions_required
+  assert(cxx.has_function(func, dependencies: libdl_dep), func + ' not found')
+endforeach
 
 # Compiler flags
 
@@ -295,11 +360,11 @@ add_project_arguments(global_cxxflags, language: 'cpp')
 
 vte_dep       = dependency(vte_req,        version: '>=' + vte_req_version)
 
-dconf_dep     = dependency('dconf',        version: '>=' + dconf_req_version)
 gio_dep       = dependency('gio-2.0',      version: '>=' + glib_req_version)
 gio_unix_dep  = dependency('gio-unix-2.0', version: '>=' + glib_req_version)
 glib_dep      = dependency('glib-2.0',     version: '>=' + glib_req_version)
 gtk_dep       = dependency('gtk+-3.0',     version: '>=' + gtk_req_version)
+libhandy_dep  = dependency('libhandy-1',   version: '>=' + libhandy_req_version)
 pcre2_dep     = dependency('libpcre2-8',   version: '>=' + pcre2_req_version)
 pthreads_dep  = dependency('threads')
 schemas_dep   = dependency('gsettings-desktop-schemas',
@@ -307,12 +372,12 @@ schemas_dep   = dependency('gsettings-desktop-schemas',
 uuid_dep      = dependency('uuid')
 
 if get_option('nautilus_extension')
-  libnautilus_extension_dep = dependency('libnautilus-extension', version: '>=' + libnautilus_ext_req_version,)
+  libnautilus_extension_dep = dependency('libnautilus-extension-4', version: '>=' + libnautilus_ext_req_version,)
 else
   libnautilus_extension_dep = dependency('', required: false,)
 endif
 
-if gtk_dep.get_pkgconfig_variable('targets').contains('x11')
+if gtk_dep.get_variable('targets').contains('x11')
   x11_dep = dependency('x11')
 else
   x11_dep = dependency('', required: false)
@@ -323,6 +388,7 @@ endif
 configure_file(
   output: 'config.h',
   configuration: config_h,
+  install: false,
 )
 
 # Utilities
@@ -333,8 +399,8 @@ xsltproc = find_program('xsltproc')
 # Subdirs
 
 subdir('src')
-subdir('data')
 subdir('po')
+subdir('data')
 
 if get_option('docs')
   subdir('help')
@@ -357,6 +423,7 @@ configure_file(
   input: 'Makefile.meson',
   output: '@BASENAME@',
   configuration: makefile_conf,
+  install: false,
 )
 
 # .gitignore everything in the build directory
@@ -386,5 +453,19 @@ output += '\n'
 output += '  Nautilus extension: ' + get_option('nautilus_extension').to_string() + '\n'
 output += '  Search provider:    ' + get_option('search_provider').to_string() + '\n'
 message(output)
+
+# Check stable/unstable status
+
+if (gt_minor_version % 2) != 0
+  if (gt_micro_version >= 99)
+    warning('This is a release candidate release!\n')
+  elif (gt_micro_version > 90)
+    warning('This is a beta release!\n')
+  else
+    warning('This is an unstable development release!\n')
+  endif
+else
+  message('This is a stable release.')
+endif
 
 # Done

@@ -1,4 +1,4 @@
-# Copyright © 2019, 2020, 2021 Christian Persch
+# Copyright © 2019, 2020, 2021, 2022 Christian Persch
 #
 # This programme is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
@@ -15,7 +15,45 @@
 
 src_inc = include_directories('.')
 
+# UI files
+
+ui_xsltproc_command = [
+  xsltproc,
+  '--nonet',
+  '-o', '@OUTPUT@',
+  '@INPUT@',
+]
+
+menubar_ui_mnemonics = custom_target(
+  'terminal-menubar-with-mnemonics.ui',
+  command: ui_xsltproc_command,
+  input: files(
+    '..' / 'data' / 'ui-filter-mnemonics.xslt',
+    'terminal-menubar.ui.in',
+  ),
+  install: false,
+  output: 'terminal-menubar-with-mnemonics.ui',
+)
+
+menubar_ui_nomnemonics = custom_target(
+  'terminal-menubar-without-mnemonics.ui',
+  command: ui_xsltproc_command,
+  input: files(
+    '..' / 'data' / 'ui-filter-no-mnemonics.xslt',
+    'terminal-menubar.ui.in',
+  ),
+  install: false,
+  output: 'terminal-menubar-without-mnemonics.ui',
+)
+
 # Common sources
+
+app_sources = files(
+  'terminal-accels.cc',
+  'terminal-accels.hh',
+  'terminal-app.cc',
+  'terminal-app.hh',
+)
 
 client_util_sources = files(
   'terminal-client-utils.cc',
@@ -37,10 +75,27 @@ dbus_sources = gnome.gdbus_codegen(
   object_manager: true,
 )
 
+egg_sources = files(
+  'eggshell.cc',
+  'eggshell.hh',
+)
+
 i18n_sources = files(
   'terminal-i18n.cc',
   'terminal-i18n.hh',
   'terminal-intl.hh',
+)
+
+marshal_sources = gnome.genmarshal(
+  'terminal-marshal',
+  internal: true,
+  install_header: false,
+  prefix: '_terminal_marshal',
+  sources: files(
+    'terminal-marshal.list',
+  ),
+  stdinc: true,
+  valist_marshallers: true,
 )
 
 misc_sources = files(
@@ -54,6 +109,21 @@ profiles_sources = files(
   'terminal-schemas.hh',
   'terminal-settings-list.cc',
   'terminal-settings-list.hh',
+)
+
+settings_dbus_sources = gnome.gdbus_codegen(
+  'terminal-settings-bridge-generated',
+  'org.gnome.Terminal.SettingsBridge.xml',
+  autocleanup: 'all',
+  install_header: false,
+  interface_prefix: gt_dns_name,
+  namespace: 'Terminal',
+  object_manager: false,
+)
+
+settings_utils_sources = files(
+  'terminal-settings-utils.cc',
+  'terminal-settings-utils.hh',
 )
 
 regex_sources = files(
@@ -85,47 +155,41 @@ version_sources = [configure_file(
   output: '@BASENAME@',
 )]
 
-# Server
+util_sources = files(
+  'terminal-util.cc',
+  'terminal-util.hh',
+)
 
-ui_xsltproc_command = [
-  xsltproc,
-  '--nonet',
-  '-o', '@OUTPUT@',
-  '@INPUT@',
+# Flags
+
+common_cxxflags = version_cxxflags + [
+  '-DTERMINAL_COMPILATION',
+  '-DTERM_PREFIX="@0@"'.format(gt_prefix),
+  '-DTERM_BINDIR="@0@"'.format(gt_prefix / gt_bindir),
+  '-DTERM_DATADIR="@0@"'.format(gt_prefix / gt_datadir),
+  '-DTERM_LIBEXECDIR="@0@"'.format(gt_prefix / gt_libexecdir),
+  '-DTERM_LOCALEDIR="@0@"'.format(gt_prefix / gt_localedir),
+  '-DTERM_PKGDATADIR="@0@"'.format(gt_prefix / gt_pkgdatadir),
+  '-DTERM_PKGLIBDIR="@0@"'.format(gt_prefix / gt_pkglibdir),
+  '-DVTE_DISABLE_DEPRECATION_WARNINGS',
 ]
 
-menubar_ui_mnemonics = custom_target(
-  'terminal-menubar-with-mnemonics.ui',
-  command: ui_xsltproc_command,
-  input: files(
-    '..' / 'data' / 'ui-filter-mnemonics.xslt',
-    'terminal-menubar.ui.in',
-  ),
+# Server
+
+server_resources_sources = gnome.compile_resources(
+  'terminal-server-resources',
+  'terminal.gresource.xml',
+  c_name: 'terminal',
+  dependencies: [
+    menubar_ui_mnemonics,
+    menubar_ui_nomnemonics,
+  ],
+  export: false,
   install: false,
-  output: 'terminal-menubar-with-mnemonics.ui',
 )
 
-menubar_ui_nomnemonics = custom_target(
-  'terminal-menubar-without-mnemonics.ui',
-  command: ui_xsltproc_command,
-  input: files(
-    '..' / 'data' / 'ui-filter-no-mnemonics.xslt',
-    'terminal-menubar.ui.in',
-  ),
-  install: false,
-  output: 'terminal-menubar-without-mnemonics.ui',
-)
-
-server_sources = client_util_sources + debug_sources + dbus_sources + i18n_sources + misc_sources + profiles_sources + regex_sources + types_sources + version_sources + files(
-  'eggshell.cc',
-  'eggshell.hh',
-  'profile-editor.cc',
-  'profile-editor.hh',
+server_sources = app_sources + client_util_sources + debug_sources + dbus_sources + egg_sources + i18n_sources + marshal_sources + misc_sources + profiles_sources + regex_sources + server_resources_sources + settings_dbus_sources + settings_utils_sources + types_sources + util_sources + version_sources + files(
   'server.cc',
-  'terminal-accels.cc',
-  'terminal-accels.hh',
-  'terminal-app.cc',
-  'terminal-app.hh',
   'terminal-enums.hh',
   'terminal-gdbus.cc',
   'terminal-gdbus.hh',
@@ -142,43 +206,20 @@ server_sources = client_util_sources + debug_sources + dbus_sources + i18n_sourc
   'terminal-notebook.cc',
   'terminal-notebook.hh',
   'terminal-pcre2.hh',
-  'terminal-prefs.cc',
-  'terminal-prefs.hh',
+  'terminal-prefs-process.cc',
+  'terminal-prefs-process.hh',
   'terminal-screen-container.cc',
   'terminal-screen-container.hh',
   'terminal-screen.cc',
   'terminal-screen.hh',
   'terminal-search-popover.cc',
   'terminal-search-popover.hh',
+  'terminal-settings-bridge-impl.cc',
+  'terminal-settings-bridge-impl.hh',
   'terminal-tab-label.cc',
   'terminal-tab-label.hh',
-  'terminal-util.cc',
-  'terminal-util.hh',
   'terminal-window.cc',
   'terminal-window.hh',
-)
-
-server_sources += gnome.compile_resources(
-  'terminal-resources',
-  'terminal.gresource.xml',
-  c_name: 'terminal',
-  dependencies: [
-    menubar_ui_mnemonics,
-    menubar_ui_nomnemonics,
-  ],
-  export: false,
-)
-
-server_sources += gnome.genmarshal(
-  'terminal-marshal',
-  internal: true,
-  install_header: false,
-  prefix: '_terminal_marshal',
-  sources: files(
-    'terminal-marshal.list',
-  ),
-  stdinc: true,
-  valist_marshallers: true,
 )
 
 if get_option('search_provider')
@@ -188,9 +229,13 @@ if get_option('search_provider')
     'terminal-search-provider.hh',
   )
 
+  search_provider_dbus_interface = files(
+    'org.gnome.ShellSearchProvider2.xml',
+  )
+
   server_sources += gnome.gdbus_codegen(
     'terminal-search-provider-gdbus-generated',
-    gt_prefix / gt_dbusinterfacedir / 'org.gnome.ShellSearchProvider2.xml',
+    search_provider_dbus_interface,
     autocleanup: 'none',
     install_header: false,
     interface_prefix: 'org.gnome.Shell',
@@ -204,19 +249,17 @@ server_incs = [
   src_inc,
 ]
 
-server_cxxflags = [
-  '-DTERMINAL_COMPILATION',
-  '-DVTE_DISABLE_DEPRECATION_WARNINGS',
-  '-DTERM_LOCALEDIR="@0@"'.format(gt_prefix / gt_localedir),
-  '-DTERM_PKGLIBDIR="@0@"'.format(gt_prefix / gt_pkglibdir),
+server_cxxflags = common_cxxflags + [
+  '-DTERMINAL_SERVER',
 ]
 
 server_deps = [
-  dconf_dep,
   gio_dep,
   gio_unix_dep,
   glib_dep,
   gtk_dep,
+  libdl_dep,
+  libhandy_dep,
   pcre2_dep,
   pthreads_dep,
   schemas_dep,
@@ -232,6 +275,7 @@ server = executable(
   include_directories: server_incs,
   install: true,
   install_dir: gt_prefix / gt_libexecdir,
+  install_tag: 'runtime',
   sources: server_sources,
 )
 
@@ -248,6 +292,7 @@ configure_file(
   configuration: server_conf,
   install: true,
   install_dir: gt_prefix / gt_dbusservicedir,
+  install_tag: 'runtime',
 )
 
 configure_file(
@@ -255,7 +300,8 @@ configure_file(
   output: gt_name + '-server.service',
   configuration: server_conf,
   install: true,
-  install_dir: gt_prefix / gt_systemduserdir
+  install_dir: gt_prefix / gt_systemduserdir,
+  install_tag: 'runtime',
 )
 
 # Search provider
@@ -267,12 +313,51 @@ if get_option('search_provider')
   install_data(
     provider_ini,
     install_dir: gt_prefix / gt_searchproviderdir,
+    install_tag: 'runtime',
   )
 endif # option 'search_provider'
 
+# Preferences
+
+prefs_resources_sources = gnome.compile_resources(
+  'terminal-prefs-resources',
+  'prefs.gresource.xml',
+  c_name: 'terminal',
+  export: false,
+  install: false,
+)
+
+prefs_main_sources = app_sources + client_util_sources + debug_sources + i18n_sources + marshal_sources + misc_sources + prefs_resources_sources + profiles_sources + settings_dbus_sources + settings_utils_sources + types_sources + util_sources + version_sources + files(
+  'prefs-main.cc',
+  'profile-editor.cc',
+  'profile-editor.hh',
+  'terminal-prefs.cc',
+  'terminal-prefs.hh',
+  'terminal-settings-bridge-backend.cc',
+  'terminal-settings-bridge-backend.hh',
+)
+
+prefs_main_cxxflags = common_cxxflags + [
+  '-DTERMINAL_PREFERENCES',
+]
+
+prefs_main_incs = server_incs
+prefs_main_deps = server_deps
+
+prefs_main = executable(
+  gt_name + '-preferences',
+  cpp_args: prefs_main_cxxflags,
+  include_directories: prefs_main_incs,
+  dependencies: prefs_main_deps,
+  install: true,
+  install_dir: gt_prefix / gt_libexecdir,
+  install_tag: 'runtime',
+  sources: prefs_main_sources,
+)
+
 # Legacy client
 
-client_sources = client_util_sources + debug_sources + dbus_sources + i18n_sources + profiles_sources + types_sources + files(
+client_sources = client_util_sources + debug_sources + dbus_sources + i18n_sources + profiles_sources + settings_utils_sources + types_sources + files(
   'terminal-options.cc',
   'terminal-options.hh',
   'terminal.cc',
@@ -288,17 +373,11 @@ client_incs = [
   src_inc,
 ]
 
-client_cxxflags = [
-  '-DTERMINAL_COMPILATION',
+client_cxxflags = common_cxxflags + [
   '-DTERMINAL_CLIENT',
-  '-DTERM_DATADIR="@0@"'.format(gt_prefix / gt_datadir),
-  '-DTERM_LOCALEDIR="@0@"'.format(gt_prefix / gt_localedir),
-  '-DTERM_PKGDATADIR="@0@"'.format(gt_prefix / gt_pkgdatadir),
-  '-DTERM_PKGLIBDIR="@0@"'.format(gt_prefix / gt_pkglibdir),
 ]
 
 client_deps = [
-  dconf_dep,
   gio_dep,
   gio_unix_dep,
   glib_dep,
@@ -314,6 +393,7 @@ client = executable(
   include_directories: client_incs,
   dependencies: client_deps,
   install: true,
+  install_tag: 'runtime',
   sources: client_sources,
 )
 
@@ -322,6 +402,7 @@ client = executable(
 install_data(
   gt_dns_name + '.gschema.xml',
   install_dir: gt_prefix / gt_schemadir,
+  install_tag: 'runtime',
 )
 
 meson.add_install_script(
@@ -339,6 +420,7 @@ reference_schemas = custom_target(
   ],
   install: true,
   install_dir: gt_prefix / gt_pkglibdir,
+  install_tag: 'runtime',
   output: 'gschemas.compiled',
 )
 
@@ -357,7 +439,8 @@ if get_option('nautilus_extension')
     src_inc,
   ]
 
-  nautilus_cxxflags = [
+  nautilus_cxxflags = glib_version_cxxflags + [
+    '-DTERMINAL_NAUTILUS',
     '-DTERM_LOCALEDIR="@0@"'.format(gt_prefix / gt_localedir),
   ]
 
@@ -379,6 +462,7 @@ if get_option('nautilus_extension')
      include_directories: nautilus_incs,
      install: true,
      install_dir: gt_prefix / gt_nautilusextensiondir,
+     install_tag: 'runtime',
      link_args: nautilus_ldflags,
      link_depends: nautilus_map,
      sources: nautilus_sources,

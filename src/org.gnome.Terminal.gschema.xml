@@ -129,7 +129,7 @@
 
   <schema id="org.gnome.Terminal.Legacy.Profile">
     <key name="visible-name" type="s">
-      <!-- Translators: Keep single quote please! -->
+      <!-- Translators: This needs to be parsed as a GVariant string, so keep the regular single quotes around the string as-is, and do not add extra quotes. -->
       <default l10n="messages" context="visible-name">'Unnamed'</default>
       <summary>Human-readable name of the profile</summary>
       <description>Human-readable name of the profile.</description>
@@ -220,7 +220,8 @@
     </key>
     <key name="word-char-exceptions" type="ms">
       <default>nothing</default>
-      <summary>List of ASCII punctuation characters that are not to be treated as part of a word when doing word-wise selection</summary>
+      <summary>List of punctuation characters that are treated as word characters</summary>
+      <description>By default, when doing word-wise selection, most punctuation breaks up word boundaries. This list of exceptions will instead be treated as part of the word.</description>
     </key>
     <key name="default-size-columns" type="i">
       <range min="16" max="511" />
@@ -247,6 +248,11 @@
       <default>false</default>
       <summary>Whether an unlimited number of lines should be kept in scrollback</summary>
       <description>If true, scrollback lines will never be discarded. The scrollback history is stored on disk temporarily, so this may cause the system to run out of disk space if there is a lot of output to the terminal.</description>
+    </key>
+    <key name="scroll-on-insert" type="b">
+      <default>true</default>
+      <summary>Whether to scroll to the bottom when text is inserted</summary>
+      <description>If true, the terminal will scroll to the bottom when text is inserted by paste.</description>
     </key>
     <key name="scroll-on-keystroke" type="b">
       <default>true</default>
@@ -704,6 +710,13 @@
       <summary>Whether new tabs should open next to the current one or at the last position</summary>
     </key>
 
+    <!-- Default terminal -->
+
+    <key name="always-check-default-terminal" type="b">
+      <default>true</default>
+      <summary>Always check whether GNOME Terminal is the default terminal</summary>
+    </key>
+
     <!-- Note that changing the following settings will only take effect
          when gnome-terminal-server is restarted.
     -->
@@ -720,9 +733,9 @@
 
    <child name="keybindings" schema="org.gnome.Terminal.Legacy.Keybindings" />
 
-    <key name="schema-version" type="u">
-      <default>3</default>
-    </key>
+   <key name="schema-version" type="u">
+     <default>3</default>
+   </key>
 
   </schema>
 

@@ -318,20 +318,14 @@ factory_proxy_new (TerminalOptions *options,
                                              error);
 }
 
-static void
-handle_show_preferences (TerminalOptions *options,
-                         const char *service_name)
+static bool
+handle_show_preferences_remote (TerminalOptions *options,
+                                const char *service_name)
 {
   gs_free_error GError *error = nullptr;
   gs_unref_object GDBusConnection *bus = nullptr;
   gs_free char *object_path = nullptr;
   GVariantBuilder builder;
-
-  bus = g_bus_get_sync (G_BUS_TYPE_SESSION, nullptr, &error);
-  if (bus == nullptr) {
-    terminal_printerr ("Failed to get session bus: %s\n", error->message);
-    return;
-  }
 
   /* For reasons (!?), the org.gtk.Actions interface's object path
    * is derived from the service name, i.e. for service name
@@ -339,9 +333,15 @@ handle_show_preferences (TerminalOptions *options,
    * This means that without the name (like when given only the unique name),
    * we cannot activate the action.
    */
-  if (g_dbus_is_unique_name(service_name)) {
-    terminal_printerr ("Cannot call this function from within gnome-terminal.\n");
-    return;
+  if (!service_name ||
+      g_dbus_is_unique_name(service_name)) {
+    return false;
+  }
+
+  bus = g_bus_get_sync (G_BUS_TYPE_SESSION, nullptr, &error);
+  if (bus == nullptr) {
+    terminal_printerr ("Failed to get session bus: %s\n", error->message);
+    return true;
   }
 
   object_path = g_strdelimit (g_strdup_printf (".%s", service_name), ".", '/');
@@ -354,6 +354,9 @@ handle_show_preferences (TerminalOptions *options,
   if (options->startup_id)
     g_variant_builder_add (&builder, "{sv}",
                            "desktop-startup-id", g_variant_new_string (options->startup_id));
+  if (options->activation_token)
+    g_variant_builder_add (&builder, "{sv}",
+                           "activation-token", g_variant_new_string (options->activation_token));
   g_variant_builder_close (&builder);
 
   if (!g_dbus_connection_call_sync (bus,
@@ -368,7 +371,31 @@ handle_show_preferences (TerminalOptions *options,
                                     nullptr /* cancelleable */,
                                     &error)) {
     terminal_printerr ("Activate call failed: %s\n", error->message);
+    return true;
+  }
+
+  return true;
+}
+
+static void
+handle_show_preferences(TerminalOptions *options,
+                        const char *service_name)
+{
+  // First try remoting to the specified server
+  if (handle_show_preferences_remote(options, service_name))
     return;
+
+  // If that isn't possible, launch the prefs binary directly
+  auto launcher = g_subprocess_launcher_new(GSubprocessFlags(0));
+  gs_free auto exe = terminal_client_get_file_uninstalled(TERM_BINDIR,
+                                                          TERM_LIBEXECDIR,
+                                                          TERMINAL_PREFERENCES_BINARY_NAME,
+                                                          G_FILE_TEST_IS_EXECUTABLE);
+  char *argv[2] = {exe, nullptr};
+
+  gs_free_error GError* error = nullptr;
+  if (!g_subprocess_launcher_spawnv(launcher, argv, &error)) {
+    terminal_printerr ("Failed to launch preferences: %s\n", error->message);
   }
 }
 
@@ -430,6 +457,7 @@ handle_options (TerminalOptions *options,
           terminal_client_append_create_instance_options (&builder,
                                                           options->display_name,
                                                           options->startup_id,
+                                                          options->activation_token,
                                                           iw->geometry,
                                                           iw->role,
                                                           it->profile ? it->profile : options->default_profile,

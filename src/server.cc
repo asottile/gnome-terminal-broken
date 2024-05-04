@@ -25,6 +25,7 @@
 #include <locale.h>
 #include <pthread.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #include <unistd.h>
 #include <sys/resource.h>
@@ -45,6 +46,36 @@
 static char *app_id = nullptr;
 
 #define INACTIVITY_TIMEOUT (100 /* ms */)
+
+
+#include <dlfcn.h>
+
+// We need to block the pk-gtk module that tries to automagically
+// install fonts.
+// Since there appears to be no way to blocklist a gtk module,
+// we resort to this gross hack.
+
+extern "C" __attribute__((__visibility__("default"))) GModule*
+g_module_open (char const* file_name,
+               GModuleFlags flags);
+
+GModule*
+g_module_open (char const* file_name,
+               GModuleFlags flags)
+{
+  static decltype(&g_module_open) _g_module_open;
+  if (!_g_module_open)
+    _g_module_open = reinterpret_cast<decltype(_g_module_open)>(dlsym(RTLD_NEXT, "g_module_open"));
+
+  if (file_name) {
+    gs_free auto basename = g_path_get_basename(file_name);
+    if (basename && strstr(basename, "pk-gtk-module")) {
+      return _g_module_open("/dev/null", flags);
+    }
+  }
+
+  return _g_module_open(file_name, flags);
+}
 
 static gboolean
 option_app_id_cb (const gchar *option_name,
@@ -122,6 +153,7 @@ init_server (int argc,
   terminal_i18n_init (TRUE);
 
   g_unsetenv ("CHARSET");
+  g_unsetenv ("OUTPUT_CHARSET");
   const char *charset;
   if (!g_get_charset (&charset)) {
     g_printerr ("Non UTF-8 locale (%s) is not supported!\n", charset);
@@ -157,15 +189,17 @@ init_server (int argc,
       g_printerr ("Failed to parse arguments: %s\n", error->message);
       g_error_free (error);
     }
+
     return _EXIT_FAILURE_GTK_INIT;
   }
 
   if (!increase_rlimit_nofile ()) {
-    g_printerr ("Failed to increase RLIMIT_NOFILE: %m\n");
+    auto const errsv = errno;
+    g_printerr ("Failed to increase RLIMIT_NOFILE: %s\n", g_strerror(errsv));
   }
 
   /* Now we can create the app */
-  GApplication *app = terminal_app_new (app_id);
+  auto const app = terminal_app_new (app_id, G_APPLICATION_IS_SERVICE, nullptr);
   g_free (app_id);
   app_id = nullptr;
 

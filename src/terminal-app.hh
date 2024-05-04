@@ -46,7 +46,9 @@ typedef struct _TerminalApp TerminalApp;
 
 GType terminal_app_get_type (void);
 
-GApplication *terminal_app_new (const char *app_id);
+GApplication *terminal_app_new (const char *app_id,
+                                GApplicationFlags flags,
+                                GSettingsBackend* backend);
 
 #define terminal_app_get (TerminalApp *) g_application_get_default
 
@@ -58,7 +60,8 @@ GdkAtom *terminal_app_get_clipboard_targets (TerminalApp *app,
 
 void terminal_app_edit_preferences (TerminalApp *app,
                                     GSettings   *profile,
-                                    const char  *widget_name);
+                                    const char  *widget_name,
+                                    unsigned timestamp);
 
 char *terminal_app_new_profile (TerminalApp *app,
                                 GSettings   *default_base_profile,
@@ -109,6 +112,8 @@ typedef enum {
   TERMINAL_PROXY_SOCKS = 3,
 } TerminalProxyProtocol;
 
+GSettingsBackend* terminal_app_get_settings_backend(TerminalApp* app);
+
 GSettingsSchemaSource* terminal_app_get_schema_source(TerminalApp* app);
 
 GSettings *terminal_app_get_global_settings (TerminalApp *app);
@@ -123,6 +128,14 @@ GSettings *terminal_app_get_proxy_settings_for_protocol(TerminalApp *app,
 GSettings *terminal_app_get_gtk_debug_settings (TerminalApp *app);
 
 PangoFontDescription *terminal_app_get_system_font (TerminalApp *app);
+
+gboolean terminal_app_is_default_terminal(TerminalApp* app);
+
+gboolean terminal_app_get_ask_default_terminal(TerminalApp* app);
+
+void terminal_app_unset_ask_default_terminal(TerminalApp* app);
+
+void terminal_app_make_default_terminal(TerminalApp* app);
 
 G_END_DECLS
 

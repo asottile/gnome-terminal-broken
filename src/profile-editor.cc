@@ -566,6 +566,17 @@ profile_palette_notify_colorpickers_cb (GSettings *profile,
 }
 
 static void
+profile_scrollback_warning_update_cb (GSettings *profile,
+                                      const char *key,
+                                      GtkWidget *infobar)
+{
+  gboolean unlimited = g_settings_get_boolean (profile, TERMINAL_PROFILE_SCROLLBACK_UNLIMITED_KEY);
+  gint lines = g_settings_get_int (profile, TERMINAL_PROFILE_SCROLLBACK_LINES_KEY);
+
+  gtk_widget_set_visible (infobar, unlimited || lines >= 1000000);
+}
+
+static void
 custom_command_entry_changed_cb (GtkEntry *entry)
 {
   const char *command;
@@ -741,7 +752,6 @@ typedef struct {
 
 /* These MUST be sorted by charset so that bsearch can work! */
 static const EncodingEntry encodings[] = {
-  { "ARMSCII-8",      N_("Armenian"),            GROUP_OBSOLETE },
   { "BIG5",           N_("Chinese Traditional"), GROUP_CJKV },
   { "BIG5-HKSCS",     N_("Chinese Traditional"), GROUP_CJKV },
   { "CP866",          N_("Cyrillic/Russian"),    GROUP_OBSOLETE },
@@ -751,15 +761,12 @@ static const EncodingEntry encodings[] = {
   { "GB18030",        N_("Chinese Simplified"),  GROUP_CJKV },
   { "GB2312",         N_("Chinese Simplified"),  GROUP_CJKV },
   { "GBK",            N_("Chinese Simplified"),  GROUP_CJKV },
-  { "GEORGIAN-PS",    N_("Georgian"),            GROUP_OBSOLETE },
   { "IBM850",         N_("Western"),             GROUP_OBSOLETE },
   { "IBM852",         N_("Central European"),    GROUP_OBSOLETE },
   { "IBM855",         N_("Cyrillic"),            GROUP_OBSOLETE },
   { "IBM857",         N_("Turkish"),             GROUP_OBSOLETE },
   { "IBM862",         N_("Hebrew"),              GROUP_OBSOLETE },
   { "IBM864",         N_("Arabic"),              GROUP_OBSOLETE },
-  { "ISO-2022-JP",    N_("Japanese"),            GROUP_CJKV },
-  { "ISO-2022-KR",    N_("Korean"),              GROUP_CJKV },
   { "ISO-8859-1",     N_("Western"),             GROUP_OBSOLETE },
   { "ISO-8859-10",    N_("Nordic"),              GROUP_OBSOLETE },
   { "ISO-8859-13",    N_("Baltic"),              GROUP_OBSOLETE },
@@ -775,7 +782,6 @@ static const EncodingEntry encodings[] = {
   { "ISO-8859-8",     N_("Hebrew Visual"),       GROUP_OBSOLETE },
   { "ISO-8859-8-I",   N_("Hebrew"),              GROUP_OBSOLETE },
   { "ISO-8859-9",     N_("Turkish"),             GROUP_OBSOLETE },
-  { "ISO-IR-111",     N_("Cyrillic"),            GROUP_OBSOLETE },
   { "KOI8-R",         N_("Cyrillic"),            GROUP_OBSOLETE },
   { "KOI8-U",         N_("Cyrillic/Ukrainian"),  GROUP_OBSOLETE },
   { "MAC-CYRILLIC",   N_("Cyrillic"),            GROUP_OBSOLETE },
@@ -833,6 +839,10 @@ append_encodings_for_group (GtkTreeStore *store,
 
   for (guint i = 0; i < G_N_ELEMENTS (encodings); i++) {
     if (encodings[i].group != group)
+      continue;
+
+    /* Skip encodings not supported by ICU */
+    if (terminal_util_translate_encoding (encodings[i].charset) == nullptr)
       continue;
 
     gs_free char *name = g_strdup_printf ("%s " EM_DASH " %s",
@@ -1400,6 +1410,12 @@ profile_prefs_load (const char *uuid, GSettings *profile)
                                "active",
 			       GSettingsBindFlags(G_SETTINGS_BIND_GET |
 						  G_SETTINGS_BIND_SET));
+  profile_prefs_settings_bind (profile, TERMINAL_PROFILE_SCROLL_ON_INSERT_KEY,
+                               gtk_builder_get_object (builder,
+                                                       "scroll-on-insert-checkbutton"),
+                               "active",
+			       GSettingsBindFlags(G_SETTINGS_BIND_GET |
+						  G_SETTINGS_BIND_SET));
   profile_prefs_settings_bind (profile, TERMINAL_PROFILE_USE_SYSTEM_FONT_KEY,
                                gtk_builder_get_object (builder,
                                                        "custom-font-checkbutton"),
@@ -1467,6 +1483,16 @@ profile_prefs_load (const char *uuid, GSettings *profile)
                                         gtk_builder_get_object (builder, "palette-box"),
                                         "sensitive",
                                         FALSE);
+
+  /* Scrolling options */
+  w = (GtkWidget *) gtk_builder_get_object (builder, "scrollback-warning");
+  profile_scrollback_warning_update_cb (profile, nullptr, w);
+  profile_prefs_signal_connect (profile, "changed::" TERMINAL_PROFILE_SCROLLBACK_UNLIMITED_KEY,
+                                G_CALLBACK (profile_scrollback_warning_update_cb),
+                                w);
+  profile_prefs_signal_connect (profile, "changed::" TERMINAL_PROFILE_SCROLLBACK_LINES_KEY,
+                                G_CALLBACK (profile_scrollback_warning_update_cb),
+                                w);
 
   /* Compatibility options */
   w = (GtkWidget *) gtk_builder_get_object (builder, "encoding-combobox");
