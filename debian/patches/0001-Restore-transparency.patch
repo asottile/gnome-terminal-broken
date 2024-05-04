@@ -36,10 +36,10 @@ https://bugzilla.gnome.org/show_bug.cgi?id=730016
  6 files changed, 228 insertions(+), 1 deletion(-)
 
 diff --git a/src/org.gnome.Terminal.gschema.xml b/src/org.gnome.Terminal.gschema.xml
-index 26b96ac..9c16b53 100644
+index eb2dd00..c97bf62 100644
 --- a/src/org.gnome.Terminal.gschema.xml
 +++ b/src/org.gnome.Terminal.gschema.xml
-@@ -349,6 +349,20 @@
+@@ -355,6 +355,20 @@
        <default>'narrow'</default>
        <summary>Whether ambiguous-width characters are narrow or wide when using UTF-8 encoding</summary>
      </key>
@@ -61,7 +61,7 @@ index 26b96ac..9c16b53 100644
  
    <!-- Keybinding settings -->
 diff --git a/src/preferences.ui b/src/preferences.ui
-index d1aca7b..c01f16b 100644
+index 6ca5502..f7171ef 100644
 --- a/src/preferences.ui
 +++ b/src/preferences.ui
 @@ -113,6 +113,11 @@
@@ -76,7 +76,7 @@ index d1aca7b..c01f16b 100644
    <object class="GtkListStore" id="model1">
      <columns>
        <!-- column-name gchararray -->
-@@ -1402,6 +1407,122 @@
+@@ -1436,6 +1441,122 @@
                                              <property name="position">1</property>
                                            </packing>
                                          </child>
@@ -200,10 +200,10 @@ index d1aca7b..c01f16b 100644
                                      </child>
                                    </object>
 diff --git a/src/profile-editor.cc b/src/profile-editor.cc
-index a99fb89..a88e72d 100644
+index 542b2ed..75c9108 100644
 --- a/src/profile-editor.cc
 +++ b/src/profile-editor.cc
-@@ -1492,6 +1492,23 @@ profile_prefs_load (const char *uuid, GSettings *profile)
+@@ -1518,6 +1518,23 @@ profile_prefs_load (const char *uuid, GSettings *profile)
  			       GSettingsBindFlags(G_SETTINGS_BIND_GET |
  						  G_SETTINGS_BIND_SET));
    gtk_widget_set_visible (w, (vte_get_feature_flags() & VTE_FEATURE_FLAG_SIXEL) != 0);
@@ -228,10 +228,10 @@ index a99fb89..a88e72d 100644
  
  /* Called once per Preferences window, to destroy stuff that doesn't depend on the profile being edited */
 diff --git a/src/terminal-schemas.hh b/src/terminal-schemas.hh
-index b146ba8..b93bd02 100644
+index 4e66124..d90771e 100644
 --- a/src/terminal-schemas.hh
 +++ b/src/terminal-schemas.hh
-@@ -78,6 +78,10 @@ G_BEGIN_DECLS
+@@ -79,6 +79,10 @@ G_BEGIN_DECLS
  #define TERMINAL_PROFILE_VISIBLE_NAME_KEY               "visible-name"
  #define TERMINAL_PROFILE_WORD_CHAR_EXCEPTIONS_KEY       "word-char-exceptions"
  
@@ -243,10 +243,10 @@ index b146ba8..b93bd02 100644
  #define TERMINAL_SETTING_CONTEXT_INFO_KEY               "context-info"
  #define TERMINAL_SETTING_DEFAULT_SHOW_MENUBAR_KEY       "default-show-menubar"
 diff --git a/src/terminal-screen.cc b/src/terminal-screen.cc
-index 0ef74f3..a987f26 100644
+index 89149d8..6d7166b 100644
 --- a/src/terminal-screen.cc
 +++ b/src/terminal-screen.cc
-@@ -718,6 +718,14 @@ terminal_screen_class_init (TerminalScreenClass *klass)
+@@ -722,6 +722,14 @@ terminal_screen_class_init (TerminalScreenClass *klass)
  
    g_type_class_add_private (object_class, sizeof (TerminalScreenPrivate));
  
@@ -261,7 +261,7 @@ index 0ef74f3..a987f26 100644
    n_url_regexes = G_N_ELEMENTS (url_regex_patterns);
    precompile_regexes (url_regex_patterns, n_url_regexes, &url_regexes, &url_regex_flavors);
    n_extra_regexes = G_N_ELEMENTS (extra_regex_patterns);
-@@ -1112,7 +1120,10 @@ terminal_screen_profile_changed_cb (GSettings     *profile,
+@@ -1116,7 +1124,10 @@ terminal_screen_profile_changed_cb (GSettings     *profile,
        prop_name == I_(TERMINAL_PROFILE_HIGHLIGHT_COLORS_SET_KEY) ||
        prop_name == I_(TERMINAL_PROFILE_HIGHLIGHT_BACKGROUND_COLOR_KEY) ||
        prop_name == I_(TERMINAL_PROFILE_HIGHLIGHT_FOREGROUND_COLOR_KEY) ||
@@ -273,7 +273,7 @@ index 0ef74f3..a987f26 100644
      update_color_scheme (screen);
  
    if (!prop_name || prop_name == I_(TERMINAL_PROFILE_AUDIBLE_BELL_KEY))
-@@ -1198,6 +1209,9 @@ update_color_scheme (TerminalScreen *screen)
+@@ -1205,6 +1216,9 @@ update_color_scheme (TerminalScreen *screen)
    GdkRGBA *highlight_bgp = nullptr, *highlight_fgp = nullptr;
    GtkStyleContext *context;
    gboolean use_theme_colors;
@@ -283,7 +283,7 @@ index 0ef74f3..a987f26 100644
  
    context = gtk_widget_get_style_context (widget);
    gtk_style_context_get_color (context, gtk_style_context_get_state (context), &theme_fg);
-@@ -1240,6 +1254,31 @@ update_color_scheme (TerminalScreen *screen)
+@@ -1247,6 +1261,31 @@ update_color_scheme (TerminalScreen *screen)
      }
  
    colors = terminal_g_settings_get_rgba_palette (priv->profile, TERMINAL_PROFILE_PALETTE_KEY, &n_colors);
@@ -315,7 +315,7 @@ index 0ef74f3..a987f26 100644
    vte_terminal_set_colors (VTE_TERMINAL (screen), &fg, &bg,
                             colors, n_colors);
    vte_terminal_set_color_bold (VTE_TERMINAL (screen), boldp);
-@@ -1247,6 +1286,10 @@ update_color_scheme (TerminalScreen *screen)
+@@ -1254,6 +1293,10 @@ update_color_scheme (TerminalScreen *screen)
    vte_terminal_set_color_cursor_foreground (VTE_TERMINAL (screen), cursor_fgp);
    vte_terminal_set_color_highlight (VTE_TERMINAL (screen), highlight_bgp);
    vte_terminal_set_color_highlight_foreground (VTE_TERMINAL (screen), highlight_fgp);
@@ -327,10 +327,10 @@ index 0ef74f3..a987f26 100644
  
  static void
 diff --git a/src/terminal-window.cc b/src/terminal-window.cc
-index 60f4950..269514f 100644
+index 36eb7ce..ecc2721 100644
 --- a/src/terminal-window.cc
 +++ b/src/terminal-window.cc
-@@ -1963,6 +1963,26 @@ terminal_window_realize (GtkWidget *widget)
+@@ -2003,6 +2003,26 @@ terminal_window_realize (GtkWidget *widget)
    terminal_window_update_size (window);
  }
  
@@ -357,7 +357,7 @@ index 60f4950..269514f 100644
  static gboolean
  terminal_window_state_event (GtkWidget            *widget,
                               GdkEventWindowState  *event)
-@@ -2133,6 +2153,8 @@ terminal_window_init (TerminalWindow *window)
+@@ -2173,6 +2193,8 @@ terminal_window_init (TerminalWindow *window)
    };
    TerminalWindowPrivate *priv;
    TerminalApp *app;
@@ -366,7 +366,7 @@ index 60f4950..269514f 100644
    GSettings *gtk_debug_settings;
    GtkWindowGroup *window_group;
    //  GtkAccelGroup *accel_group;
-@@ -2148,6 +2170,11 @@ terminal_window_init (TerminalWindow *window)
+@@ -2188,6 +2210,11 @@ terminal_window_init (TerminalWindow *window)
  
    gtk_widget_init_template (GTK_WIDGET (window));
  
@@ -378,7 +378,7 @@ index 60f4950..269514f 100644
    uuid_generate (u);
    uuid_unparse (u, uuidstr);
    priv->uuid = g_strdup (uuidstr);
-@@ -2296,6 +2323,7 @@ terminal_window_class_init (TerminalWindowClass *klass)
+@@ -2361,6 +2388,7 @@ terminal_window_class_init (TerminalWindowClass *klass)
  
    widget_class->show = terminal_window_show;
    widget_class->realize = terminal_window_realize;

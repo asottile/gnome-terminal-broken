@@ -8,7 +8,7 @@ Subject: _support_apturl
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/terminal-regex.hh b/src/terminal-regex.hh
-index 465df77..b74b956 100644
+index 6fcc0f9..10100b8 100644
 --- a/src/terminal-regex.hh
 +++ b/src/terminal-regex.hh
 @@ -153,6 +153,6 @@

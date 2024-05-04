@@ -68,10 +68,10 @@ index 6d85190..cedb1d9 100644
  
  static void
 diff --git a/src/terminal-screen.cc b/src/terminal-screen.cc
-index 85ae885..4e004c4 100644
+index 8311b56..f779c9e 100644
 --- a/src/terminal-screen.cc
 +++ b/src/terminal-screen.cc
-@@ -108,6 +108,8 @@ struct _TerminalScreenPrivate
+@@ -112,6 +112,8 @@ struct _TerminalScreenPrivate
    gboolean exec_on_realize;
    guint idle_exec_source;
    ExecData *exec_data;
@@ -80,7 +80,7 @@ index 85ae885..4e004c4 100644
  };
  
  enum
-@@ -123,6 +125,8 @@ enum {
+@@ -127,6 +129,8 @@ enum {
    PROP_0,
    PROP_PROFILE,
    PROP_TITLE,
@@ -89,7 +89,7 @@ index 85ae885..4e004c4 100644
  };
  
  enum
-@@ -616,6 +620,12 @@ terminal_screen_get_property (GObject *object,
+@@ -620,6 +624,12 @@ terminal_screen_get_property (GObject *object,
        case PROP_TITLE:
          g_value_set_string (value, terminal_screen_get_title (screen));
          break;
@@ -102,7 +102,7 @@ index 85ae885..4e004c4 100644
        default:
          G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
          break;
-@@ -636,6 +646,8 @@ terminal_screen_set_property (GObject *object,
+@@ -640,6 +650,8 @@ terminal_screen_set_property (GObject *object,
          terminal_screen_set_profile (screen, (GSettings*)g_value_get_object (value));
          break;
        case PROP_TITLE:
@@ -111,7 +111,7 @@ index 85ae885..4e004c4 100644
          /* not writable */
        default:
          G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-@@ -727,6 +739,26 @@ terminal_screen_class_init (TerminalScreenClass *klass)
+@@ -731,6 +743,26 @@ terminal_screen_class_init (TerminalScreenClass *klass)
  				      G_PARAM_STATIC_NICK |
  				      G_PARAM_STATIC_BLURB)));
  
@@ -138,7 +138,7 @@ index 85ae885..4e004c4 100644
    g_type_class_add_private (object_class, sizeof (TerminalScreenPrivate));
  
    gtk_widget_class_install_style_property (widget_class,
-@@ -1072,6 +1104,22 @@ terminal_screen_get_title (TerminalScreen *screen)
+@@ -1076,6 +1108,22 @@ terminal_screen_get_title (TerminalScreen *screen)
    return vte_terminal_get_window_title (VTE_TERMINAL (screen));
  }
  
@@ -161,7 +161,7 @@ index 85ae885..4e004c4 100644
  static void
  terminal_screen_profile_changed_cb (GSettings     *profile,
                                      const char    *prop_name,
-@@ -1324,6 +1372,18 @@ update_color_scheme (TerminalScreen *screen)
+@@ -1331,6 +1379,18 @@ update_color_scheme (TerminalScreen *screen)
    vte_terminal_set_color_highlight (VTE_TERMINAL (screen), highlight_bgp);
    vte_terminal_set_color_highlight_foreground (VTE_TERMINAL (screen), highlight_fgp);
  
@@ -181,7 +181,7 @@ index 85ae885..4e004c4 100644
  }
  
 diff --git a/src/terminal-screen.hh b/src/terminal-screen.hh
-index 70d0d8c..b434052 100644
+index 25c2565..45af7bb 100644
 --- a/src/terminal-screen.hh
 +++ b/src/terminal-screen.hh
 @@ -115,6 +115,8 @@ GSettings* terminal_screen_get_profile (TerminalScreen *screen);

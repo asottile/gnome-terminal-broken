@@ -37,10 +37,10 @@ index 6686d34..36d0c67 100644
  
  static void
 diff --git a/src/terminal-screen.cc b/src/terminal-screen.cc
-index a987f26..bf41b6c 100644
+index 6d7166b..f42aeb9 100644
 --- a/src/terminal-screen.cc
 +++ b/src/terminal-screen.cc
-@@ -135,6 +135,8 @@ enum
+@@ -139,6 +139,8 @@ enum
    TARGET_TAB
  };
  
@@ -49,7 +49,7 @@ index a987f26..bf41b6c 100644
  static void terminal_screen_constructed (GObject             *object);
  static void terminal_screen_dispose     (GObject             *object);
  static void terminal_screen_finalize    (GObject             *object);
-@@ -537,9 +539,14 @@ terminal_screen_init (TerminalScreen *screen)
+@@ -541,9 +543,14 @@ terminal_screen_init (TerminalScreen *screen)
    guint i;
    uuid_t u;
    char uuidstr[37];
